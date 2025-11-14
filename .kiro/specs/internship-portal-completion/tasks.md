@@ -12,22 +12,33 @@
   - Remove placeholder text and improve layout with proper styling
   - _Requirements: 1.1, 1.2, 1.3, 1.4_
 
-- [ ] 2. Complete Internships Listing Page
+- [x] 2. Complete Internships Listing Page
+
+
+
+
+
+
+
   - [ ] 2.1 Add detailed internship display with description field
     - Update internships table to show description column
     - Implement expandable rows or cards for better description visibility
+
     - _Requirements: 2.1_
   
   - [ ] 2.2 Implement filtering by department and location
     - Add filter dropdowns for department and location
+
     - Wire filter logic to update displayed internships
     - _Requirements: 2.2_
   
-  - [ ] 2.3 Add search functionality for keywords
+  - [x] 2.3 Add search functionality for keywords
+
     - Implement search input field
     - Add search logic to filter internships by title, department, or description
     - _Requirements: 2.3_
   
+
   - [ ] 2.4 Ensure real-time updates via WebSocket
     - Verify WebSocket subscription is working for internship updates
     - Test real-time refresh when new internships are posted
