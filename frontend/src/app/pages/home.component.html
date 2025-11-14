@@ -1,10 +1,89 @@
-<mat-card>
-  <mat-card-title>Welcome to WebVibes Technology</mat-card-title>
-  <p>Your gateway to internships and skill-building courses.</p>
-  <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
-    <a mat-raised-button color="primary" routerLink="/internships">Browse Internships</a>
-    <a mat-stroked-button color="accent" routerLink="/courses">Explore Courses</a>
-    <a mat-button routerLink="/apply">Apply Now</a>
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Welcome to WebVibes Technology</h1>
+    <p class="hero-subtitle">Your gateway to exciting internships and skill-building courses</p>
+    <div class="hero-actions">
+      <a mat-raised-button color="primary" routerLink="/internships" class="hero-button">
+        <mat-icon>work</mat-icon>
+        Browse Internships
+      </a>
+      <a mat-raised-button color="accent" routerLink="/courses" class="hero-button">
+        <mat-icon>school</mat-icon>
+        Explore Courses
+      </a>
+      <a mat-stroked-button routerLink="/apply" class="hero-button">
+        <mat-icon>send</mat-icon>
+        Apply Now
+      </a>
+    </div>
   </div>
-</mat-card>
-<p>home works!</p>
+</section>
+
+<!-- Statistics Section -->
+<section class="statistics-section">
+  <div class="stat-card">
+    <mat-icon class="stat-icon">work_outline</mat-icon>
+    <div class="stat-number">{{ activeInternshipsCount }}</div>
+    <div class="stat-label">Active Internships</div>
+  </div>
+  <div class="stat-card">
+    <mat-icon class="stat-icon">school</mat-icon>
+    <div class="stat-number">{{ activeCoursesCount }}</div>
+    <div class="stat-label">Available Courses</div>
+  </div>
+</section>
+
+<!-- Feature Cards Section -->
+<section class="features-section">
+  <h2 class="section-title">What We Offer</h2>
+  <div class="feature-cards">
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="feature-icon">work</mat-icon>
+        <mat-card-title>Internship Opportunities</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Discover hands-on internship opportunities across various departments. Gain real-world experience and build your professional network.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <a mat-button color="primary" routerLink="/internships">
+          View Internships
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="feature-icon">school</mat-icon>
+        <mat-card-title>Skill-Building Courses</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Enhance your skills with our curated courses taught by industry experts. Learn at your own pace and advance your career.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <a mat-button color="primary" routerLink="/courses">
+          Browse Courses
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="feature-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="feature-icon">contact_mail</mat-icon>
+        <mat-card-title>Get in Touch</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Have questions or need assistance? Our team is here to help. Reach out to us and we'll get back to you promptly.</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <a mat-button color="primary" routerLink="/contact">
+          Contact Us
+          <mat-icon>arrow_forward</mat-icon>
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>
