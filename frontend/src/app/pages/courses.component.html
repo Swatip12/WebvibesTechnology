@@ -1,71 +1,142 @@
-<div class="courses-container">
-  <mat-card class="header-card">
-    <mat-card-header>
-      <mat-card-title>Available Courses</mat-card-title>
-      <mat-card-subtitle>Enhance your skills with our professional courses</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="filters">
-        <mat-form-field appearance="outline">
-          <mat-label>Filter by Category</mat-label>
-          <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onFilterChange()">
-            <mat-option *ngFor="let option of categoryOptions" [value]="option.value">
-              {{ option.label }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        
-        <mat-form-field appearance="outline">
-          <mat-label>Filter by Duration</mat-label>
-          <mat-select [(ngModel)]="selectedDuration" (selectionChange)="onFilterChange()">
-            <mat-option *ngFor="let option of durationOptions" [value]="option.value">
-              {{ option.label }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </mat-card-content>
-  </mat-card>
-
-  <div class="courses-grid">
-    <mat-card *ngFor="let course of filteredData" class="course-card">
-      <mat-card-header>
-        <mat-card-title>{{ course.title }}</mat-card-title>
-        <mat-card-subtitle>
-          <mat-icon class="instructor-icon">person</mat-icon>
-          {{ course.instructor }}
-        </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <p class="course-description">{{ course.description }}</p>
-        <div class="course-details">
-          <mat-chip-set>
-            <mat-chip *ngIf="course.category">
-              <mat-icon>category</mat-icon>
-              {{ course.category }}
-            </mat-chip>
-            <mat-chip *ngIf="course.duration">
-              <mat-icon>schedule</mat-icon>
-              {{ course.duration }}
-            </mat-chip>
-          </mat-chip-set>
-        </div>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="expressInterest(course)">
-          <mat-icon>favorite</mat-icon>
-          Express Interest
-        </button>
-      </mat-card-actions>
-    </mat-card>
+<div class="courses-page-dark">
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
   </div>
 
-  <div *ngIf="filteredData.length === 0" class="no-courses">
-    <mat-card>
-      <mat-card-content>
-        <mat-icon class="no-courses-icon">school</mat-icon>
-        <p>No courses available at the moment. Please check back later!</p>
-      </mat-card-content>
-    </mat-card>
+  <!-- Hero Section with Glassmorphism -->
+  <div class="hero-glass">
+    <div class="hero-content-wrapper">
+      <div class="hero-badge-glow">
+        <mat-icon>auto_awesome</mat-icon>
+        <span>Premium Learning Experience</span>
+      </div>
+      <h1 class="hero-title-gradient">
+        Discover Amazing Courses
+      </h1>
+      <p class="hero-subtitle-light">
+        Level up your skills with expert-led courses designed for success
+      </p>
+      
+      <!-- Stats with Glow Effect -->
+      <div class="stats-glow-container">
+        <div class="stat-glow-item">
+          <div class="stat-number-glow">{{filteredData.length}}+</div>
+          <div class="stat-label-glow">Active Courses</div>
+        </div>
+        <div class="stat-divider-glow"></div>
+        <div class="stat-glow-item">
+          <div class="stat-number-glow">50+</div>
+          <div class="stat-label-glow">Expert Instructors</div>
+        </div>
+        <div class="stat-divider-glow"></div>
+        <div class="stat-glow-item">
+          <div class="stat-number-glow">5K+</div>
+          <div class="stat-label-glow">Happy Students</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glassmorphism Filter Bar -->
+  <div class="filter-glass-bar">
+    <div class="filter-container-glass">
+      <div class="search-glass-wrapper">
+        <mat-icon class="search-icon-glow">search</mat-icon>
+        <input type="text" placeholder="Search courses..." class="search-input-glass">
+      </div>
+      
+      <mat-form-field appearance="outline" class="filter-glass-field">
+        <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()" placeholder="Category">
+          <mat-option *ngFor="let cat of categoryOptions" [value]="cat.value">
+            {{cat.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-glass-field">
+        <mat-select [(ngModel)]="selectedDuration" (ngModelChange)="onFilterChange()" placeholder="Duration">
+          <mat-option *ngFor="let dur of durationOptions" [value]="dur.value">
+            {{dur.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Course Cards with Glow Effects -->
+  <div class="courses-container-dark">
+    <div class="courses-grid-glow" *ngIf="filteredData.length > 0">
+      <div *ngFor="let course of filteredData; let i = index" 
+           class="course-card-glow"
+           [style.animation-delay]="(i * 0.1) + 's'">
+        
+        <!-- Gradient Border Animation -->
+        <div class="card-border-gradient"></div>
+        
+        <!-- Card Content -->
+        <div class="card-glass-content">
+          <!-- Category Badge with Glow -->
+          <div class="category-badge-glow">
+            <mat-icon>{{getCategoryIcon(course.category)}}</mat-icon>
+            <span>{{course.category}}</span>
+          </div>
+
+          <!-- Course Icon with Gradient -->
+          <div class="course-icon-gradient">
+            <mat-icon>school</mat-icon>
+          </div>
+
+          <!-- Course Info -->
+          <h3 class="course-title-glow">{{course.title}}</h3>
+          
+          <div class="course-meta-dark">
+            <div class="meta-item-glow">
+              <mat-icon>person</mat-icon>
+              <span>{{course.instructor}}</span>
+            </div>
+            <div class="meta-item-glow">
+              <mat-icon>schedule</mat-icon>
+              <span>{{course.duration}}</span>
+            </div>
+          </div>
+
+          <p class="course-desc-light">{{course.description}}</p>
+
+          <!-- Features with Icons -->
+          <div class="features-glow">
+            <div class="feature-chip-glow">
+              <mat-icon>verified</mat-icon>
+              <span>Certified</span>
+            </div>
+            <div class="feature-chip-glow">
+              <mat-icon>support</mat-icon>
+              <span>24/7 Support</span>
+            </div>
+          </div>
+
+          <!-- Enroll Button with Gradient -->
+          <button mat-raised-button (click)="enrollCourse(course)" class="enroll-btn-gradient">
+            <span>Enroll Course</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State with Glow -->
+    <div class="empty-state-glow" *ngIf="filteredData.length === 0">
+      <div class="empty-icon-glow">
+        <mat-icon>school</mat-icon>
+      </div>
+      <h3>No Courses Found</h3>
+      <p>Try adjusting your filters to discover more courses</p>
+      <button mat-raised-button (click)="selectedCategory='all'; selectedDuration='all'; onFilterChange()" class="reset-btn-gradient">
+        <mat-icon>refresh</mat-icon>
+        <span>Reset Filters</span>
+      </button>
+    </div>
   </div>
 </div>

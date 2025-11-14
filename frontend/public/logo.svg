@@ -1,0 +1,17 @@
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="25" cy="25" r="22" fill="#FF9800" opacity="0.2"/>
+  
+  <!-- WV letters -->
+  <text x="10" y="35" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#FF9800">
+    WV
+  </text>
+  
+  <!-- Company name -->
+  <text x="55" y="22" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#ffffff">
+    WebVibes
+  </text>
+  <text x="55" y="38" font-family="Arial, sans-serif" font-size="10" font-weight="400" fill="#ffffff" opacity="0.9">
+    Technology
+  </text>
+</svg>

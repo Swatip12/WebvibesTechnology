@@ -3,29 +3,35 @@
       [attr.role]="'dialog'"
       [mode]="'over'"
       [opened]="false">
-    <mat-toolbar color="primary">Menu</mat-toolbar>
+    <mat-toolbar color="primary" class="sidenav-header">
+      <img src="webvibes-logo.svg" alt="WebVibes Technology Logo" class="sidenav-logo">
+    </mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/" (click)="drawer.close()">
+      <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="drawer.close()">
         <mat-icon matListItemIcon>home</mat-icon>
         <span matListItemTitle>Home</span>
       </a>
-      <a mat-list-item routerLink="/internships" (click)="drawer.close()">
+      <a mat-list-item routerLink="/internships" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon matListItemIcon>work</mat-icon>
         <span matListItemTitle>Internships</span>
       </a>
-      <a mat-list-item routerLink="/courses" (click)="drawer.close()">
+      <a mat-list-item routerLink="/courses" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon matListItemIcon>school</mat-icon>
         <span matListItemTitle>Courses</span>
       </a>
-      <a mat-list-item routerLink="/apply" (click)="drawer.close()">
+      <a mat-list-item routerLink="/training-process" routerLinkActive="active" (click)="drawer.close()">
+        <mat-icon matListItemIcon>timeline</mat-icon>
+        <span matListItemTitle>Training Process</span>
+      </a>
+      <a mat-list-item routerLink="/apply" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon matListItemIcon>send</mat-icon>
         <span matListItemTitle>Apply</span>
       </a>
-      <a mat-list-item routerLink="/about" (click)="drawer.close()">
+      <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon matListItemIcon>info</mat-icon>
         <span matListItemTitle>About</span>
       </a>
-      <a mat-list-item routerLink="/contact" (click)="drawer.close()">
+      <a mat-list-item routerLink="/contact" routerLinkActive="active" (click)="drawer.close()">
         <mat-icon matListItemIcon>contact_mail</mat-icon>
         <span matListItemTitle>Contact</span>
       </a>
@@ -42,14 +48,17 @@
         class="menu-button">
         <mat-icon>menu</mat-icon>
       </button>
-      <span class="brand-name">WebVibes Technology</span>
+      <a routerLink="/" class="logo-link">
+        <img src="webvibes-logo.svg" alt="WebVibes Technology Logo" class="logo">
+      </a>
       <span class="spacer"></span>
       <nav class="desktop-nav">
-        <a mat-button routerLink="/internships">Internships</a>
-        <a mat-button routerLink="/courses">Courses</a>
-        <a mat-button routerLink="/apply">Apply</a>
-        <a mat-button routerLink="/about">About</a>
-        <a mat-button routerLink="/contact">Contact</a>
+        <a mat-button routerLink="/internships" routerLinkActive="active">Internships</a>
+        <a mat-button routerLink="/courses" routerLinkActive="active">Courses</a>
+        <a mat-button routerLink="/training-process" routerLinkActive="active">Training Process</a>
+        <a mat-button routerLink="/apply" routerLinkActive="active">Apply</a>
+        <a mat-button routerLink="/about" routerLinkActive="active">About</a>
+        <a mat-button routerLink="/contact" routerLinkActive="active">Contact</a>
       </nav>
     </mat-toolbar>
 

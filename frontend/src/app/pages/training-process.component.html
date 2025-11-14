@@ -1,0 +1,93 @@
+<div class="training-process-page">
+  <!-- Hero Header -->
+  <div class="page-hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <mat-icon class="hero-icon">timeline</mat-icon>
+        Training Process
+      </h1>
+      <p class="hero-subtitle">Your journey from application to certification in 6 simple steps</p>
+    </div>
+  </div>
+
+  <!-- Training Steps Timeline -->
+  <section class="steps-section">
+    <div class="content-wrapper">
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-description">
+        Follow our structured training program designed to transform you into an industry-ready professional
+      </p>
+
+      <div class="timeline">
+        <div *ngFor="let step of trainingSteps; let i = index" class="timeline-item" [class.reverse]="i % 2 !== 0">
+          <div class="timeline-content">
+            <mat-card class="step-card">
+              <div class="step-number-badge">{{ step.number }}</div>
+              
+              <div class="step-icon-wrapper">
+                <mat-icon>{{ step.icon }}</mat-icon>
+              </div>
+
+              <div class="step-header">
+                <h3>{{ step.title }}</h3>
+                <span class="step-duration">{{ step.duration }}</span>
+              </div>
+
+              <p class="step-description">{{ step.description }}</p>
+
+              <div class="step-highlights">
+                <div *ngFor="let highlight of step.highlights" class="highlight-item">
+                  <mat-icon>check_circle</mat-icon>
+                  <span>{{ highlight }}</span>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <div class="timeline-connector" *ngIf="i < trainingSteps.length - 1">
+            <div class="connector-line"></div>
+            <div class="connector-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section">
+    <div class="content-wrapper">
+      <h2 class="section-title">Why Choose Our Program</h2>
+      <p class="section-description">
+        Get more than just training - join a community of learners and professionals
+      </p>
+
+      <div class="benefits-grid">
+        <mat-card *ngFor="let benefit of benefits" class="benefit-card">
+          <div class="benefit-icon-wrapper">
+            <mat-icon>{{ benefit.icon }}</mat-icon>
+          </div>
+          <h3>{{ benefit.title }}</h3>
+          <p>{{ benefit.description }}</p>
+        </mat-card>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2>Ready to Start Your Journey?</h2>
+      <p>Join hundreds of students who have transformed their careers with us</p>
+      <div class="cta-buttons">
+        <a mat-raised-button routerLink="/internships" class="cta-btn-primary">
+          <mat-icon>work</mat-icon>
+          Browse Internships
+        </a>
+        <a mat-raised-button routerLink="/courses" class="cta-btn-secondary">
+          <mat-icon>school</mat-icon>
+          Explore Courses
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

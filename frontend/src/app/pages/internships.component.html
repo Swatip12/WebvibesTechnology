@@ -1,110 +1,129 @@
 <div class="internships-container">
-  <mat-card class="header-card">
-    <mat-card-title>Open Internships</mat-card-title>
-    <mat-card-content>
-      <!-- Search and Filter Section -->
-      <div class="filters-section">
-        <mat-form-field appearance="outline" class="search-field">
-          <mat-label>Search</mat-label>
-          <input matInput 
-                 [(ngModel)]="searchKeyword" 
-                 (ngModelChange)="applyFilters()"
-                 placeholder="Search by title, department, or description">
-          <mat-icon matSuffix>search</mat-icon>
-        </mat-form-field>
+  <!-- Hero Header -->
+  <div class="page-hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <mat-icon class="hero-icon">work</mat-icon>
+        Internship Opportunities
+      </h1>
+      <p class="hero-subtitle">Find your perfect internship and launch your career</p>
+    </div>
+  </div>
 
-        <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Department</mat-label>
-          <mat-select [(ngModel)]="selectedDepartment" (ngModelChange)="applyFilters()">
-            <mat-option value="">All Departments</mat-option>
-            <mat-option *ngFor="let dept of departments" [value]="dept">
-              {{dept}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+  <!-- Search and Filters Card -->
+  <mat-card class="filters-card">
+    <div class="filters-section">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search Internships</mat-label>
+        <input matInput 
+               [(ngModel)]="searchKeyword" 
+               (ngModelChange)="applyFilters()"
+               placeholder="Search by title, department, or description">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
 
-        <mat-form-field appearance="outline" class="filter-field">
-          <mat-label>Location</mat-label>
-          <mat-select [(ngModel)]="selectedLocation" (ngModelChange)="applyFilters()">
-            <mat-option value="">All Locations</mat-option>
-            <mat-option *ngFor="let loc of locations" [value]="loc">
-              {{loc}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Department</mat-label>
+        <mat-select [(ngModel)]="selectedDepartment" (ngModelChange)="applyFilters()">
+          <mat-option value="">All Departments</mat-option>
+          <mat-option *ngFor="let dept of departments" [value]="dept">
+            {{dept}}
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix>business</mat-icon>
+      </mat-form-field>
 
-        <button mat-stroked-button (click)="clearFilters()" class="clear-btn">
-          <mat-icon>clear</mat-icon>
-          Clear Filters
-        </button>
-      </div>
-    </mat-card-content>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Location</mat-label>
+        <mat-select [(ngModel)]="selectedLocation" (ngModelChange)="applyFilters()">
+          <mat-option value="">All Locations</mat-option>
+          <mat-option *ngFor="let loc of locations" [value]="loc">
+            {{loc}}
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix>location_on</mat-icon>
+      </mat-form-field>
+
+      <button mat-raised-button color="accent" (click)="clearFilters()" class="clear-btn">
+        <mat-icon>clear_all</mat-icon>
+        Clear
+      </button>
+    </div>
+
+    <div class="results-count" *ngIf="filteredData.length > 0">
+      <mat-icon>info</mat-icon>
+      <span>Showing {{filteredData.length}} internship{{filteredData.length !== 1 ? 's' : ''}}</span>
+    </div>
   </mat-card>
 
-  <!-- No Internships Message -->
-  <div *ngIf="filteredData.length === 0" class="no-data-message">
-    <mat-card>
-      <mat-card-content>
-        <div class="empty-state">
-          <mat-icon>work_off</mat-icon>
-          <h2>No internships available</h2>
-          <p *ngIf="searchKeyword || selectedDepartment || selectedLocation">
-            Try adjusting your filters to see more results.
-          </p>
-          <p *ngIf="!searchKeyword && !selectedDepartment && !selectedLocation">
-            Check back soon for new opportunities!
-          </p>
+  <!-- Internships Grid -->
+  <div class="internships-grid" *ngIf="filteredData.length > 0">
+    <mat-card *ngFor="let internship of filteredData" class="internship-card">
+      <div class="card-badge">
+        <mat-icon>verified</mat-icon>
+        <span>Active</span>
+      </div>
+      
+      <mat-card-header>
+        <div mat-card-avatar class="card-avatar">
+          <mat-icon>work</mat-icon>
         </div>
+        <mat-card-title>{{ internship.title }}</mat-card-title>
+        <mat-card-subtitle>
+          <mat-icon class="subtitle-icon">business</mat-icon>
+          {{ internship.department }}
+        </mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="info-grid">
+          <div class="info-item">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ internship.location }}</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>schedule</mat-icon>
+            <span>{{ internship.durationWeeks }} weeks</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>calendar_today</mat-icon>
+            <span>{{ internship.postedAt | date: 'MMM d, y' }}</span>
+          </div>
+        </div>
+        <p class="description">{{ internship.description }}</p>
       </mat-card-content>
+      
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/apply" class="apply-button">
+          <mat-icon>send</mat-icon>
+          Apply Now
+        </button>
+        <button mat-icon-button matTooltip="Refresh">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-card-actions>
     </mat-card>
   </div>
 
-  <!-- Internships List -->
-  <div class="internships-list">
-    <mat-accordion *ngFor="let internship of filteredData">
-      <mat-expansion-panel class="internship-card">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="internship-header">
-              <h3>{{internship.title}}</h3>
-              <div class="internship-meta">
-                <span class="meta-item">
-                  <mat-icon>business</mat-icon>
-                  {{internship.department}}
-                </span>
-                <span class="meta-item">
-                  <mat-icon>location_on</mat-icon>
-                  {{internship.location}}
-                </span>
-                <span class="meta-item">
-                  <mat-icon>schedule</mat-icon>
-                  {{internship.durationWeeks}} weeks
-                </span>
-              </div>
-            </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <div class="internship-details">
-          <h4>Description</h4>
-          <p>{{internship.description}}</p>
-          
-          <div class="action-buttons">
-            <a mat-raised-button color="primary" routerLink="/apply">
-              <mat-icon>send</mat-icon>
-              Apply Now
-            </a>
-          </div>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
-
-  <!-- Action Buttons -->
-  <div class="footer-actions" *ngIf="filteredData.length > 0">
-    <button mat-stroked-button (click)="load()">
-      <mat-icon>refresh</mat-icon>
-      Refresh
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="filteredData.length === 0">
+    <div class="empty-icon">
+      <mat-icon>work_off</mat-icon>
+    </div>
+    <h2>No Internships Found</h2>
+    <p *ngIf="searchKeyword || selectedDepartment || selectedLocation">
+      Try adjusting your filters to see more results.
+    </p>
+    <p *ngIf="!searchKeyword && !selectedDepartment && !selectedLocation">
+      We're currently updating our internship opportunities. Check back soon!
+    </p>
+    <button mat-raised-button color="primary" (click)="clearFilters()" *ngIf="searchKeyword || selectedDepartment || selectedLocation">
+      <mat-icon>clear_all</mat-icon>
+      Clear Filters
+    </button>
+    <button mat-raised-button color="primary" routerLink="/contact" *ngIf="!searchKeyword && !selectedDepartment && !selectedLocation">
+      <mat-icon>contact_mail</mat-icon>
+      Contact Us
     </button>
   </div>
 </div>

@@ -6,9 +6,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CoursesService, Course } from '../core/api/courses.service';
 import { SocketService } from '../core/ws/socket.service';
+import { CourseEnrollmentDialogComponent } from './course-enrollment-dialog.component';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -22,6 +26,9 @@ import { Subscription } from 'rxjs';
     MatChipsModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatDialogModule,
+    MatTooltipModule,
+    RouterModule,
     FormsModule
   ],
   templateUrl: './courses.component.html',
@@ -53,7 +60,8 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   constructor(
     private api: CoursesService,
-    private socket: SocketService
+    private socket: SocketService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -93,7 +101,31 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.applyFilters();
   }
 
-  expressInterest(course: Course) {
-    alert(`Thank you for your interest in "${course.title}"! We will contact you soon with more information.`);
+  enrollCourse(course: Course) {
+    const dialogRef = this.dialog.open(CourseEnrollmentDialogComponent, {
+      width: '700px',
+      maxWidth: '95vw',
+      data: { course },
+      panelClass: 'enrollment-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Enrollment data:', result);
+        alert(`Thank you for enrolling in "${course.title}"! We will contact you soon with further details.`);
+      }
+    });
+  }
+
+  getCategoryIcon(category: string | undefined): string {
+    if (!category) return 'category';
+    const icons: { [key: string]: string } = {
+      'Programming': 'code',
+      'Design': 'palette',
+      'Business': 'business_center',
+      'Data Science': 'analytics',
+      'Marketing': 'campaign'
+    };
+    return icons[category] || 'category';
   }
 }

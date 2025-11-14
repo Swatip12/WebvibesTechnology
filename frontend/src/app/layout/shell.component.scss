@@ -1,19 +1,80 @@
+// LinkCode.in Inspired Navigation
+$dark-bg: #0A0E27;
+$dark-nav: rgba(26, 31, 58, 0.8);
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$text-light: #E2E8F0;
+$text-muted: #94A3B8;
+
 .sidenav-container {
   height: 100vh;
+  background: $dark-bg;
 }
 
 .sidenav {
-  width: 250px;
+  width: 280px;
+  background: rgba(26, 31, 58, 0.95) !important;
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidenav-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 16px;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidenav-logo {
+  height: 100px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.3));
 }
 
 .toolbar {
   position: sticky;
   top: 0;
-  z-index: 2;
+  z-index: 1000;
+  background: $dark-nav !important;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  padding: 8px 24px;
+  height: 80px;
 }
 
 .menu-button {
   display: none;
+  color: $text-light !important;
+  
+  &:hover {
+    background: rgba(102, 126, 234, 0.2) !important;
+  }
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin-left: 8px;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.4));
+  }
+}
+
+.logo {
+  height: 70px;
+  width: auto;
+  cursor: pointer;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
 }
 
 .brand-name {
@@ -27,13 +88,92 @@
 
 .desktop-nav {
   display: flex;
-  gap: 8px;
+  gap: 4px;
+  align-items: center;
+
+  a {
+    position: relative;
+    color: $text-light !important;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 10px 20px !important;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: $primary-gradient;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 12px;
+      z-index: -1;
+    }
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.15) !important;
+      transform: translateY(-2px);
+      
+      &::before {
+        opacity: 0.1;
+      }
+    }
+
+    &.active,
+    &[aria-current="page"] {
+      background: $primary-gradient !important;
+      color: white !important;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+      
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 .content {
-  padding: 16px;
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: 0;
+  max-width: 100%;
+  margin: 0;
+  background: $dark-bg;
+  min-height: calc(100vh - 80px);
+}
+
+// Mobile Sidenav Styling
+::ng-deep .mat-drawer {
+  .mat-mdc-list-item {
+    border-radius: 12px;
+    margin: 4px 12px;
+    transition: all 0.3s ease;
+    color: $text-light !important;
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.15) !important;
+      transform: translateX(4px);
+    }
+
+    &.mdc-list-item--activated,
+    &[aria-current="page"] {
+      background: $primary-gradient !important;
+      color: white !important;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+
+      .mat-icon {
+        color: white !important;
+      }
+    }
+
+    .mat-icon {
+      color: rgba(102, 126, 234, 0.8) !important;
+      margin-right: 16px;
+    }
+  }
 }
 
 // Mobile styles (320px+)
@@ -46,18 +186,45 @@
     display: none;
   }
 
+  .toolbar {
+    padding: 8px 16px;
+    height: 70px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+  
+  .sidenav-logo {
+    height: 70px;
+  }
+
   .brand-name {
     font-size: 1rem;
   }
 
   .content {
-    padding: 12px;
+    padding: 0;
+    min-height: calc(100vh - 70px);
   }
 }
 
 // Tablet styles (768px+)
 @media (min-width: 769px) and (max-width: 1024px) {
+  .toolbar {
+    padding: 8px 20px;
+  }
+
+  .desktop-nav {
+    gap: 2px;
+
+    a {
+      padding: 8px 16px !important;
+      font-size: 0.9rem;
+    }
+  }
+
   .content {
-    padding: 16px;
+    padding: 0;
   }
 }

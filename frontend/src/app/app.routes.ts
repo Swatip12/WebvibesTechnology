@@ -6,6 +6,7 @@ import { CoursesComponent } from './pages/courses.component';
 import { ApplyComponent } from './pages/apply.component';
 import { AboutComponent } from './pages/about.component';
 import { ContactComponent } from './pages/contact.component';
+import { TrainingProcessComponent } from './pages/training-process.component';
 
 export const routes: Routes = [
   {
@@ -15,6 +16,7 @@ export const routes: Routes = [
       { path: '', component: HomeComponent },
       { path: 'internships', component: InternshipsComponent },
       { path: 'courses', component: CoursesComponent },
+      { path: 'training-process', component: TrainingProcessComponent },
       { path: 'apply', component: ApplyComponent },
       { path: 'about', component: AboutComponent },
       { path: 'contact', component: ContactComponent },

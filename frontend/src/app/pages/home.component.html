@@ -1,89 +1,239 @@
-<!-- Hero Section -->
-<section class="hero-section">
-  <div class="hero-content">
-    <h1 class="hero-title">Welcome to WebVibes Technology</h1>
-    <p class="hero-subtitle">Your gateway to exciting internships and skill-building courses</p>
-    <div class="hero-actions">
-      <a mat-raised-button color="primary" routerLink="/internships" class="hero-button">
-        <mat-icon>work</mat-icon>
-        Browse Internships
-      </a>
-      <a mat-raised-button color="accent" routerLink="/courses" class="hero-button">
-        <mat-icon>school</mat-icon>
-        Explore Courses
-      </a>
-      <a mat-stroked-button routerLink="/apply" class="hero-button">
-        <mat-icon>send</mat-icon>
-        Apply Now
-      </a>
+<div class="home-dark">
+  <!-- Animated Background -->
+  <div class="animated-bg">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero-glass">
+    <div class="hero-content-wrapper">
+      <div class="hero-badge-glow">
+        <mat-icon>rocket_launch</mat-icon>
+        <span>Launch Your Career</span>
+      </div>
+      
+      <h1 class="hero-title-gradient">
+        Welcome to WebVibes Technology
+      </h1>
+      
+      <p class="hero-subtitle-light">
+        Your gateway to exciting internships and skill-building courses
+      </p>
+
+      <div class="hero-actions-glow">
+        <a mat-raised-button routerLink="/internships" class="hero-btn-gradient">
+          <mat-icon>work</mat-icon>
+          <span>Browse Internships</span>
+        </a>
+        <a mat-raised-button routerLink="/courses" class="hero-btn-outline">
+          <mat-icon>school</mat-icon>
+          <span>Explore Courses</span>
+        </a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Statistics Section -->
-<section class="statistics-section">
-  <div class="stat-card">
-    <mat-icon class="stat-icon">work_outline</mat-icon>
-    <div class="stat-number">{{ activeInternshipsCount }}</div>
-    <div class="stat-label">Active Internships</div>
-  </div>
-  <div class="stat-card">
-    <mat-icon class="stat-icon">school</mat-icon>
-    <div class="stat-number">{{ activeCoursesCount }}</div>
-    <div class="stat-label">Available Courses</div>
-  </div>
-</section>
+  <!-- Statistics -->
+  <section class="stats-glow-section">
+    <div class="stats-container-glow">
+      <div class="stat-glow-card">
+        <div class="stat-icon-wrapper">
+          <mat-icon>work_outline</mat-icon>
+        </div>
+        <div class="stat-number-glow">{{ activeInternshipsCount }}+</div>
+        <div class="stat-label-glow">Active Internships</div>
+      </div>
+      
+      <div class="stat-divider-glow"></div>
+      
+      <div class="stat-glow-card">
+        <div class="stat-icon-wrapper">
+          <mat-icon>school</mat-icon>
+        </div>
+        <div class="stat-number-glow">{{ activeCoursesCount }}+</div>
+        <div class="stat-label-glow">Available Courses</div>
+      </div>
+      
+      <div class="stat-divider-glow"></div>
+      
+      <div class="stat-glow-card">
+        <div class="stat-icon-wrapper">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="stat-number-glow">5K+</div>
+        <div class="stat-label-glow">Happy Students</div>
+      </div>
+    </div>
+  </section>
 
-<!-- Feature Cards Section -->
-<section class="features-section">
-  <h2 class="section-title">What We Offer</h2>
-  <div class="feature-cards">
-    <mat-card class="feature-card">
-      <mat-card-header>
-        <mat-icon mat-card-avatar class="feature-icon">work</mat-icon>
-        <mat-card-title>Internship Opportunities</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+  <!-- How It Works Section -->
+  <section class="process-section">
+    <h2 class="section-title-gradient">How It Works</h2>
+    <p class="section-subtitle">Get started in 3 simple steps</p>
+    
+    <div class="process-steps">
+      <div class="process-card">
+        <div class="step-number">01</div>
+        <div class="step-icon-wrapper">
+          <mat-icon>search</mat-icon>
+        </div>
+        <h3>Explore Opportunities</h3>
+        <p>Browse through our curated list of internships and courses tailored to your interests</p>
+      </div>
+
+      <div class="process-arrow">
+        <mat-icon>arrow_forward</mat-icon>
+      </div>
+
+      <div class="process-card">
+        <div class="step-number">02</div>
+        <div class="step-icon-wrapper">
+          <mat-icon>edit_note</mat-icon>
+        </div>
+        <h3>Apply Online</h3>
+        <p>Fill out a simple application form and submit your details in minutes</p>
+      </div>
+
+      <div class="process-arrow">
+        <mat-icon>arrow_forward</mat-icon>
+      </div>
+
+      <div class="process-card">
+        <div class="step-number">03</div>
+        <div class="step-icon-wrapper">
+          <mat-icon>celebration</mat-icon>
+        </div>
+        <h3>Start Learning</h3>
+        <p>Get accepted and begin your journey towards professional growth</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-dark-section">
+    <h2 class="section-title-gradient">What We Offer</h2>
+    
+    <div class="feature-cards-glow">
+      <div class="feature-card-glass">
+        <div class="card-border-gradient"></div>
+        <div class="feature-icon-gradient">
+          <mat-icon>work</mat-icon>
+        </div>
+        <h3>Internship Opportunities</h3>
         <p>Discover hands-on internship opportunities across various departments. Gain real-world experience and build your professional network.</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <a mat-button color="primary" routerLink="/internships">
-          View Internships
+        <a mat-raised-button routerLink="/internships" class="feature-btn-glow">
+          <span>View Internships</span>
           <mat-icon>arrow_forward</mat-icon>
         </a>
-      </mat-card-actions>
-    </mat-card>
+      </div>
 
-    <mat-card class="feature-card">
-      <mat-card-header>
-        <mat-icon mat-card-avatar class="feature-icon">school</mat-icon>
-        <mat-card-title>Skill-Building Courses</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+      <div class="feature-card-glass">
+        <div class="card-border-gradient"></div>
+        <div class="feature-icon-gradient">
+          <mat-icon>school</mat-icon>
+        </div>
+        <h3>Skill-Building Courses</h3>
         <p>Enhance your skills with our curated courses taught by industry experts. Learn at your own pace and advance your career.</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <a mat-button color="primary" routerLink="/courses">
-          Browse Courses
+        <a mat-raised-button routerLink="/courses" class="feature-btn-glow">
+          <span>Browse Courses</span>
           <mat-icon>arrow_forward</mat-icon>
         </a>
-      </mat-card-actions>
-    </mat-card>
+      </div>
 
-    <mat-card class="feature-card">
-      <mat-card-header>
-        <mat-icon mat-card-avatar class="feature-icon">contact_mail</mat-icon>
-        <mat-card-title>Get in Touch</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+      <div class="feature-card-glass">
+        <div class="card-border-gradient"></div>
+        <div class="feature-icon-gradient">
+          <mat-icon>contact_mail</mat-icon>
+        </div>
+        <h3>Get in Touch</h3>
         <p>Have questions or need assistance? Our team is here to help. Reach out to us and we'll get back to you promptly.</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <a mat-button color="primary" routerLink="/contact">
-          Contact Us
+        <a mat-raised-button routerLink="/contact" class="feature-btn-glow">
+          <span>Contact Us</span>
           <mat-icon>arrow_forward</mat-icon>
         </a>
-      </mat-card-actions>
-    </mat-card>
-  </div>
-</section>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
+    <h2 class="section-title-gradient">What Our Students Say</h2>
+    <p class="section-subtitle">Real experiences from real people</p>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="quote-icon">
+          <mat-icon>format_quote</mat-icon>
+        </div>
+        <p class="testimonial-text">
+          "The internship program at WebVibes was transformative. I gained practical skills and made valuable connections that helped launch my career."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="author-info">
+            <div class="author-name">Divya Rathi</div>
+            <div class="author-role">Software Engineer Intern</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-icon">
+          <mat-icon>format_quote</mat-icon>
+        </div>
+        <p class="testimonial-text">
+          "The courses are well-structured and taught by industry experts. I learned more in 8 weeks than I did in months of self-study."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="author-info">
+            <div class="author-name">Anubhav Patil</div>
+            <div class="author-role">Web Development Student</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="quote-icon">
+          <mat-icon>format_quote</mat-icon>
+        </div>
+        <p class="testimonial-text">
+          "Amazing support team and great learning environment. The hands-on projects really helped me understand real-world applications."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="author-info">
+            <div class="author-name">Shivani Patil</div>
+            <div class="author-role">Data Science Intern</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2 class="cta-title">Ready to Start Your Journey?</h2>
+      <p class="cta-subtitle">Join thousands of students and professionals advancing their careers</p>
+      <div class="cta-actions">
+        <a mat-raised-button routerLink="/apply" class="cta-btn-primary">
+          <mat-icon>send</mat-icon>
+          <span>Apply Now</span>
+        </a>
+        <a mat-raised-button routerLink="/contact" class="cta-btn-secondary">
+          <mat-icon>chat</mat-icon>
+          <span>Talk to Us</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,435 @@
+// Dark Theme Enrollment Dialog with Glassmorphism
+$dark-bg: #0A0E27;
+$dark-card: #1A1F3A;
+$primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+$text-light: #E2E8F0;
+$text-muted: #94A3B8;
+
+.enrollment-dialog {
+  width: 700px;
+  max-width: 95vw;
+  max-height: 90vh;
+  background: rgba(26, 31, 58, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+// Header with Gradient
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 32px;
+  background: $primary-gradient;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate-gradient 10s linear infinite;
+  }
+}
+
+@keyframes rotate-gradient {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.header-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  animation: icon-pulse 2s infinite;
+}
+
+@keyframes icon-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+}
+
+.header-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  color: white;
+}
+
+.header-text {
+  h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .course-title {
+    margin: 6px 0 0 0;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 400;
+  }
+}
+
+.close-btn {
+  color: white !important;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.1) !important;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+}
+
+// Stepper Styling
+.enrollment-stepper {
+  margin-top: 0;
+  background: transparent !important;
+  padding: 32px;
+}
+
+.step-form {
+  padding: 24px 0;
+}
+
+.form-section {
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $text-light;
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0 0 28px 0;
+
+    mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      color: #667eea;
+    }
+  }
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+// Form Field Styling
+::ng-deep {
+  .enrollment-dialog-container {
+    .mat-mdc-dialog-container {
+      background: transparent;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      max-height: 90vh;
+      overflow: visible;
+    }
+
+    .mat-mdc-dialog-surface {
+      background: transparent;
+      overflow: visible;
+    }
+  }
+
+  .enrollment-dialog {
+    .mat-mdc-dialog-container {
+      background: transparent;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .mat-mdc-form-field {
+      .mat-mdc-text-field-wrapper {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+      }
+
+      .mat-mdc-notched-outline {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &.mat-focused {
+        .mat-mdc-notched-outline {
+          border-color: #667eea;
+          box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .mat-mdc-floating-label {
+          color: #667eea !important;
+        }
+      }
+
+      .mat-mdc-input-element,
+      .mat-mdc-select-value,
+      .mat-mdc-floating-label {
+        color: $text-light;
+      }
+
+      .mat-mdc-input-element::placeholder {
+        color: $text-muted;
+      }
+
+      .mat-icon {
+        color: #667eea;
+      }
+
+      .mat-mdc-form-field-hint,
+      .mat-mdc-form-field-error {
+        color: $text-muted;
+      }
+    }
+
+    // Stepper Styling
+    .mat-step-header {
+      .mat-step-icon {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        color: $text-muted !important;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .mat-step-icon-selected {
+        background: $primary-gradient !important;
+        color: white !important;
+        border-color: transparent;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .mat-step-icon-state-done {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+        color: white !important;
+        border-color: transparent;
+      }
+
+      .mat-step-label {
+        color: $text-muted !important;
+      }
+
+      .mat-step-label-selected {
+        color: $text-light !important;
+        font-weight: 600 !important;
+      }
+    }
+
+    .mat-stepper-horizontal-line {
+      border-top-color: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+}
+
+.step-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+  button {
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    padding: 0 28px !important;
+    height: 52px !important;
+    transition: all 0.3s ease !important;
+
+    mat-icon {
+      margin-left: 8px;
+    }
+  }
+
+  button[matStepperPrevious] {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: $text-light !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+
+    mat-icon {
+      margin-left: 0;
+      margin-right: 8px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+}
+
+// Review Section
+.review-section {
+  padding: 24px 0;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: $text-light;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 28px 0;
+
+    mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      color: #4facfe;
+    }
+  }
+}
+
+.review-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  border-left: 4px solid #667eea;
+
+  h4 {
+    margin: 0 0 20px 0;
+    color: $text-light;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+}
+
+.review-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .label {
+    font-weight: 600;
+    color: $text-muted;
+    font-size: 0.95rem;
+  }
+
+  .value {
+    color: $text-light;
+    font-weight: 500;
+    text-align: right;
+    max-width: 60%;
+  }
+}
+
+.submit-btn {
+  background: $primary-gradient !important;
+  color: white !important;
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4) !important;
+  transition: all 0.3s ease !important;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5) !important;
+  }
+
+  &:disabled {
+    background: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+    opacity: 0.5;
+  }
+}
+
+// Custom Scrollbar
+.enrollment-dialog {
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(102, 126, 234, 0.5);
+    border-radius: 10px;
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.7);
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .enrollment-dialog {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .dialog-header {
+    padding: 24px 20px;
+  }
+
+  .header-icon-wrapper {
+    width: 56px;
+    height: 56px;
+  }
+
+  .header-text h2 {
+    font-size: 1.5rem;
+  }
+
+  .enrollment-stepper {
+    padding: 24px 16px;
+  }
+
+  .review-item {
+    flex-direction: column;
+    gap: 6px;
+
+    .value {
+      text-align: left;
+      max-width: 100%;
+    }
+  }
+
+  .step-actions {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
+}

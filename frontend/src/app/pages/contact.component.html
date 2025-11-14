@@ -1,74 +1,130 @@
-<div class="contact-container">
-  <mat-card class="contact-form-card">
-    <mat-card-title>Send Us a Message</mat-card-title>
-    <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="submit()" style="display:grid; gap:12px; margin-top:12px;">
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" required />
+<div class="contact-page">
+  <!-- Hero Header -->
+  <div class="page-hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <mat-icon class="hero-icon">contact_mail</mat-icon>
+        Get In Touch
+      </h1>
+      <p class="hero-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+    </div>
+  </div>
+
+  <!-- Contact Content -->
+  <div class="contact-container">
+    <!-- Contact Form Card -->
+    <mat-card class="contact-form-card">
+      <div class="card-header">
+        <mat-icon class="header-icon">edit_note</mat-icon>
+        <h2>Send Us a Message</h2>
+        <p>Fill out the form below and we'll get back to you shortly</p>
+      </div>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="contact-form">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Your Name</mat-label>
+          <input matInput formControlName="name" required placeholder="Enter your full name" />
+          <mat-icon matPrefix>person</mat-icon>
           <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" required />
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email Address</mat-label>
+          <input matInput type="email" formControlName="email" required placeholder="your.email@example.com" />
+          <mat-icon matPrefix>email</mat-icon>
           <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
           <mat-error *ngIf="form.get('email')?.hasError('email')">Please enter a valid email address</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Subject</mat-label>
-          <input matInput formControlName="subject" required />
+          <input matInput formControlName="subject" required placeholder="What is this regarding?" />
+          <mat-icon matPrefix>subject</mat-icon>
           <mat-error *ngIf="form.get('subject')?.hasError('required')">Subject is required</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Message</mat-label>
-          <textarea matInput rows="5" formControlName="message" required></textarea>
+          <textarea matInput rows="6" formControlName="message" required 
+                    placeholder="Tell us more about your inquiry..."></textarea>
+          <mat-icon matPrefix>message</mat-icon>
           <mat-error *ngIf="form.get('message')?.hasError('required')">Message is required</mat-error>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="loading">Send Message</button>
+        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="loading">
+          <mat-icon>{{ loading ? 'hourglass_empty' : 'send' }}</mat-icon>
+          {{ loading ? 'Sending...' : 'Send Message' }}
+        </button>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </mat-card>
 
-  <mat-card class="contact-info-card">
-    <mat-card-title>Contact Information</mat-card-title>
-    <mat-card-content>
+    <!-- Contact Info Card -->
+    <mat-card class="contact-info-card">
+      <div class="card-header">
+        <mat-icon class="header-icon">info</mat-icon>
+        <h2>Contact Information</h2>
+        <p>Reach out to us through any of these channels</p>
+      </div>
+
       <div class="contact-info">
         <div class="contact-item">
-          <mat-icon>email</mat-icon>
+          <div class="icon-wrapper">
+            <mat-icon>email</mat-icon>
+          </div>
           <div class="contact-details">
             <h3>Email</h3>
-            <p>contact&#64;webvibes.tech</p>
+            <p>webvibestechnology&#64;gmail.com</p>
           </div>
         </div>
 
         <div class="contact-item">
-          <mat-icon>phone</mat-icon>
+          <div class="icon-wrapper">
+            <mat-icon>phone</mat-icon>
+          </div>
           <div class="contact-details">
             <h3>Phone</h3>
-            <p>+1 (555) 123-4567</p>
+            <p>+91 7447839781</p>
           </div>
         </div>
 
         <div class="contact-item">
-          <mat-icon>location_on</mat-icon>
+          <div class="icon-wrapper">
+            <mat-icon>location_on</mat-icon>
+          </div>
           <div class="contact-details">
             <h3>Address</h3>
-            <p>123 Tech Street<br>Innovation City, TC 12345<br>United States</p>
+            <p>Bharatkunj-2, Kothrud<br>Pune, Maharashtra 411052<br>India</p>
           </div>
         </div>
 
         <div class="contact-item">
-          <mat-icon>schedule</mat-icon>
+          <div class="icon-wrapper">
+            <mat-icon>schedule</mat-icon>
+          </div>
           <div class="contact-details">
             <h3>Business Hours</h3>
             <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday - Sunday: Closed</p>
           </div>
         </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+
+      <div class="social-section">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="https://facebook.com" target="_blank" rel="noopener" mat-icon-button class="social-btn">
+            <mat-icon>facebook</mat-icon>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" mat-icon-button class="social-btn">
+            <mat-icon>twitter</mat-icon>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" mat-icon-button class="social-btn">
+            <mat-icon>linkedin</mat-icon>
+          </a>
+          <a href="https://instagram.com" target="_blank" rel="noopener" mat-icon-button class="social-btn">
+            <mat-icon>instagram</mat-icon>
+          </a>
+        </div>
+      </div>
+    </mat-card>
+  </div>
 </div>

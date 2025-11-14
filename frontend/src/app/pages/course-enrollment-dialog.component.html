@@ -1,0 +1,222 @@
+<div class="enrollment-dialog">
+  <div class="dialog-header">
+    <div class="header-content">
+      <div class="header-icon-wrapper">
+        <mat-icon class="header-icon">school</mat-icon>
+      </div>
+      <div class="header-text">
+        <h2>Course Enrollment</h2>
+        <p class="course-title">{{data.course.title}}</p>
+      </div>
+    </div>
+    <button mat-icon-button (click)="onCancel()" class="close-btn">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-stepper #stepper linear class="enrollment-stepper">
+    <!-- Step 1: Personal Information -->
+    <mat-step [stepControl]="personalInfoForm">
+      <ng-template matStepLabel>Personal Info</ng-template>
+      <form [formGroup]="personalInfoForm" class="step-form">
+        <div class="form-section">
+          <h3>
+            <mat-icon>person</mat-icon>
+            Personal Information
+          </h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="fullName" placeholder="Enter your full name">
+            <mat-icon matPrefix>badge</mat-icon>
+            <mat-error *ngIf="personalInfoForm.get('fullName')?.hasError('required')">
+              Name is required
+            </mat-error>
+            <mat-error *ngIf="personalInfoForm.get('fullName')?.hasError('minlength')">
+              Name must be at least 3 characters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email Address</mat-label>
+            <input matInput formControlName="email" type="email" placeholder="your.email@example.com">
+            <mat-icon matPrefix>email</mat-icon>
+            <mat-error *ngIf="personalInfoForm.get('email')?.hasError('required')">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="personalInfoForm.get('email')?.hasError('email')">
+              Please enter a valid email
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput formControlName="phone" placeholder="+1 (234) 567-8900">
+            <mat-icon matPrefix>phone</mat-icon>
+            <mat-error *ngIf="personalInfoForm.get('phone')?.hasError('required')">
+              Phone is required
+            </mat-error>
+            <mat-error *ngIf="personalInfoForm.get('phone')?.hasError('pattern')">
+              Please enter a valid phone number (10-15 digits)
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Address</mat-label>
+            <textarea matInput formControlName="address" rows="3" placeholder="Enter your address"></textarea>
+            <mat-icon matPrefix>home</mat-icon>
+            <mat-error *ngIf="personalInfoForm.get('address')?.hasError('required')">
+              Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="step-actions">
+          <button mat-raised-button color="primary" matStepperNext [disabled]="!personalInfoForm.valid">
+            Next
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 2: Education & Experience -->
+    <mat-step [stepControl]="educationForm">
+      <ng-template matStepLabel>Education</ng-template>
+      <form [formGroup]="educationForm" class="step-form">
+        <div class="form-section">
+          <h3>
+            <mat-icon>school</mat-icon>
+            Education & Experience
+          </h3>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Highest Qualification</mat-label>
+            <input matInput formControlName="qualification" placeholder="e.g., Bachelor's in Computer Science">
+            <mat-icon matPrefix>workspace_premium</mat-icon>
+            <mat-error *ngIf="educationForm.get('qualification')?.hasError('required')">
+              Qualification is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Institution/University</mat-label>
+            <input matInput formControlName="institution" placeholder="Enter your institution name">
+            <mat-icon matPrefix>account_balance</mat-icon>
+            <mat-error *ngIf="educationForm.get('institution')?.hasError('required')">
+              Institution is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Relevant Experience</mat-label>
+            <input matInput formControlName="experience" placeholder="e.g., 2 years in web development">
+            <mat-icon matPrefix>work</mat-icon>
+            <mat-error *ngIf="educationForm.get('experience')?.hasError('required')">
+              Experience is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Why do you want to enroll?</mat-label>
+            <textarea matInput formControlName="motivation" rows="4" 
+                      placeholder="Tell us why you're interested in this course (minimum 50 characters)"></textarea>
+            <mat-icon matPrefix>edit_note</mat-icon>
+            <mat-hint>{{educationForm.get('motivation')?.value?.length || 0}} / 50 minimum</mat-hint>
+            <mat-error *ngIf="educationForm.get('motivation')?.hasError('required')">
+              Motivation is required
+            </mat-error>
+            <mat-error *ngIf="educationForm.get('motivation')?.hasError('minlength')">
+              Please write at least 50 characters
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="step-actions">
+          <button mat-button matStepperPrevious>
+            <mat-icon>arrow_back</mat-icon>
+            Back
+          </button>
+          <button mat-raised-button color="primary" matStepperNext [disabled]="!educationForm.valid">
+            Review
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <!-- Step 3: Review & Submit -->
+    <mat-step>
+      <ng-template matStepLabel>Review</ng-template>
+      <div class="review-section">
+        <h3>
+          <mat-icon>check_circle</mat-icon>
+          Review Your Information
+        </h3>
+
+        <div class="review-card">
+          <h4>Course Details</h4>
+          <div class="review-item">
+            <span class="label">Course:</span>
+            <span class="value">{{data.course.title}}</span>
+          </div>
+          <div class="review-item">
+            <span class="label">Instructor:</span>
+            <span class="value">{{data.course.instructor}}</span>
+          </div>
+          <div class="review-item">
+            <span class="label">Duration:</span>
+            <span class="value">{{data.course.duration}}</span>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <h4>Personal Information</h4>
+          <div class="review-item">
+            <span class="label">Name:</span>
+            <span class="value">{{personalInfoForm.get('fullName')?.value}}</span>
+          </div>
+          <div class="review-item">
+            <span class="label">Email:</span>
+            <span class="value">{{personalInfoForm.get('email')?.value}}</span>
+          </div>
+          <div class="review-item">
+            <span class="label">Phone:</span>
+            <span class="value">{{personalInfoForm.get('phone')?.value}}</span>
+          </div>
+          <div class="review-item">
+            <span class="label">Address:</span>
+            <span class="value">{{personalInfoForm.get('address')?.value}}</span>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <h4>Education & Experience</h4>
+          <div class="review-item">
+            <span class="label">Qualification:</span>
+            <span class="value">{{educationForm.get('qualification')?.value}}</span>
+          </div>
+          <div class="review-item">
+            <span class="label">Institution:</span>
+            <span class="value">{{educationForm.get('institution')?.value}}</span>
+          </div>
+          <div class="review-item">
+            <span class="label">Experience:</span>
+            <span class="value">{{educationForm.get('experience')?.value}}</span>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button mat-button matStepperPrevious>
+            <mat-icon>arrow_back</mat-icon>
+            Back
+          </button>
+          <button mat-raised-button color="primary" (click)="onSubmit()" class="submit-btn">
+            <mat-icon>send</mat-icon>
+            Submit Enrollment
+          </button>
+        </div>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>
