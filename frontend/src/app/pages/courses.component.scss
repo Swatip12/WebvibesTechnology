@@ -144,7 +144,7 @@
   }
 }
 
-// Responsive design
+// Mobile styles (320px+)
 @media (max-width: 768px) {
   .courses-container {
     padding: 12px;
@@ -156,13 +156,15 @@
   }
 
   .filters {
+    flex-direction: column;
+    gap: 12px;
+
     mat-form-field {
       width: 100%;
+      min-width: 100%;
     }
   }
-}
 
-@media (max-width: 480px) {
   .header-card {
     mat-card-title {
       font-size: 24px;
@@ -178,6 +180,59 @@
       mat-card-title {
         font-size: 18px;
       }
+
+      mat-card-subtitle {
+        font-size: 13px;
+      }
     }
+
+    mat-card-content {
+      .course-description {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .no-courses mat-card {
+    padding: 32px 16px;
+
+    mat-card-content {
+      .no-courses-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+// Tablet styles (768px+)
+@media (min-width: 769px) and (max-width: 1024px) {
+  .courses-container {
+    padding: 16px;
+  }
+
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+
+  .filters {
+    gap: 12px;
+
+    mat-form-field {
+      min-width: 180px;
+    }
+  }
+}
+
+// Desktop styles (1024px+)
+@media (min-width: 1025px) {
+  .courses-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   }
 }

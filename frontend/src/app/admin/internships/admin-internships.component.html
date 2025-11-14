@@ -1,0 +1,71 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Manage Internships</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="actions-bar">
+      <button mat-raised-button color="primary" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        Create Internship
+      </button>
+    </div>
+
+    <div class="table-container">
+      <table mat-table [dataSource]="internships" class="mat-elevation-z2">
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>Title</th>
+          <td mat-cell *matCellDef="let internship">{{ internship.title }}</td>
+        </ng-container>
+
+        <!-- Department Column -->
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let internship">{{ internship.department }}</td>
+        </ng-container>
+
+        <!-- Location Column -->
+        <ng-container matColumnDef="location">
+          <th mat-header-cell *matHeaderCellDef>Location</th>
+          <td mat-cell *matCellDef="let internship">{{ internship.location }}</td>
+        </ng-container>
+
+        <!-- Duration Column -->
+        <ng-container matColumnDef="durationWeeks">
+          <th mat-header-cell *matHeaderCellDef>Duration (weeks)</th>
+          <td mat-cell *matCellDef="let internship">{{ internship.durationWeeks }}</td>
+        </ng-container>
+
+        <!-- Active Column -->
+        <ng-container matColumnDef="active">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let internship">
+            <span [class.active-badge]="internship.active" [class.inactive-badge]="!internship.active">
+              {{ internship.active ? 'Active' : 'Inactive' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let internship">
+            <button mat-icon-button color="primary" (click)="openEditDialog(internship)" matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteInternship(internship)" matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <div *ngIf="internships.length === 0" class="no-data">
+        <p>No internships found. Click "Create Internship" to add one.</p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

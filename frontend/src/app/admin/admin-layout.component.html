@@ -1,0 +1,49 @@
+<mat-sidenav-container class="admin-container">
+  <mat-sidenav #drawer class="admin-sidenav" [mode]="sidenavMode" [opened]="sidenavOpened">
+    <div class="admin-header">
+      <h2>Admin Dashboard</h2>
+    </div>
+    <mat-nav-list>
+      <a mat-list-item routerLink="/admin/internships" routerLinkActive="active" (click)="closeSidenavOnMobile()">
+        <mat-icon matListItemIcon>work</mat-icon>
+        <span matListItemTitle>Manage Internships</span>
+      </a>
+      <a mat-list-item routerLink="/admin/applications" routerLinkActive="active" (click)="closeSidenavOnMobile()">
+        <mat-icon matListItemIcon>assignment</mat-icon>
+        <span matListItemTitle>Manage Applications</span>
+      </a>
+      <a mat-list-item routerLink="/admin/courses" routerLinkActive="active" (click)="closeSidenavOnMobile()">
+        <mat-icon matListItemIcon>school</mat-icon>
+        <span matListItemTitle>Manage Courses</span>
+      </a>
+      <mat-divider></mat-divider>
+      <a mat-list-item routerLink="/">
+        <mat-icon matListItemIcon>home</mat-icon>
+        <span matListItemTitle>Back to Portal</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="admin-toolbar">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        class="menu-button">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="admin-title">WebVibes Technology - Admin</span>
+      <span class="spacer"></span>
+      <button mat-button routerLink="/" class="exit-button">
+        <mat-icon>exit_to_app</mat-icon>
+        <span class="exit-text">Exit Admin</span>
+      </button>
+    </mat-toolbar>
+
+    <div class="admin-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

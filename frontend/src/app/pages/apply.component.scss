@@ -1,0 +1,52 @@
+mat-card {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+mat-card-title {
+  font-size: 1.75rem;
+  margin-bottom: 16px;
+}
+
+form {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+button[type="submit"] {
+  margin-top: 8px;
+  height: 48px;
+  font-size: 1rem;
+}
+
+// Mobile styles (320px+)
+@media (max-width: 768px) {
+  mat-card {
+    margin: 0;
+  }
+
+  mat-card-title {
+    font-size: 1.5rem;
+  }
+
+  form {
+    gap: 8px;
+  }
+
+  mat-form-field {
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    height: 44px;
+    font-size: 0.95rem;
+  }
+}
+
+// Tablet styles (768px+)
+@media (min-width: 769px) and (max-width: 1024px) {
+  mat-card {
+    max-width: 700px;
+  }
+}

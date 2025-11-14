@@ -1,0 +1,124 @@
+mat-card {
+  margin-bottom: 16px;
+}
+
+.filter-section {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+
+  mat-form-field {
+    min-width: 250px;
+    flex: 1;
+  }
+
+  .export-button {
+    height: 56px;
+  }
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.applications-table {
+  width: 100%;
+  min-width: 800px;
+  
+  th {
+    font-weight: 600;
+    background-color: #f5f5f5;
+  }
+
+  td, th {
+    padding: 12px 16px;
+  }
+
+  .cover-letter-cell {
+    max-width: 300px;
+    cursor: help;
+  }
+
+  .no-resume {
+    color: #999;
+    font-style: italic;
+  }
+}
+
+.no-data {
+  text-align: center;
+  padding: 48px 16px;
+  color: #666;
+  
+  p {
+    margin: 0;
+    font-size: 16px;
+  }
+}
+
+::ng-deep .cover-letter-tooltip {
+  max-width: 400px;
+  white-space: pre-wrap;
+  font-size: 14px;
+}
+
+// Mobile styles (320px+)
+@media (max-width: 768px) {
+  mat-card {
+    margin-bottom: 12px;
+  }
+
+  .filter-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+
+    mat-form-field {
+      min-width: 100%;
+    }
+
+    .export-button {
+      width: 100%;
+      height: 48px;
+    }
+  }
+
+  .table-container {
+    margin: 0 -16px;
+  }
+
+  .applications-table {
+    font-size: 14px;
+
+    td, th {
+      padding: 8px 4px;
+    }
+
+    .cover-letter-cell {
+      max-width: 150px;
+    }
+  }
+
+  .no-data {
+    padding: 32px 16px;
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+
+// Tablet styles (768px+)
+@media (min-width: 769px) and (max-width: 1024px) {
+  .filter-section {
+    mat-form-field {
+      min-width: 200px;
+    }
+  }
+
+  .applications-table {
+    font-size: 15px;
+  }
+}

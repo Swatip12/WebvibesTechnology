@@ -39,6 +39,7 @@ public class CourseService {
             existing.setInstructor(updated.getInstructor());
             existing.setDescription(updated.getDescription());
             existing.setDuration(updated.getDuration());
+            existing.setCategory(updated.getCategory());
             existing.setActive(updated.isActive());
             Course saved = courseRepository.save(existing);
             messagingTemplate.convertAndSend("/topic/courses", saved);
