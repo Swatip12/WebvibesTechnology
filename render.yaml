@@ -1,11 +1,11 @@
 services:
   - type: web
     name: webvibes-backend
-    env: java
+    runtime: docker
     region: singapore
     plan: free
-    buildCommand: cd backend && chmod +x mvnw && ./mvnw clean package -DskipTests
-    startCommand: cd backend && java -jar target/portal-0.0.1-SNAPSHOT.jar
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
