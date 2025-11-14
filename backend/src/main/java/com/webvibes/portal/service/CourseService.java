@@ -3,6 +3,7 @@ package com.webvibes.portal.service;
 import com.webvibes.portal.model.Course;
 import com.webvibes.portal.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
     public List<Course> listActive() {
         return courseRepository.findByActiveTrue();
@@ -26,7 +28,9 @@ public class CourseService {
     }
 
     public Course create(Course course) {
-        return courseRepository.save(course);
+        Course saved = courseRepository.save(course);
+        messagingTemplate.convertAndSend("/topic/courses", saved);
+        return saved;
     }
 
     public Optional<Course> update(Long id, Course updated) {
@@ -36,11 +40,14 @@ public class CourseService {
             existing.setDescription(updated.getDescription());
             existing.setDuration(updated.getDuration());
             existing.setActive(updated.isActive());
-            return courseRepository.save(existing);
+            Course saved = courseRepository.save(existing);
+            messagingTemplate.convertAndSend("/topic/courses", saved);
+            return saved;
         });
     }
 
     public void delete(Long id) {
         courseRepository.deleteById(id);
+        messagingTemplate.convertAndSend("/topic/courses", "deleted:" + id);
     }
 }

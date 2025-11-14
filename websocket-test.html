@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Test - Internship Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7/bundles/stomp.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .status.connected {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status.disconnected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .status.connecting {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #log {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #4CAF50;
+            background-color: white;
+        }
+        .log-entry.error {
+            border-left-color: #f44336;
+            background-color: #ffebee;
+        }
+        .log-entry.info {
+            border-left-color: #2196F3;
+            background-color: #e3f2fd;
+        }
+        .log-entry.success {
+            border-left-color: #4CAF50;
+            background-color: #e8f5e9;
+        }
+        .timestamp {
+            color: #666;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔌 WebSocket Connection Test</h1>
+        <p>This page tests the WebSocket connection to the Internship Portal backend.</p>
+        
+        <div id="status" class="status disconnected">Status: Disconnected</div>
+        
+        <div>
+            <button id="connectBtn" onclick="connect()">Connect</button>
+            <button id="disconnectBtn" onclick="disconnect()" disabled>Disconnect</button>
+            <button onclick="clearLog()">Clear Log</button>
+        </div>
+        
+        <h2>Connection Details</h2>
+        <ul>
+            <li><strong>WebSocket URL:</strong> http://localhost:8080/ws</li>
+            <li><strong>Topic:</strong> /topic/internships</li>
+            <li><strong>Protocol:</strong> STOMP over SockJS</li>
+        </ul>
+        
+        <h2>Activity Log</h2>
+        <div id="log"></div>
+    </div>
+
+    <script>
+        let stompClient = null;
+        let subscription = null;
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            const timestamp = new Date().toLocaleTimeString();
+            entry.innerHTML = `<span class="timestamp">[${timestamp}]</span> ${message}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function updateStatus(status, className) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = `Status: ${status}`;
+            statusDiv.className = `status ${className}`;
+        }
+
+        function connect() {
+            log('Initiating WebSocket connection...', 'info');
+            updateStatus('Connecting...', 'connecting');
+            
+            document.getElementById('connectBtn').disabled = true;
+            
+            const socket = new SockJS('http://localhost:8080/ws');
+            stompClient = Stomp.Stomp.over(socket);
+            
+            stompClient.reconnectDelay = 3000;
+            
+            stompClient.onConnect = function(frame) {
+                log('✅ WebSocket connected successfully!', 'success');
+                updateStatus('Connected', 'connected');
+                document.getElementById('disconnectBtn').disabled = false;
+                
+                // Subscribe to internships topic
+                subscription = stompClient.subscribe('/topic/internships', function(message) {
+                    log('📨 Message received on /topic/internships:', 'success');
+                    try {
+                        const data = JSON.parse(message.body);
+                        log(`Data: ${JSON.stringify(data, null, 2)}`, 'info');
+                    } catch (e) {
+                        log(`Data: ${message.body}`, 'info');
+                    }
+                });
+                
+                log('📡 Subscribed to /topic/internships', 'success');
+                log('Waiting for messages... Try creating/updating/deleting an internship from the backend.', 'info');
+            };
+            
+            stompClient.onStompError = function(frame) {
+                log('❌ STOMP Error: ' + frame.headers['message'], 'error');
+                log('Error details: ' + frame.body, 'error');
+                updateStatus('Error', 'disconnected');
+                document.getElementById('connectBtn').disabled = false;
+                document.getElementById('disconnectBtn').disabled = true;
+            };
+            
+            stompClient.onWebSocketError = function(event) {
+                log('❌ WebSocket Error: ' + JSON.stringify(event), 'error');
+                updateStatus('Error', 'disconnected');
+                document.getElementById('connectBtn').disabled = false;
+                document.getElementById('disconnectBtn').disabled = true;
+            };
+            
+            stompClient.onWebSocketClose = function() {
+                log('⚠️ WebSocket connection closed', 'error');
+                updateStatus('Disconnected', 'disconnected');
+                document.getElementById('connectBtn').disabled = false;
+                document.getElementById('disconnectBtn').disabled = true;
+            };
+            
+            stompClient.activate();
+        }
+
+        function disconnect() {
+            if (stompClient !== null) {
+                if (subscription) {
+                    subscription.unsubscribe();
+                    log('Unsubscribed from /topic/internships', 'info');
+                }
+                stompClient.deactivate();
+                log('Disconnected from WebSocket', 'info');
+                updateStatus('Disconnected', 'disconnected');
+                document.getElementById('connectBtn').disabled = false;
+                document.getElementById('disconnectBtn').disabled = true;
+            }
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // Auto-connect on page load
+        window.onload = function() {
+            log('Page loaded. Click "Connect" to test WebSocket connection.', 'info');
+        };
+    </script>
+</body>
+</html>

@@ -45,14 +45,27 @@ export class InternshipsComponent {
 
   constructor(private api: InternshipsService, private socket: SocketService) {
     this.load();
-    this.socket.onInternships().subscribe(() => this.load());
+    this.socket.onInternships().subscribe((data) => {
+      console.log('WebSocket update received for internships:', data);
+      this.load();
+    });
   }
 
   load() {
-    this.api.listActive().subscribe((list) => {
-      this.data = list;
-      this.extractFilterOptions();
-      this.applyFilters();
+    this.api.listActive().subscribe({
+      next: (list) => {
+        this.data = list;
+        this.extractFilterOptions();
+        this.applyFilters();
+      },
+      error: (error) => {
+        console.error('Failed to load internships:', error);
+        // Set empty data so the page still renders
+        this.data = [];
+        this.filteredData = [];
+        this.departments = [];
+        this.locations = [];
+      }
     });
   }
 

@@ -27,6 +27,9 @@ public class ContactMessage {
     private String email;
 
     @NotBlank
+    private String subject;
+
+    @NotBlank
     private String message;
 
     private LocalDateTime sentAt = LocalDateTime.now();

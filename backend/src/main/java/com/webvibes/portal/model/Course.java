@@ -31,5 +31,7 @@ public class Course {
 
     private String duration; // e.g. "6 weeks"
 
+    private String category; // e.g. "Programming", "Design", "Business"
+
     private boolean active = true;
 }

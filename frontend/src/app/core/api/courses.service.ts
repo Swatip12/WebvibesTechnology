@@ -8,6 +8,7 @@ export interface Course {
   instructor: string;
   description: string;
   duration?: string;
+  category?: string;
   active: boolean;
 }
 
