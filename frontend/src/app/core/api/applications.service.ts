@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface ApplicationPayload {
   id?: number;
@@ -17,7 +18,7 @@ export interface ApplicationPayload {
   providedIn: 'root'
 })
 export class ApplicationsService {
-  private base = 'http://localhost:8080/api/applications';
+  private base = `${environment.apiUrl}/applications`;
 
   constructor(private http: HttpClient) { }
 

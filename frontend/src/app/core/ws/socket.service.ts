@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Client, IMessage, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class SocketService {
 
   private ensureConnected() {
     if (this.connected) return;
-    this.client = Stomp.over(() => new SockJS('http://localhost:8080/ws'));
+    this.client = Stomp.over(() => new SockJS(environment.wsUrl));
     this.client.reconnectDelay = 3000;
     this.client.onConnect = () => {
       console.log('WebSocket connected successfully');
