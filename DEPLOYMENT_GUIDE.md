@@ -81,16 +81,48 @@ git push -u origin main
    - **Branch**: main
    - **Root Directory**: `backend`
    - **Runtime**: Java
-   - **Build Command**: `./mvnw clean package -DskipTests`
+   - **Build Command**: `chmod +x mvnw && ./mvnw clean package -DskipTests`
    - **Start Command**: `java -jar target/portal-0.0.1-SNAPSHOT.jar`
    - **Plan**: Free
 
-4. Add Environment Variables:
-   ```
-   SPRING_PROFILES_ACTIVE=prod
-   DATABASE_URL=<paste your database URL here>
-   JAVA_OPTS=-Xmx512m -Xms256m
-   ```
+4. Add Environment Variables (click "+ Add Environment Variable" for each):
+
+   **Variable 1:**
+   - **Key:** `SPRING_DATASOURCE_URL`
+   - **Value:** `jdbc:postgresql://dpg-xxxxx.singapore-postgres.render.com/webvibes_db`
+   - *(Replace with your actual Internal Database URL from step 2.2, change `postgresql://` to `jdbc:postgresql://`)*
+
+   **Variable 2:**
+   - **Key:** `SPRING_DATASOURCE_USERNAME`
+   - **Value:** Your database username from step 2.2
+
+   **Variable 3:**
+   - **Key:** `SPRING_DATASOURCE_PASSWORD`
+   - **Value:** Your database password from step 2.2
+
+   **Variable 4:**
+   - **Key:** `SPRING_JPA_HIBERNATE_DDL_AUTO`
+   - **Value:** `update`
+
+   **Variable 5:**
+   - **Key:** `SPRING_JPA_DATABASE_PLATFORM`
+   - **Value:** `org.hibernate.dialect.PostgreSQLDialect`
+
+   **Variable 6:**
+   - **Key:** `CORS_ALLOWED_ORIGINS`
+   - **Value:** `https://webvibestechno.in,https://www.webvibestechno.in`
+
+   **Variable 7:**
+   - **Key:** `SERVER_PORT`
+   - **Value:** `10000`
+
+   **Variable 8:**
+   - **Key:** `SPRING_PROFILES_ACTIVE`
+   - **Value:** `prod`
+
+   **Variable 9:**
+   - **Key:** `JAVA_OPTS`
+   - **Value:** `-Xmx512m -Xms256m`
 
 5. Click "Create Web Service"
 

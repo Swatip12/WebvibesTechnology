@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CoursesService, Course } from '../core/api/courses.service';
+import { CourseEnrollmentsService } from '../core/api/course-enrollments.service';
 import { SocketService } from '../core/ws/socket.service';
 import { CourseEnrollmentDialogComponent } from './course-enrollment-dialog.component';
 import { Subscription } from 'rxjs';
@@ -60,6 +61,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
 
   constructor(
     private api: CoursesService,
+    private enrollmentApi: CourseEnrollmentsService,
     private socket: SocketService,
     private dialog: MatDialog
   ) {}
@@ -110,9 +112,16 @@ export class CoursesComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Enrollment data:', result);
-        alert(`Thank you for enrolling in "${course.title}"! We will contact you soon with further details.`);
+      if (result && course.id) {
+        this.enrollmentApi.create(result, course.id).subscribe({
+          next: () => {
+            alert(`Thank you for enrolling in "${course.title}"! We will contact you soon with further details.`);
+          },
+          error: (err) => {
+            console.error('Failed to submit enrollment:', err);
+            alert('Failed to submit enrollment. Please try again.');
+          }
+        });
       }
     });
   }

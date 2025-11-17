@@ -19,6 +19,10 @@ export const adminRoutes: Routes = [
         path: 'courses', 
         loadComponent: () => import('./courses/admin-courses.component').then(m => m.AdminCoursesComponent)
       },
+      { 
+        path: 'enrollments', 
+        loadComponent: () => import('./enrollments/admin-enrollments.component').then(m => m.AdminEnrollmentsComponent)
+      },
     ],
   },
 ];
