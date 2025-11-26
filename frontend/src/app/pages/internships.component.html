@@ -1,12 +1,38 @@
 <div class="internships-container">
-  <!-- Hero Header -->
-  <div class="page-hero">
+  <!-- Hero Banner Section -->
+  <div class="hero-banner" [style.background-image]="'url(' + imageService.hero.internships + ')'">
+    <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1 class="hero-title">
+      <h1 class="hero-title fade-in-up">
         <mat-icon class="hero-icon">work</mat-icon>
         Internship Opportunities
       </h1>
-      <p class="hero-subtitle">Find your perfect internship and launch your career</p>
+      <p class="hero-subtitle fade-in-up stagger-1">
+        Find your perfect internship and launch your career with WebVibes Technology
+      </p>
+      <div class="hero-stats fade-in-up stagger-2">
+        <div class="stat-item">
+          <mat-icon>business_center</mat-icon>
+          <div class="stat-content">
+            <span class="stat-number">{{data.length}}</span>
+            <span class="stat-label">Open Positions</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <mat-icon>location_city</mat-icon>
+          <div class="stat-content">
+            <span class="stat-number">{{locations.length}}</span>
+            <span class="stat-label">Locations</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <mat-icon>category</mat-icon>
+          <div class="stat-content">
+            <span class="stat-number">{{departments.length}}</span>
+            <span class="stat-label">Departments</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -56,12 +82,45 @@
     </div>
   </mat-card>
 
+  <!-- Skeleton Loaders -->
+  <div class="internships-grid" *ngIf="isLoading">
+    <div *ngFor="let i of [1,2,3,4,5,6]" class="skeleton-card skeleton-internship-card">
+      <div class="skeleton-badge"></div>
+      <div class="skeleton-header">
+        <div class="skeleton-avatar skeleton"></div>
+        <div style="flex: 1;">
+          <div class="skeleton-title skeleton"></div>
+          <div class="skeleton-subtitle skeleton"></div>
+        </div>
+      </div>
+      <div class="skeleton-info-grid">
+        <div class="skeleton-text-short skeleton"></div>
+        <div class="skeleton-text-short skeleton"></div>
+        <div class="skeleton-text-short skeleton"></div>
+      </div>
+      <div class="skeleton-text skeleton"></div>
+      <div class="skeleton-text-medium skeleton"></div>
+      <div class="skeleton-text-short skeleton"></div>
+      <div class="skeleton-actions">
+        <div class="skeleton-button skeleton"></div>
+        <div class="skeleton-icon skeleton"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- Internships Grid -->
-  <div class="internships-grid" *ngIf="filteredData.length > 0">
-    <mat-card *ngFor="let internship of filteredData" class="internship-card">
-      <div class="card-badge">
-        <mat-icon>verified</mat-icon>
-        <span>Active</span>
+  <div class="internships-grid" *ngIf="!isLoading && filteredData.length > 0">
+    <mat-card *ngFor="let internship of filteredData; let i = index" 
+              class="internship-card scroll-animate"
+              [style.transition-delay.ms]="i * 80">
+      <div class="card-image-header" 
+           [style.background-image]="'url(' + imageService.getInternshipImage(internship.department) + ')'"
+           (error)="imageService.handleImageError($event)">
+        <div class="card-image-overlay"></div>
+        <div class="card-badge">
+          <mat-icon>verified</mat-icon>
+          <span>Active</span>
+        </div>
       </div>
       
       <mat-card-header>
@@ -106,7 +165,7 @@
   </div>
 
   <!-- Empty State -->
-  <div class="empty-state" *ngIf="filteredData.length === 0">
+  <div class="empty-state" *ngIf="!isLoading && filteredData.length === 0">
     <div class="empty-icon">
       <mat-icon>work_off</mat-icon>
     </div>

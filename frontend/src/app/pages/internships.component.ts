@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { InternshipsService, Internship } from '../core/api/internships.service';
 import { SocketService } from '../core/ws/socket.service';
+import { ImageService } from '../core/services/image.service';
 
 @Component({
   selector: 'app-internships',
@@ -33,6 +34,7 @@ import { SocketService } from '../core/ws/socket.service';
 export class InternshipsComponent {
   data: Internship[] = [];
   filteredData: Internship[] = [];
+  isLoading: boolean = true;
 
   // Filter properties
   searchKeyword: string = '';
@@ -43,7 +45,14 @@ export class InternshipsComponent {
   departments: string[] = [];
   locations: string[] = [];
 
-  constructor(private api: InternshipsService, private socket: SocketService) {
+  // Intersection Observer for scroll animations
+  private observer?: IntersectionObserver;
+
+  constructor(
+    private api: InternshipsService, 
+    private socket: SocketService,
+    public imageService: ImageService
+  ) {
     this.load();
     this.socket.onInternships().subscribe((data) => {
       console.log('WebSocket update received for internships:', data);
@@ -51,12 +60,49 @@ export class InternshipsComponent {
     });
   }
 
+  ngAfterViewInit() {
+    this.setupScrollAnimations();
+  }
+
+  ngOnDestroy() {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
+
+  setupScrollAnimations() {
+    // Create Intersection Observer for scroll-triggered animations
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    // Observe all cards after a short delay to ensure DOM is ready
+    setTimeout(() => {
+      const cards = document.querySelectorAll('.internship-card');
+      cards.forEach((card) => {
+        this.observer?.observe(card);
+      });
+    }, 100);
+  }
+
   load() {
+    this.isLoading = true;
     this.api.listActive().subscribe({
       next: (list) => {
         this.data = list;
         this.extractFilterOptions();
         this.applyFilters();
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Failed to load internships:', error);
@@ -65,6 +111,7 @@ export class InternshipsComponent {
         this.filteredData = [];
         this.departments = [];
         this.locations = [];
+        this.isLoading = false;
       }
     });
   }
@@ -93,6 +140,9 @@ export class InternshipsComponent {
 
       return matchesSearch && matchesDepartment && matchesLocation;
     });
+
+    // Re-setup scroll animations after filter changes
+    setTimeout(() => this.setupScrollAnimations(), 100);
   }
 
   clearFilters() {

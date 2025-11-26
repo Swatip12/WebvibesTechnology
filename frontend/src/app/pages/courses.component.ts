@@ -38,6 +38,7 @@ import { Subscription } from 'rxjs';
 export class CoursesComponent implements OnInit, OnDestroy {
   data: Course[] = [];
   filteredData: Course[] = [];
+  isLoading: boolean = true;
   selectedDuration: string = 'all';
   selectedCategory: string = 'all';
   private wsSubscription?: Subscription;
@@ -78,9 +79,19 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   load() {
-    this.api.listActive().subscribe((d) => {
-      this.data = d;
-      this.applyFilters();
+    this.isLoading = true;
+    this.api.listActive().subscribe({
+      next: (d) => {
+        this.data = d;
+        this.applyFilters();
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('Failed to load courses:', error);
+        this.data = [];
+        this.filteredData = [];
+        this.isLoading = false;
+      }
     });
   }
 

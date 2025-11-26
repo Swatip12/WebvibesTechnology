@@ -68,7 +68,29 @@
 
   <!-- Course Cards with Glow Effects -->
   <div class="courses-container-dark">
-    <div class="courses-grid-glow" *ngIf="filteredData.length > 0">
+    <!-- Skeleton Loaders -->
+    <div class="courses-grid-glow" *ngIf="isLoading">
+      <div *ngFor="let i of [1,2,3,4,5,6]" class="course-card-glow">
+        <div class="card-glass-content skeleton-course-card">
+          <div class="skeleton-badge skeleton"></div>
+          <div class="skeleton-course-icon skeleton"></div>
+          <div class="skeleton-title skeleton" style="margin: 0 auto;"></div>
+          <div class="skeleton-meta">
+            <div class="skeleton-text-short skeleton"></div>
+            <div class="skeleton-text-short skeleton"></div>
+          </div>
+          <div class="skeleton-text skeleton"></div>
+          <div class="skeleton-text-medium skeleton"></div>
+          <div class="skeleton-features">
+            <div class="skeleton-badge skeleton"></div>
+            <div class="skeleton-badge skeleton"></div>
+          </div>
+          <div class="skeleton-button skeleton" style="width: 100%; margin-top: auto;"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="courses-grid-glow" *ngIf="!isLoading && filteredData.length > 0">
       <div *ngFor="let course of filteredData; let i = index" 
            class="course-card-glow"
            [style.animation-delay]="(i * 0.1) + 's'">
@@ -127,7 +149,7 @@
     </div>
 
     <!-- Empty State with Glow -->
-    <div class="empty-state-glow" *ngIf="filteredData.length === 0">
+    <div class="empty-state-glow" *ngIf="!isLoading && filteredData.length === 0">
       <div class="empty-icon-glow">
         <mat-icon>school</mat-icon>
       </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -14,17 +14,22 @@ import { CoursesService } from '../core/api/courses.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   activeInternshipsCount = 0;
   activeCoursesCount = 0;
 
   constructor(
     private internshipsService: InternshipsService,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
     this.loadStatistics();
+  }
+
+  ngAfterViewInit(): void {
+    this.setupScrollAnimations();
   }
 
   private loadStatistics(): void {
@@ -41,5 +46,33 @@ export class HomeComponent implements OnInit {
       },
       error: (err) => console.error('Error loading courses:', err)
     });
+  }
+
+  private setupScrollAnimations(): void {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe feature cards
+    const featureCards = this.elementRef.nativeElement.querySelectorAll('.feature-card-glass');
+    featureCards.forEach((card: Element) => observer.observe(card));
+
+    // Observe process cards
+    const processCards = this.elementRef.nativeElement.querySelectorAll('.process-card');
+    processCards.forEach((card: Element) => observer.observe(card));
+
+    // Observe testimonial cards
+    const testimonialCards = this.elementRef.nativeElement.querySelectorAll('.testimonial-card');
+    testimonialCards.forEach((card: Element) => observer.observe(card));
   }
 }
