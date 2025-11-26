@@ -116,9 +116,9 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   contactInfo = {
-    email: 'webvibestechnology@gmail.com',
+    email: 'info.webvibes@gmail.com',
     phone: '+91 7447839781',
-    address: 'Bharatkunj-2, Kothrud, Pune, Maharashtra 411052'
+    address: 'Pune, Maharashtra, India'
   };
 
   ngOnInit(): void {
