@@ -236,6 +236,18 @@ $text-muted: #94A3B8;
   background: rgba(10, 14, 39, 0.8);
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  animation: slideInDown 0.5s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .filter-container-glass {
@@ -279,19 +291,31 @@ $text-muted: #94A3B8;
   outline: none;
   color: $text-light;
   font-size: 1rem;
+  transition: all 0.3s ease;
 
   &::placeholder {
     color: $text-muted;
+    transition: color 0.3s ease;
+  }
+
+  &:focus::placeholder {
+    color: transparent;
   }
 }
 
 .filter-glass-field {
   width: 200px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 
   ::ng-deep {
     .mat-mdc-text-field-wrapper {
       background: rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
     }
 
     .mat-mdc-form-field-flex {
@@ -300,10 +324,12 @@ $text-muted: #94A3B8;
 
     .mat-mdc-notched-outline {
       border-color: rgba(255, 255, 255, 0.1);
+      transition: border-color 0.3s ease;
     }
 
     &.mat-focused .mat-mdc-notched-outline {
       border-color: #667eea;
+      box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
     }
 
     .mat-mdc-select-value,
@@ -313,6 +339,11 @@ $text-muted: #94A3B8;
 
     .mat-mdc-select-arrow {
       color: #667eea;
+      transition: transform 0.3s ease;
+    }
+
+    &.mat-focused .mat-mdc-select-arrow {
+      transform: rotate(180deg);
     }
   }
 }
@@ -330,6 +361,11 @@ $text-muted: #94A3B8;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 32px;
+  transition: opacity 0.3s ease;
+
+  &.filter-transition {
+    opacity: 0.5;
+  }
 }
 
 .course-card-glow {
@@ -342,14 +378,19 @@ $text-muted: #94A3B8;
   animation: card-fade-in 0.6s ease-out both;
 
   &:hover {
-    transform: translateY(-12px);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     
     .card-border-gradient {
       opacity: 1;
     }
 
-    .course-icon-gradient {
-      transform: scale(1.1) rotate(5deg);
+    .course-header-image {
+      transform: scale(1.05);
+    }
+
+    .course-header-overlay {
+      background: linear-gradient(180deg, rgba(10, 14, 39, 0.3) 0%, rgba(26, 31, 58, 0.8) 100%);
     }
 
     .enroll-btn-gradient {
@@ -362,12 +403,23 @@ $text-muted: #94A3B8;
 @keyframes card-fade-in {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(30px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
+}
+
+// Smooth card re-arrangement on filter change
+.courses-grid-glow .course-card-glow {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-transition .course-card-glow {
+  animation: none;
+  opacity: 0.5;
+  transform: scale(0.98);
 }
 
 .card-border-gradient {
@@ -381,10 +433,35 @@ $text-muted: #94A3B8;
   background: $primary-gradient;
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
+}
+
+.course-header-image {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.course-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(10, 14, 39, 0.4) 0%, rgba(26, 31, 58, 0.9) 100%);
+  transition: background 0.4s ease;
 }
 
 .card-glass-content {
@@ -392,24 +469,28 @@ $text-muted: #94A3B8;
   padding: 32px;
   background: rgba(26, 31, 58, 0.8);
   backdrop-filter: blur(10px);
-  border-radius: 24px;
+  border-radius: 0 0 24px 24px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
 }
 
 .category-badge-glow {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 14px;
-  background: rgba(102, 126, 234, 0.2);
-  border: 1px solid rgba(102, 126, 234, 0.3);
+  padding: 8px 16px;
+  background: rgba(102, 126, 234, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(102, 126, 234, 0.5);
   border-radius: 20px;
-  color: #667eea;
+  color: white;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 
   mat-icon {
     font-size: 16px;
@@ -575,6 +656,82 @@ $text-muted: #94A3B8;
   border-radius: 12px !important;
   font-weight: 600 !important;
   box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3) !important;
+}
+
+// Skeleton Loaders
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-header {
+  width: 100%;
+  height: 200px;
+  border-radius: 24px 24px 0 0;
+}
+
+.skeleton-course-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 300px;
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 28px;
+}
+
+.skeleton-meta {
+  display: flex;
+  gap: 20px;
+}
+
+.skeleton-text-short {
+  width: 80px;
+  height: 16px;
+}
+
+.skeleton-text {
+  width: 100%;
+  height: 16px;
+}
+
+.skeleton-text-medium {
+  width: 80%;
+  height: 16px;
+}
+
+.skeleton-features {
+  display: flex;
+  gap: 10px;
+}
+
+.skeleton-badge {
+  width: 80px;
+  height: 28px;
+}
+
+.skeleton-button {
+  width: 100%;
+  height: 52px;
+  margin-top: auto;
 }
 
 // Responsive

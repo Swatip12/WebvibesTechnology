@@ -7,10 +7,10 @@
   </div>
 
   <!-- Hero Section with Glassmorphism -->
-  <div class="hero-glass">
+  <div class="hero-glass" role="banner" aria-label="Courses overview">
     <div class="hero-content-wrapper">
       <div class="hero-badge-glow">
-        <mat-icon>auto_awesome</mat-icon>
+        <mat-icon aria-hidden="true">auto_awesome</mat-icon>
         <span>Premium Learning Experience</span>
       </div>
       <h1 class="hero-title-gradient">
@@ -21,19 +21,19 @@
       </p>
       
       <!-- Stats with Glow Effect -->
-      <div class="stats-glow-container">
-        <div class="stat-glow-item">
-          <div class="stat-number-glow">{{filteredData.length}}+</div>
+      <div class="stats-glow-container" role="list" aria-label="Course statistics">
+        <div class="stat-glow-item" role="listitem">
+          <div class="stat-number-glow" aria-label="{{filteredData.length}} plus active courses">{{filteredData.length}}+</div>
           <div class="stat-label-glow">Active Courses</div>
         </div>
-        <div class="stat-divider-glow"></div>
-        <div class="stat-glow-item">
-          <div class="stat-number-glow">50+</div>
+        <div class="stat-divider-glow" aria-hidden="true"></div>
+        <div class="stat-glow-item" role="listitem">
+          <div class="stat-number-glow" aria-label="Over 50 expert instructors">50+</div>
           <div class="stat-label-glow">Expert Instructors</div>
         </div>
-        <div class="stat-divider-glow"></div>
-        <div class="stat-glow-item">
-          <div class="stat-number-glow">5K+</div>
+        <div class="stat-divider-glow" aria-hidden="true"></div>
+        <div class="stat-glow-item" role="listitem">
+          <div class="stat-number-glow" aria-label="Over 5000 happy students">5K+</div>
           <div class="stat-label-glow">Happy Students</div>
         </div>
       </div>
@@ -41,15 +41,15 @@
   </div>
 
   <!-- Glassmorphism Filter Bar -->
-  <div class="filter-glass-bar">
+  <div class="filter-glass-bar" role="search" aria-label="Search and filter courses">
     <div class="filter-container-glass">
       <div class="search-glass-wrapper">
-        <mat-icon class="search-icon-glow">search</mat-icon>
-        <input type="text" placeholder="Search courses..." class="search-input-glass">
+        <mat-icon class="search-icon-glow" aria-hidden="true">search</mat-icon>
+        <input type="text" placeholder="Search courses..." class="search-input-glass" aria-label="Search courses by name or description">
       </div>
       
       <mat-form-field appearance="outline" class="filter-glass-field">
-        <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()" placeholder="Category">
+        <mat-select [(ngModel)]="selectedCategory" (ngModelChange)="onFilterChange()" placeholder="Category" aria-label="Filter by course category">
           <mat-option *ngFor="let cat of categoryOptions" [value]="cat.value">
             {{cat.label}}
           </mat-option>
@@ -57,7 +57,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="filter-glass-field">
-        <mat-select [(ngModel)]="selectedDuration" (ngModelChange)="onFilterChange()" placeholder="Duration">
+        <mat-select [(ngModel)]="selectedDuration" (ngModelChange)="onFilterChange()" placeholder="Duration" aria-label="Filter by course duration">
           <mat-option *ngFor="let dur of durationOptions" [value]="dur.value">
             {{dur.label}}
           </mat-option>
@@ -71,9 +71,8 @@
     <!-- Skeleton Loaders -->
     <div class="courses-grid-glow" *ngIf="isLoading">
       <div *ngFor="let i of [1,2,3,4,5,6]" class="course-card-glow">
+        <div class="skeleton-header skeleton"></div>
         <div class="card-glass-content skeleton-course-card">
-          <div class="skeleton-badge skeleton"></div>
-          <div class="skeleton-course-icon skeleton"></div>
           <div class="skeleton-title skeleton" style="margin: 0 auto;"></div>
           <div class="skeleton-meta">
             <div class="skeleton-text-short skeleton"></div>
@@ -90,37 +89,41 @@
       </div>
     </div>
 
-    <div class="courses-grid-glow" *ngIf="!isLoading && filteredData.length > 0">
-      <div *ngFor="let course of filteredData; let i = index" 
+    <div class="courses-grid-glow" *ngIf="!isLoading && filteredData.length > 0" role="list" aria-label="Available courses">
+      <article *ngFor="let course of filteredData; let i = index" 
            class="course-card-glow"
-           [style.animation-delay]="(i * 0.1) + 's'">
+           [style.animation-delay]="(i * 0.1) + 's'"
+           role="listitem">
         
         <!-- Gradient Border Animation -->
-        <div class="card-border-gradient"></div>
+        <div class="card-border-gradient" [style.background]="'linear-gradient(135deg, ' + getCategoryColor(course.category) + ' 0%, ' + getCategoryColor(course.category) + '80 100%)'" aria-hidden="true"></div>
+        
+        <!-- Course Header Image -->
+        <div class="course-header-image" 
+             appLazyImage 
+             [backgroundImage]="getCategoryImage(course.category)"
+             role="img"
+             [attr.aria-label]="course.category + ' course category image'">
+          <div class="course-header-overlay" aria-hidden="true"></div>
+          <!-- Category Badge with Glow -->
+          <div class="category-badge-glow" [style.background]="'rgba(' + (course.category === 'Programming' ? '102, 126, 234' : course.category === 'Design' ? '240, 147, 251' : course.category === 'Business' ? '79, 172, 254' : course.category === 'Data Science' ? '67, 233, 123' : '250, 112, 154') + ', 0.2)'" [style.border-color]="getCategoryColor(course.category) + '50'">
+            <mat-icon aria-hidden="true">{{getCategoryIcon(course.category)}}</mat-icon>
+            <span>{{course.category}}</span>
+          </div>
+        </div>
         
         <!-- Card Content -->
         <div class="card-glass-content">
-          <!-- Category Badge with Glow -->
-          <div class="category-badge-glow">
-            <mat-icon>{{getCategoryIcon(course.category)}}</mat-icon>
-            <span>{{course.category}}</span>
-          </div>
-
-          <!-- Course Icon with Gradient -->
-          <div class="course-icon-gradient">
-            <mat-icon>school</mat-icon>
-          </div>
-
           <!-- Course Info -->
           <h3 class="course-title-glow">{{course.title}}</h3>
           
-          <div class="course-meta-dark">
-            <div class="meta-item-glow">
-              <mat-icon>person</mat-icon>
+          <div class="course-meta-dark" role="list" aria-label="Course details">
+            <div class="meta-item-glow" role="listitem">
+              <mat-icon aria-hidden="true">person</mat-icon>
               <span>{{course.instructor}}</span>
             </div>
-            <div class="meta-item-glow">
-              <mat-icon>schedule</mat-icon>
+            <div class="meta-item-glow" role="listitem">
+              <mat-icon aria-hidden="true">schedule</mat-icon>
               <span>{{course.duration}}</span>
             </div>
           </div>
@@ -128,35 +131,35 @@
           <p class="course-desc-light">{{course.description}}</p>
 
           <!-- Features with Icons -->
-          <div class="features-glow">
-            <div class="feature-chip-glow">
-              <mat-icon>verified</mat-icon>
+          <div class="features-glow" role="list" aria-label="Course features">
+            <div class="feature-chip-glow" role="listitem">
+              <mat-icon aria-hidden="true">verified</mat-icon>
               <span>Certified</span>
             </div>
-            <div class="feature-chip-glow">
-              <mat-icon>support</mat-icon>
+            <div class="feature-chip-glow" role="listitem">
+              <mat-icon aria-hidden="true">support</mat-icon>
               <span>24/7 Support</span>
             </div>
           </div>
 
           <!-- Enroll Button with Gradient -->
-          <button mat-raised-button (click)="enrollCourse(course)" class="enroll-btn-gradient">
+          <button mat-raised-button (click)="enrollCourse(course)" class="enroll-btn-gradient" [attr.aria-label]="'Enroll in ' + course.title + ' course'">
             <span>Enroll Course</span>
-            <mat-icon>arrow_forward</mat-icon>
+            <mat-icon aria-hidden="true">arrow_forward</mat-icon>
           </button>
         </div>
-      </div>
+      </article>
     </div>
 
     <!-- Empty State with Glow -->
-    <div class="empty-state-glow" *ngIf="!isLoading && filteredData.length === 0">
-      <div class="empty-icon-glow">
+    <div class="empty-state-glow" *ngIf="!isLoading && filteredData.length === 0" role="status" aria-live="polite">
+      <div class="empty-icon-glow" aria-hidden="true">
         <mat-icon>school</mat-icon>
       </div>
       <h3>No Courses Found</h3>
       <p>Try adjusting your filters to discover more courses</p>
-      <button mat-raised-button (click)="selectedCategory='all'; selectedDuration='all'; onFilterChange()" class="reset-btn-gradient">
-        <mat-icon>refresh</mat-icon>
+      <button mat-raised-button (click)="selectedCategory='all'; selectedDuration='all'; onFilterChange()" class="reset-btn-gradient" aria-label="Reset all filters to show all courses">
+        <mat-icon aria-hidden="true">refresh</mat-icon>
         <span>Reset Filters</span>
       </button>
     </div>

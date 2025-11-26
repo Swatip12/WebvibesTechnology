@@ -1,34 +1,34 @@
 <div class="internships-container">
   <!-- Hero Banner Section -->
-  <div class="hero-banner" [style.background-image]="'url(' + imageService.hero.internships + ')'">
-    <div class="hero-overlay"></div>
+  <div class="hero-banner" appLazyImage [backgroundImage]="imageService.hero.internships" role="banner" aria-label="Internship opportunities hero section">
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
       <h1 class="hero-title fade-in-up">
-        <mat-icon class="hero-icon">work</mat-icon>
+        <mat-icon class="hero-icon" aria-hidden="true">work</mat-icon>
         Internship Opportunities
       </h1>
       <p class="hero-subtitle fade-in-up stagger-1">
         Find your perfect internship and launch your career with WebVibes Technology
       </p>
-      <div class="hero-stats fade-in-up stagger-2">
-        <div class="stat-item">
-          <mat-icon>business_center</mat-icon>
+      <div class="hero-stats fade-in-up stagger-2" role="list" aria-label="Internship statistics">
+        <div class="stat-item" role="listitem">
+          <mat-icon aria-hidden="true">business_center</mat-icon>
           <div class="stat-content">
-            <span class="stat-number">{{data.length}}</span>
+            <span class="stat-number" aria-label="{{data.length}} open positions">{{data.length}}</span>
             <span class="stat-label">Open Positions</span>
           </div>
         </div>
-        <div class="stat-item">
-          <mat-icon>location_city</mat-icon>
+        <div class="stat-item" role="listitem">
+          <mat-icon aria-hidden="true">location_city</mat-icon>
           <div class="stat-content">
-            <span class="stat-number">{{locations.length}}</span>
+            <span class="stat-number" aria-label="{{locations.length}} locations">{{locations.length}}</span>
             <span class="stat-label">Locations</span>
           </div>
         </div>
-        <div class="stat-item">
-          <mat-icon>category</mat-icon>
+        <div class="stat-item" role="listitem">
+          <mat-icon aria-hidden="true">category</mat-icon>
           <div class="stat-content">
-            <span class="stat-number">{{departments.length}}</span>
+            <span class="stat-number" aria-label="{{departments.length}} departments">{{departments.length}}</span>
             <span class="stat-label">Departments</span>
           </div>
         </div>
@@ -37,47 +37,48 @@
   </div>
 
   <!-- Search and Filters Card -->
-  <mat-card class="filters-card">
+  <mat-card class="filters-card" role="search" aria-label="Search and filter internships">
     <div class="filters-section">
       <mat-form-field appearance="outline" class="search-field">
         <mat-label>Search Internships</mat-label>
         <input matInput 
                [(ngModel)]="searchKeyword" 
                (ngModelChange)="applyFilters()"
-               placeholder="Search by title, department, or description">
-        <mat-icon matPrefix>search</mat-icon>
+               placeholder="Search by title, department, or description"
+               aria-label="Search internships by title, department, or description">
+        <mat-icon matPrefix aria-hidden="true">search</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="filter-field">
         <mat-label>Department</mat-label>
-        <mat-select [(ngModel)]="selectedDepartment" (ngModelChange)="applyFilters()">
+        <mat-select [(ngModel)]="selectedDepartment" (ngModelChange)="applyFilters()" aria-label="Filter by department">
           <mat-option value="">All Departments</mat-option>
           <mat-option *ngFor="let dept of departments" [value]="dept">
             {{dept}}
           </mat-option>
         </mat-select>
-        <mat-icon matPrefix>business</mat-icon>
+        <mat-icon matPrefix aria-hidden="true">business</mat-icon>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="filter-field">
         <mat-label>Location</mat-label>
-        <mat-select [(ngModel)]="selectedLocation" (ngModelChange)="applyFilters()">
+        <mat-select [(ngModel)]="selectedLocation" (ngModelChange)="applyFilters()" aria-label="Filter by location">
           <mat-option value="">All Locations</mat-option>
           <mat-option *ngFor="let loc of locations" [value]="loc">
             {{loc}}
           </mat-option>
         </mat-select>
-        <mat-icon matPrefix>location_on</mat-icon>
+        <mat-icon matPrefix aria-hidden="true">location_on</mat-icon>
       </mat-form-field>
 
-      <button mat-raised-button color="accent" (click)="clearFilters()" class="clear-btn">
-        <mat-icon>clear_all</mat-icon>
+      <button mat-raised-button color="accent" (click)="clearFilters()" class="clear-btn" aria-label="Clear all filters">
+        <mat-icon aria-hidden="true">clear_all</mat-icon>
         Clear
       </button>
     </div>
 
-    <div class="results-count" *ngIf="filteredData.length > 0">
-      <mat-icon>info</mat-icon>
+    <div class="results-count" *ngIf="filteredData.length > 0" role="status" aria-live="polite">
+      <mat-icon aria-hidden="true">info</mat-icon>
       <span>Showing {{filteredData.length}} internship{{filteredData.length !== 1 ? 's' : ''}}</span>
     </div>
   </mat-card>
@@ -109,64 +110,68 @@
   </div>
 
   <!-- Internships Grid -->
-  <div class="internships-grid" *ngIf="!isLoading && filteredData.length > 0">
-    <mat-card *ngFor="let internship of filteredData; let i = index" 
-              class="internship-card scroll-animate"
-              [style.transition-delay.ms]="i * 80">
-      <div class="card-image-header" 
-           [style.background-image]="'url(' + imageService.getInternshipImage(internship.department) + ')'"
-           (error)="imageService.handleImageError($event)">
-        <div class="card-image-overlay"></div>
-        <div class="card-badge">
-          <mat-icon>verified</mat-icon>
-          <span>Active</span>
-        </div>
-      </div>
-      
-      <mat-card-header>
-        <div mat-card-avatar class="card-avatar">
-          <mat-icon>work</mat-icon>
-        </div>
-        <mat-card-title>{{ internship.title }}</mat-card-title>
-        <mat-card-subtitle>
-          <mat-icon class="subtitle-icon">business</mat-icon>
-          {{ internship.department }}
-        </mat-card-subtitle>
-      </mat-card-header>
-      
-      <mat-card-content>
-        <div class="info-grid">
-          <div class="info-item">
-            <mat-icon>location_on</mat-icon>
-            <span>{{ internship.location }}</span>
-          </div>
-          <div class="info-item">
-            <mat-icon>schedule</mat-icon>
-            <span>{{ internship.durationWeeks }} weeks</span>
-          </div>
-          <div class="info-item">
-            <mat-icon>calendar_today</mat-icon>
-            <span>{{ internship.postedAt | date: 'MMM d, y' }}</span>
+  <div class="internships-grid" *ngIf="!isLoading && filteredData.length > 0" role="list" aria-label="Available internships">
+    <article *ngFor="let internship of filteredData; let i = index" 
+              role="listitem">
+      <mat-card class="internship-card scroll-animate"
+                [style.transition-delay.ms]="i * 80">
+        <div class="card-image-header" 
+             appLazyImage 
+             [backgroundImage]="imageService.getInternshipImage(internship.department)"
+             role="img"
+             [attr.aria-label]="internship.department + ' internship category image'">
+          <div class="card-image-overlay" aria-hidden="true"></div>
+          <div class="card-badge">
+            <mat-icon aria-hidden="true">verified</mat-icon>
+            <span>Active</span>
           </div>
         </div>
-        <p class="description">{{ internship.description }}</p>
-      </mat-card-content>
-      
-      <mat-card-actions>
-        <button mat-raised-button color="primary" routerLink="/apply" class="apply-button">
-          <mat-icon>send</mat-icon>
-          Apply Now
-        </button>
-        <button mat-icon-button matTooltip="Refresh">
-          <mat-icon>refresh</mat-icon>
-        </button>
-      </mat-card-actions>
-    </mat-card>
+        
+        <mat-card-header>
+          <div mat-card-avatar class="card-avatar" aria-hidden="true">
+            <mat-icon>work</mat-icon>
+          </div>
+          <mat-card-title>{{ internship.title }}</mat-card-title>
+          <mat-card-subtitle>
+            <mat-icon class="subtitle-icon" aria-hidden="true">business</mat-icon>
+            {{ internship.department }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <div class="info-grid" role="list" aria-label="Internship details">
+            <div class="info-item" role="listitem">
+              <mat-icon aria-hidden="true">location_on</mat-icon>
+              <span>{{ internship.location }}</span>
+            </div>
+            <div class="info-item" role="listitem">
+              <mat-icon aria-hidden="true">schedule</mat-icon>
+              <span>{{ internship.durationWeeks }} weeks</span>
+            </div>
+            <div class="info-item" role="listitem">
+              <mat-icon aria-hidden="true">calendar_today</mat-icon>
+              <span>{{ internship.postedAt | date: 'MMM d, y' }}</span>
+            </div>
+          </div>
+          <p class="description">{{ internship.description }}</p>
+        </mat-card-content>
+        
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/apply" class="apply-button" [attr.aria-label]="'Apply for ' + internship.title + ' internship'">
+            <mat-icon aria-hidden="true">send</mat-icon>
+            Apply Now
+          </button>
+          <button mat-icon-button matTooltip="Refresh" aria-label="Refresh internship data">
+            <mat-icon aria-hidden="true">refresh</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </article>
   </div>
 
   <!-- Empty State -->
-  <div class="empty-state" *ngIf="!isLoading && filteredData.length === 0">
-    <div class="empty-icon">
+  <div class="empty-state" *ngIf="!isLoading && filteredData.length === 0" role="status" aria-live="polite">
+    <div class="empty-icon" aria-hidden="true">
       <mat-icon>work_off</mat-icon>
     </div>
     <h2>No Internships Found</h2>
@@ -176,12 +181,12 @@
     <p *ngIf="!searchKeyword && !selectedDepartment && !selectedLocation">
       We're currently updating our internship opportunities. Check back soon!
     </p>
-    <button mat-raised-button color="primary" (click)="clearFilters()" *ngIf="searchKeyword || selectedDepartment || selectedLocation">
-      <mat-icon>clear_all</mat-icon>
+    <button mat-raised-button color="primary" (click)="clearFilters()" *ngIf="searchKeyword || selectedDepartment || selectedLocation" aria-label="Clear all filters to see all internships">
+      <mat-icon aria-hidden="true">clear_all</mat-icon>
       Clear Filters
     </button>
-    <button mat-raised-button color="primary" routerLink="/contact" *ngIf="!searchKeyword && !selectedDepartment && !selectedLocation">
-      <mat-icon>contact_mail</mat-icon>
+    <button mat-raised-button color="primary" routerLink="/contact" *ngIf="!searchKeyword && !selectedDepartment && !selectedLocation" aria-label="Contact us for more information">
+      <mat-icon aria-hidden="true">contact_mail</mat-icon>
       Contact Us
     </button>
   </div>

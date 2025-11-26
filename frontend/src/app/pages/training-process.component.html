@@ -1,31 +1,71 @@
 <div class="training-process-page">
-  <!-- Hero Header -->
-  <div class="page-hero">
+  <!-- Hero Section with Background Image -->
+  <section class="hero-section" role="banner" aria-label="Training process overview">
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
-      <h1 class="hero-title">
-        <mat-icon class="hero-icon">timeline</mat-icon>
+      <h1 class="hero-title fade-in-up">
+        <mat-icon class="hero-icon" aria-hidden="true">timeline</mat-icon>
         Training Process
       </h1>
-      <p class="hero-subtitle">Your journey from application to certification in 6 simple steps</p>
+      <p class="hero-subtitle fade-in-up stagger-1">Your journey from application to certification in 12 comprehensive steps</p>
+      <div class="hero-stats fade-in-up stagger-2" role="list" aria-label="Training program statistics">
+        <div class="stat-item" role="listitem">
+          <div class="stat-number" aria-label="12 weeks duration">12</div>
+          <div class="stat-label">Weeks</div>
+        </div>
+        <div class="stat-item" role="listitem">
+          <div class="stat-number" aria-label="Over 100 students">100+</div>
+          <div class="stat-label">Students</div>
+        </div>
+        <div class="stat-item" role="listitem">
+          <div class="stat-number" aria-label="95 percent success rate">95%</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Training Steps Timeline -->
-  <section class="steps-section">
+  <section class="steps-section" aria-labelledby="steps-heading">
     <div class="content-wrapper">
-      <h2 class="section-title">How It Works</h2>
+      <h2 id="steps-heading" class="section-title">How It Works</h2>
       <p class="section-description">
         Follow our structured training program designed to transform you into an industry-ready professional
       </p>
 
-      <div class="timeline">
-        <div *ngFor="let step of trainingSteps; let i = index" class="timeline-item" [class.reverse]="i % 2 !== 0">
+      <!-- Progress Indicator -->
+      <div class="progress-indicator" role="progressbar" aria-label="Training progress overview" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+        <div class="progress-steps">
+          <div *ngFor="let step of trainingSteps; let i = index" 
+               class="progress-step"
+               [attr.data-step]="step.number">
+            <div class="progress-dot" aria-hidden="true"></div>
+            <span class="progress-label">{{ step.title }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline" role="list" aria-label="Training steps timeline">
+        <article *ngFor="let step of trainingSteps; let i = index" 
+                 class="timeline-item" 
+                 [class.reverse]="i % 2 !== 0"
+                 role="listitem">
           <div class="timeline-content">
             <mat-card class="step-card">
-              <div class="step-number-badge">{{ step.number }}</div>
+              <div class="step-number-badge" aria-label="Step {{ step.number }}">{{ step.number }}</div>
               
-              <div class="step-icon-wrapper">
-                <mat-icon>{{ step.icon }}</mat-icon>
+              <!-- Step Image -->
+              <div class="step-image-wrapper">
+                <img [src]="step.image" 
+                     [alt]="'Visual representation of ' + step.title + ' training step'" 
+                     class="step-image"
+                     loading="lazy">
+                <div class="step-image-overlay" aria-hidden="true">
+                  <mat-icon class="step-overlay-icon">{{ step.icon }}</mat-icon>
+                </div>
               </div>
 
               <div class="step-header">
@@ -35,40 +75,42 @@
 
               <p class="step-description">{{ step.description }}</p>
 
-              <div class="step-highlights">
-                <div *ngFor="let highlight of step.highlights" class="highlight-item">
-                  <mat-icon>check_circle</mat-icon>
+              <div class="step-highlights" role="list" aria-label="Step highlights">
+                <div *ngFor="let highlight of step.highlights" class="highlight-item" role="listitem">
+                  <mat-icon aria-hidden="true">check_circle</mat-icon>
                   <span>{{ highlight }}</span>
                 </div>
               </div>
             </mat-card>
           </div>
 
-          <div class="timeline-connector" *ngIf="i < trainingSteps.length - 1">
+          <div class="timeline-connector" *ngIf="i < trainingSteps.length - 1" aria-hidden="true">
             <div class="connector-line"></div>
             <div class="connector-dot"></div>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   </section>
 
   <!-- Benefits Section -->
-  <section class="benefits-section">
+  <section class="benefits-section" aria-labelledby="benefits-heading">
     <div class="content-wrapper">
-      <h2 class="section-title">Why Choose Our Program</h2>
+      <h2 id="benefits-heading" class="section-title">Why Choose Our Program</h2>
       <p class="section-description">
         Get more than just training - join a community of learners and professionals
       </p>
 
       <div class="benefits-grid">
-        <mat-card *ngFor="let benefit of benefits" class="benefit-card">
-          <div class="benefit-icon-wrapper">
-            <mat-icon>{{ benefit.icon }}</mat-icon>
-          </div>
-          <h3>{{ benefit.title }}</h3>
-          <p>{{ benefit.description }}</p>
-        </mat-card>
+        <article *ngFor="let benefit of benefits" class="benefit-card">
+          <mat-card>
+            <div class="benefit-icon-wrapper" aria-hidden="true">
+              <mat-icon>{{ benefit.icon }}</mat-icon>
+            </div>
+            <h3>{{ benefit.title }}</h3>
+            <p>{{ benefit.description }}</p>
+          </mat-card>
+        </article>
       </div>
     </div>
   </section>

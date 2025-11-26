@@ -6,11 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { InternshipsService } from '../core/api/internships.service';
 import { CoursesService } from '../core/api/courses.service';
+import { LazyImageDirective } from '../core/directives/lazy-image.directive';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule, MatIconModule],
+  imports: [CommonModule, RouterModule, MatCardModule, MatButtonModule, MatIconModule, LazyImageDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

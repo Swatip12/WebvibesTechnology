@@ -1,9 +1,17 @@
 <div class="about-container">
     <!-- Hero Section -->
-    <section class="hero-section">
+    <section class="hero-section" role="banner" aria-label="About WebVibes Technology">
+        <div class="hero-background" role="img" aria-label="Technology and innovation background"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
         <div class="hero-content">
-            <h1>About WebVibes Technology</h1>
-            <p class="hero-subtitle">Empowering the next generation of tech innovators</p>
+            <h1 class="fade-in-up">About WebVibes Technology</h1>
+            <p class="hero-subtitle fade-in-up stagger-1">Empowering the next generation of tech innovators</p>
+            <p class="hero-description fade-in-up stagger-2">
+                We are a leading technology education platform dedicated to bridging the gap between 
+                academic learning and real-world industry experience. Through innovative internship programs 
+                and comprehensive skill-building courses, we empower aspiring professionals to achieve their 
+                career goals and make a meaningful impact in the tech industry.
+            </p>
         </div>
     </section>
 
@@ -43,22 +51,64 @@
     </section>
 
     <!-- Team and Culture Section -->
-    <section class="culture-section">
+    <section class="culture-section" aria-labelledby="culture-heading">
         <div class="content-wrapper">
-            <h2>Our Culture & Values</h2>
+            <h2 id="culture-heading">Our Culture & Values</h2>
             <p class="section-description">
                 We believe in creating an inclusive, dynamic workplace where innovation thrives and
                 every team member can reach their full potential.
             </p>
 
             <div class="values-grid">
-                <mat-card *ngFor="let value of teamValues" class="value-card">
-                    <mat-card-content>
-                        <mat-icon class="value-icon">{{ value.icon }}</mat-icon>
-                        <h3>{{ value.title }}</h3>
-                        <p>{{ value.description }}</p>
-                    </mat-card-content>
-                </mat-card>
+                <article *ngFor="let value of teamValues; let i = index" 
+                          class="value-card animate-on-scroll"
+                          [attr.data-delay]="i * 100">
+                    <mat-card>
+                        <div class="value-image-container">
+                            <img [src]="value.image" 
+                                 [alt]="'Image representing ' + value.title + ': ' + value.description" 
+                                 class="value-image" 
+                                 loading="lazy">
+                            <div class="value-image-overlay" aria-hidden="true">
+                                <mat-icon class="value-icon">{{ value.icon }}</mat-icon>
+                            </div>
+                        </div>
+                        <mat-card-content>
+                            <h3>{{ value.title }}</h3>
+                            <p>{{ value.description }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Journey Timeline Section -->
+    <section class="timeline-section" aria-labelledby="journey-heading">
+        <div class="content-wrapper">
+            <h2 id="journey-heading">Our Journey</h2>
+            <p class="section-description">
+                A decade of innovation, growth, and transforming lives through technology education
+            </p>
+
+            <div class="timeline" role="list" aria-label="Company milestones timeline">
+                <article *ngFor="let milestone of milestones; let i = index" 
+                     class="timeline-item animate-on-scroll"
+                     [attr.data-delay]="i * 150"
+                     [class.timeline-left]="i % 2 === 0"
+                     [class.timeline-right]="i % 2 !== 0"
+                     role="listitem">
+                    <div class="timeline-marker" aria-hidden="true">
+                        <mat-icon>{{ milestone.icon }}</mat-icon>
+                    </div>
+                    <mat-card class="timeline-card">
+                        <mat-card-content>
+                            <time class="timeline-year" [attr.datetime]="milestone.year">{{ milestone.year }}</time>
+                            <h3>{{ milestone.title }}</h3>
+                            <p>{{ milestone.description }}</p>
+                        </mat-card-content>
+                    </mat-card>
+                </article>
             </div>
         </div>
     </section>
@@ -73,7 +123,9 @@
             </p>
 
             <div class="achievements-grid">
-                <mat-card *ngFor="let achievement of achievements" class="achievement-card">
+                <mat-card *ngFor="let achievement of achievements; let i = index" 
+                          class="achievement-card animate-on-scroll"
+                          [attr.data-delay]="i * 100">
                     <mat-card-content>
                         <mat-icon class="achievement-icon">{{ achievement.icon }}</mat-icon>
                         <div class="achievement-number">{{ achievement.number }}</div>
@@ -86,30 +138,30 @@
     </section>
 
     <!-- Contact Information Section -->
-    <section class="contact-info-section">
+    <section class="contact-info-section" aria-labelledby="contact-heading">
         <div class="content-wrapper">
-            <h2>Get In Touch</h2>
+            <h2 id="contact-heading">Get In Touch</h2>
             <mat-card class="contact-card">
                 <mat-card-content>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <mat-icon>email</mat-icon>
+                    <div class="contact-details" role="list" aria-label="Contact information">
+                        <div class="contact-item" role="listitem">
+                            <mat-icon aria-hidden="true">email</mat-icon>
                             <div>
                                 <h4>Email</h4>
-                                <p>{{ contactInfo.email }}</p>
+                                <p><a href="mailto:{{ contactInfo.email }}" aria-label="Send email to {{ contactInfo.email }}">{{ contactInfo.email }}</a></p>
                             </div>
                         </div>
 
-                        <div class="contact-item">
-                            <mat-icon>phone</mat-icon>
+                        <div class="contact-item" role="listitem">
+                            <mat-icon aria-hidden="true">phone</mat-icon>
                             <div>
                                 <h4>Phone</h4>
-                                <p>{{ contactInfo.phone }}</p>
+                                <p><a href="tel:{{ contactInfo.phone }}" aria-label="Call {{ contactInfo.phone }}">{{ contactInfo.phone }}</a></p>
                             </div>
                         </div>
 
-                        <div class="contact-item">
-                            <mat-icon>location_on</mat-icon>
+                        <div class="contact-item" role="listitem">
+                            <mat-icon aria-hidden="true">location_on</mat-icon>
                             <div>
                                 <h4>Address</h4>
                                 <p>{{ contactInfo.address }}</p>
@@ -119,12 +171,16 @@
 
                     <div class="social-links">
                         <h4>Follow Us</h4>
-                        <div class="social-buttons">
-                            <a *ngFor="let social of socialLinks" [href]="social.url" target="_blank"
-                                rel="noopener noreferrer" mat-icon-button [attr.aria-label]="social.label">
-                                <mat-icon>{{ social.icon }}</mat-icon>
+                        <nav class="social-buttons" aria-label="Social media links">
+                            <a *ngFor="let social of socialLinks" 
+                               [href]="social.url" 
+                               target="_blank"
+                               rel="noopener noreferrer" 
+                               mat-icon-button 
+                               [attr.aria-label]="'Visit our ' + social.label + ' page'">
+                                <mat-icon aria-hidden="true">{{ social.icon }}</mat-icon>
                             </a>
-                        </div>
+                        </nav>
                     </div>
                 </mat-card-content>
             </mat-card>

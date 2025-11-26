@@ -15,6 +15,7 @@ import { CourseEnrollmentsService } from '../core/api/course-enrollments.service
 import { SocketService } from '../core/ws/socket.service';
 import { CourseEnrollmentDialogComponent } from './course-enrollment-dialog.component';
 import { Subscription } from 'rxjs';
+import { LazyImageDirective } from '../core/directives/lazy-image.directive';
 
 @Component({
   selector: 'app-courses',
@@ -30,7 +31,8 @@ import { Subscription } from 'rxjs';
     MatDialogModule,
     MatTooltipModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    LazyImageDirective
   ],
   templateUrl: './courses.component.html',
   styleUrl: './courses.component.scss'
@@ -103,15 +105,34 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   applyFilters() {
+    // Add a brief loading state for smooth transition
+    const previousLength = this.filteredData.length;
+    
     this.filteredData = this.data.filter(course => {
       const durationMatch = this.selectedDuration === 'all' || course.duration === this.selectedDuration;
       const categoryMatch = this.selectedCategory === 'all' || course.category === this.selectedCategory;
       return durationMatch && categoryMatch;
     });
+
+    // Trigger re-animation if filter changed
+    if (previousLength !== this.filteredData.length) {
+      this.triggerCardAnimation();
+    }
   }
 
   onFilterChange() {
     this.applyFilters();
+  }
+
+  private triggerCardAnimation() {
+    // Force re-render of cards with animation by briefly hiding and showing
+    const grid = document.querySelector('.courses-grid-glow');
+    if (grid) {
+      grid.classList.add('filter-transition');
+      setTimeout(() => {
+        grid.classList.remove('filter-transition');
+      }, 50);
+    }
   }
 
   enrollCourse(course: Course) {
@@ -147,5 +168,29 @@ export class CoursesComponent implements OnInit, OnDestroy {
       'Marketing': 'campaign'
     };
     return icons[category] || 'category';
+  }
+
+  getCategoryImage(category: string | undefined): string {
+    if (!category) return 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=400&q=80&fit=crop&auto=format';
+    const images: { [key: string]: string } = {
+      'Programming': 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=400&q=80&fit=crop&auto=format',
+      'Design': 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&h=400&q=80&fit=crop&auto=format',
+      'Business': 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=400&q=80&fit=crop&auto=format',
+      'Data Science': 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=400&q=80&fit=crop&auto=format',
+      'Marketing': 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=800&h=400&q=80&fit=crop&auto=format'
+    };
+    return images[category] || 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=400&q=80&fit=crop&auto=format';
+  }
+
+  getCategoryColor(category: string | undefined): string {
+    if (!category) return '#667eea';
+    const colors: { [key: string]: string } = {
+      'Programming': '#667eea',
+      'Design': '#f093fb',
+      'Business': '#4facfe',
+      'Data Science': '#43e97b',
+      'Marketing': '#fa709a'
+    };
+    return colors[category] || '#667eea';
   }
 }

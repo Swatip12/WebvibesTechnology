@@ -14,8 +14,11 @@ export class ImageService {
   // Placeholder image for loading states
   readonly LOADING_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Crect fill='%23f0f0f0' width='800' height='500'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23999' font-family='sans-serif' font-size='24'%3ELoading...%3C/text%3E%3C/svg%3E";
   
-  // Generic fallback placeholder
-  readonly FALLBACK_PLACEHOLDER = `${this.UNSPLASH_BASE}/photo-1557683316-973673baf926?w=800&h=500&q=80&fit=crop&auto=format`;
+  // Generic fallback placeholder (local SVG to avoid external dependency)
+  readonly FALLBACK_PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 500'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23667eea;stop-opacity:0.3' /%3E%3Cstop offset='100%25' style='stop-color:%23764ba2;stop-opacity:0.3' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23grad)' width='800' height='500'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' fill='%23667eea' font-family='sans-serif' font-size='20' font-weight='600'%3EImage Unavailable%3C/text%3E%3C/svg%3E";
+  
+  // Track failed image URLs to avoid retry loops
+  private failedUrls = new Set<string>();
 
   /**
    * Hero section images
@@ -104,7 +107,31 @@ export class ImageService {
   handleImageError(event: Event): void {
     const img = event.target as HTMLImageElement;
     if (img && img.src !== this.FALLBACK_PLACEHOLDER) {
+      // Mark this URL as failed
+      this.failedUrls.add(img.src);
+      
+      // Set fallback placeholder
       img.src = this.FALLBACK_PLACEHOLDER;
+      
+      // Add error class for styling
+      img.classList.add('image-error');
+      
+      console.warn('Image failed to load:', img.src);
+    }
+  }
+
+  /**
+   * Handle background image error for divs
+   * @param element Element with background image
+   */
+  handleBackgroundImageError(element: HTMLElement): void {
+    if (element) {
+      const bgImage = element.style.backgroundImage;
+      if (bgImage && !bgImage.includes('data:image')) {
+        element.style.backgroundImage = `url('${this.FALLBACK_PLACEHOLDER}')`;
+        element.classList.add('image-error');
+        console.warn('Background image failed to load:', bgImage);
+      }
     }
   }
 
@@ -118,5 +145,113 @@ export class ImageService {
    */
   getResponsiveImage(photoId: string, width: number, height: number, quality: number = 80): string {
     return `${this.UNSPLASH_BASE}/${photoId}?w=${width}&h=${height}&q=${quality}&fit=crop&auto=format`;
+  }
+
+  /**
+   * Get responsive srcset for different viewport sizes
+   * @param photoId Unsplash photo ID or full URL
+   * @param baseHeight Base height for aspect ratio
+   * @returns srcset string with multiple sizes
+   */
+  getResponsiveSrcSet(photoId: string, baseHeight: number = 500): string {
+    // Extract photo ID if full URL is provided
+    const id = photoId.includes('unsplash.com') 
+      ? photoId.split('unsplash.com')[1].split('?')[0] 
+      : photoId;
+    
+    const widths = [400, 800, 1200, 1600, 1920];
+    return widths
+      .map(w => {
+        const h = Math.round((baseHeight / 800) * w);
+        return `${this.UNSPLASH_BASE}${id}?w=${w}&h=${h}&q=80&fit=crop&auto=format ${w}w`;
+      })
+      .join(', ');
+  }
+
+  /**
+   * Get responsive background image CSS for different viewports
+   * @param photoId Unsplash photo ID or full URL
+   * @returns Object with background image URLs for different breakpoints
+   */
+  getResponsiveBackgroundUrls(photoId: string): {
+    mobile: string;
+    tablet: string;
+    desktop: string;
+  } {
+    // Extract photo ID if full URL is provided
+    const id = photoId.includes('unsplash.com') 
+      ? photoId.split('unsplash.com')[1].split('?')[0] 
+      : photoId;
+    
+    return {
+      mobile: `${this.UNSPLASH_BASE}${id}?w=768&h=400&q=80&fit=crop&auto=format`,
+      tablet: `${this.UNSPLASH_BASE}${id}?w=1024&h=600&q=80&fit=crop&auto=format`,
+      desktop: `${this.UNSPLASH_BASE}${id}?w=1920&h=800&q=80&fit=crop&auto=format`
+    };
+  }
+
+  /**
+   * Preload critical images
+   * @param urls Array of image URLs to preload
+   */
+  preloadImages(urls: string[]): void {
+    urls.forEach(url => {
+      if (!this.failedUrls.has(url)) {
+        const img = new Image();
+        img.src = url;
+      }
+    });
+  }
+
+  /**
+   * Check if an image URL has previously failed
+   * @param url Image URL to check
+   * @returns true if the URL has failed before
+   */
+  hasImageFailed(url: string): boolean {
+    return this.failedUrls.has(url);
+  }
+
+  /**
+   * Clear failed URLs cache
+   */
+  clearFailedCache(): void {
+    this.failedUrls.clear();
+  }
+
+  /**
+   * Get optimized image URL based on viewport width
+   * @param photoId Unsplash photo ID or full URL
+   * @param viewportWidth Current viewport width
+   * @returns Optimized image URL
+   */
+  getOptimizedUrl(photoId: string, viewportWidth: number): string {
+    // Extract photo ID if full URL is provided
+    const id = photoId.includes('unsplash.com') 
+      ? photoId.split('unsplash.com')[1].split('?')[0] 
+      : photoId;
+    
+    // Determine optimal width based on viewport
+    let width = 800;
+    let height = 500;
+    
+    if (viewportWidth <= 480) {
+      width = 480;
+      height = 300;
+    } else if (viewportWidth <= 768) {
+      width = 768;
+      height = 400;
+    } else if (viewportWidth <= 1024) {
+      width = 1024;
+      height = 600;
+    } else if (viewportWidth <= 1440) {
+      width = 1440;
+      height = 800;
+    } else {
+      width = 1920;
+      height = 1080;
+    }
+    
+    return `${this.UNSPLASH_BASE}${id}?w=${width}&h=${height}&q=80&fit=crop&auto=format`;
   }
 }

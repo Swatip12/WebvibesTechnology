@@ -1,69 +1,119 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="'dialog'"
+      [attr.role]="'navigation'"
+      [attr.aria-label]="'Mobile navigation menu'"
       [mode]="'over'"
       [opened]="false">
     <mat-toolbar color="primary" class="sidenav-header">
       <img src="webvibes-logo.svg" alt="WebVibes Technology Logo" class="sidenav-logo">
     </mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="drawer.close()">
-        <mat-icon matListItemIcon>home</mat-icon>
+    <mat-nav-list role="list">
+      <a mat-list-item routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="drawer.close()" aria-label="Navigate to home page">
+        <mat-icon matListItemIcon aria-hidden="true">home</mat-icon>
         <span matListItemTitle>Home</span>
       </a>
-      <a mat-list-item routerLink="/internships" routerLinkActive="active" (click)="drawer.close()">
-        <mat-icon matListItemIcon>work</mat-icon>
+      <a mat-list-item routerLink="/internships" routerLinkActive="active" (click)="drawer.close()" aria-label="Navigate to internships page">
+        <mat-icon matListItemIcon aria-hidden="true">work</mat-icon>
         <span matListItemTitle>Internships</span>
       </a>
-      <a mat-list-item routerLink="/courses" routerLinkActive="active" (click)="drawer.close()">
-        <mat-icon matListItemIcon>school</mat-icon>
+      <a mat-list-item routerLink="/courses" routerLinkActive="active" (click)="drawer.close()" aria-label="Navigate to courses page">
+        <mat-icon matListItemIcon aria-hidden="true">school</mat-icon>
         <span matListItemTitle>Courses</span>
       </a>
-      <a mat-list-item routerLink="/training-process" routerLinkActive="active" (click)="drawer.close()">
-        <mat-icon matListItemIcon>timeline</mat-icon>
+      <a mat-list-item routerLink="/training-process" routerLinkActive="active" (click)="drawer.close()" aria-label="Navigate to training process page">
+        <mat-icon matListItemIcon aria-hidden="true">timeline</mat-icon>
         <span matListItemTitle>Training Process</span>
       </a>
-      <a mat-list-item routerLink="/apply" routerLinkActive="active" (click)="drawer.close()">
-        <mat-icon matListItemIcon>send</mat-icon>
+      <a mat-list-item routerLink="/apply" routerLinkActive="active" (click)="drawer.close()" aria-label="Navigate to application page">
+        <mat-icon matListItemIcon aria-hidden="true">send</mat-icon>
         <span matListItemTitle>Apply</span>
       </a>
-      <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="drawer.close()">
-        <mat-icon matListItemIcon>info</mat-icon>
+      <a mat-list-item routerLink="/about" routerLinkActive="active" (click)="drawer.close()" aria-label="Navigate to about page">
+        <mat-icon matListItemIcon aria-hidden="true">info</mat-icon>
         <span matListItemTitle>About</span>
       </a>
-      <a mat-list-item routerLink="/contact" routerLinkActive="active" (click)="drawer.close()">
-        <mat-icon matListItemIcon>contact_mail</mat-icon>
+      <a mat-list-item routerLink="/contact" routerLinkActive="active" (click)="drawer.close()" aria-label="Navigate to contact page">
+        <mat-icon matListItemIcon aria-hidden="true">contact_mail</mat-icon>
         <span matListItemTitle>Contact</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary" class="toolbar">
+    <mat-toolbar color="primary" class="toolbar" role="banner">
       <button
         type="button"
-        aria-label="Toggle sidenav"
+        aria-label="Toggle navigation menu"
         mat-icon-button
         (click)="drawer.toggle()"
         class="menu-button">
-        <mat-icon>menu</mat-icon>
+        <mat-icon aria-hidden="true">menu</mat-icon>
       </button>
-      <a routerLink="/" class="logo-link">
+      <a routerLink="/" class="logo-link" aria-label="WebVibes Technology home page">
         <img src="webvibes-logo.svg" alt="WebVibes Technology Logo" class="logo">
       </a>
       <span class="spacer"></span>
-      <nav class="desktop-nav">
-        <a mat-button routerLink="/internships" routerLinkActive="active">Internships</a>
-        <a mat-button routerLink="/courses" routerLinkActive="active">Courses</a>
-        <a mat-button routerLink="/training-process" routerLinkActive="active">Training Process</a>
-        <a mat-button routerLink="/apply" routerLinkActive="active">Apply</a>
-        <a mat-button routerLink="/about" routerLinkActive="active">About</a>
-        <a mat-button routerLink="/contact" routerLinkActive="active">Contact</a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a mat-button routerLink="/internships" routerLinkActive="active" aria-label="Browse internships">Internships</a>
+        <a mat-button routerLink="/courses" routerLinkActive="active" aria-label="Explore courses">Courses</a>
+        <a mat-button routerLink="/training-process" routerLinkActive="active" aria-label="View training process">Training Process</a>
+        <a mat-button routerLink="/apply" routerLinkActive="active" aria-label="Apply for internship">Apply</a>
+        <a mat-button routerLink="/about" routerLinkActive="active" aria-label="About us">About</a>
+        <a mat-button routerLink="/contact" routerLinkActive="active" aria-label="Contact us">Contact</a>
       </nav>
     </mat-toolbar>
 
-    <div class="content">
+    <main class="content" id="main-content" role="main">
       <router-outlet></router-outlet>
-    </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+      <div class="footer-content">
+        <div class="footer-section">
+          <img src="webvibes-logo.svg" alt="WebVibes Technology Logo" class="footer-logo">
+          <p class="footer-tagline">Empowering the next generation of tech professionals</p>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Quick Links</h3>
+          <nav class="footer-links" aria-label="Quick links navigation">
+            <a routerLink="/internships" class="footer-link">Internships</a>
+            <a routerLink="/courses" class="footer-link">Courses</a>
+            <a routerLink="/training-process" class="footer-link">Training Process</a>
+            <a routerLink="/apply" class="footer-link">Apply Now</a>
+          </nav>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Company</h3>
+          <nav class="footer-links" aria-label="Company navigation">
+            <a routerLink="/about" class="footer-link">About Us</a>
+            <a routerLink="/contact" class="footer-link">Contact</a>
+          </nav>
+        </div>
+
+        <div class="footer-section">
+          <h3 class="footer-title">Connect With Us</h3>
+          <nav class="social-links" aria-label="Social media links">
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-link" aria-label="Visit our LinkedIn page">
+              <mat-icon aria-hidden="true">link</mat-icon>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="social-link" aria-label="Visit our Twitter page">
+              <mat-icon aria-hidden="true">tag</mat-icon>
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="social-link" aria-label="Visit our Facebook page">
+              <mat-icon aria-hidden="true">public</mat-icon>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link" aria-label="Visit our Instagram page">
+              <mat-icon aria-hidden="true">photo_camera</mat-icon>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">&copy; 2024 WebVibes Technology. All rights reserved.</p>
+      </div>
+    </footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

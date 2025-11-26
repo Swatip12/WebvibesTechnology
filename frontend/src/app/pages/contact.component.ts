@@ -8,17 +8,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { ContactService } from '../core/api/contact.service';
+import { LazyImageDirective } from '../core/directives/lazy-image.directive';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSnackBarModule, MatIconModule],
+  imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatSnackBarModule, MatIconModule, LazyImageDirective],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
 export class ContactComponent {
   form!: FormGroup;
   loading = false;
+  submitSuccess = false;
+  submitError = false;
 
   constructor(private fb: FormBuilder, private api: ContactService, private sb: MatSnackBar) {
     this.form = this.fb.group({
@@ -30,11 +33,47 @@ export class ContactComponent {
   }
 
   submit() {
-    if (this.form.invalid) { this.form.markAllAsTouched(); return; }
+    if (this.form.invalid) { 
+      this.form.markAllAsTouched(); 
+      return; 
+    }
+    
     this.loading = true;
+    this.submitSuccess = false;
+    this.submitError = false;
+    
     this.api.create(this.form.getRawValue() as any).subscribe({
-      next: () => { this.sb.open('Message sent!', 'OK', { duration: 2500 }); this.form.reset(); this.loading = false; },
-      error: () => { this.sb.open('Failed to send message', 'Dismiss', { duration: 3000 }); this.loading = false; }
+      next: () => { 
+        this.loading = false;
+        this.submitSuccess = true;
+        this.sb.open('✓ Message sent successfully! We\'ll get back to you soon.', 'Close', { 
+          duration: 4000,
+          panelClass: ['success-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        }); 
+        this.form.reset();
+        
+        // Reset success state after animation
+        setTimeout(() => {
+          this.submitSuccess = false;
+        }, 4000);
+      },
+      error: (err) => { 
+        this.loading = false;
+        this.submitError = true;
+        this.sb.open('✗ Failed to send message. Please try again.', 'Dismiss', { 
+          duration: 4000,
+          panelClass: ['error-snackbar'],
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+        
+        // Reset error state after animation
+        setTimeout(() => {
+          this.submitError = false;
+        }, 4000);
+      }
     });
   }
 }

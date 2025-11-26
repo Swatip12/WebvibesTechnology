@@ -12,6 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { InternshipsService, Internship } from '../core/api/internships.service';
 import { SocketService } from '../core/ws/socket.service';
 import { ImageService } from '../core/services/image.service';
+import { LazyImageDirective } from '../core/directives/lazy-image.directive';
 
 @Component({
   selector: 'app-internships',
@@ -26,7 +27,8 @@ import { ImageService } from '../core/services/image.service';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    LazyImageDirective
   ],
   templateUrl: './internships.component.html',
   styleUrl: './internships.component.scss'

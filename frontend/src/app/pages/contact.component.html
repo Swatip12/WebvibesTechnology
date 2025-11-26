@@ -1,14 +1,23 @@
 <div class="contact-page">
-  <!-- Hero Header -->
-  <div class="page-hero">
+  <!-- Hero Section with Background Image -->
+  <section class="hero-section" role="banner" aria-label="Contact us">
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
-      <h1 class="hero-title">
-        <mat-icon class="hero-icon">contact_mail</mat-icon>
-        Get In Touch
-      </h1>
-      <p class="hero-subtitle">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+      <mat-icon class="hero-icon fade-in-up" aria-hidden="true">contact_mail</mat-icon>
+      <h1 class="hero-title fade-in-up stagger-1">Get In Touch</h1>
+      <p class="hero-subtitle fade-in-up stagger-2">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+      <div class="hero-contact-info fade-in-up stagger-3" role="list" aria-label="Quick contact information">
+        <div class="quick-contact-item" role="listitem">
+          <mat-icon aria-hidden="true">email</mat-icon>
+          <a href="mailto:webvibestechnology@gmail.com" aria-label="Email us at webvibestechnology@gmail.com">webvibestechnology@gmail.com</a>
+        </div>
+        <div class="quick-contact-item" role="listitem">
+          <mat-icon aria-hidden="true">phone</mat-icon>
+          <a href="tel:+917447839781" aria-label="Call us at +91 7447839781">+91 7447839781</a>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
 
   <!-- Contact Content -->
   <div class="contact-container">
@@ -20,85 +29,104 @@
         <p>Fill out the form below and we'll get back to you shortly</p>
       </div>
 
-      <form [formGroup]="form" (ngSubmit)="submit()" class="contact-form">
-        <mat-form-field appearance="outline" class="full-width">
+      <form [formGroup]="form" (ngSubmit)="submit()" class="contact-form" aria-label="Contact form">
+        <!-- Success Message -->
+        <div class="status-message success-message" *ngIf="submitSuccess" role="alert" aria-live="polite">
+          <mat-icon aria-hidden="true">check_circle</mat-icon>
+          <div class="message-content">
+            <h3>Message Sent Successfully!</h3>
+            <p>Thank you for contacting us. We'll get back to you soon.</p>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="status-message error-message" *ngIf="submitError" role="alert" aria-live="assertive">
+          <mat-icon aria-hidden="true">error</mat-icon>
+          <div class="message-content">
+            <h3>Failed to Send Message</h3>
+            <p>Please check your connection and try again.</p>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width form-field-animated">
           <mat-label>Your Name</mat-label>
-          <input matInput formControlName="name" required placeholder="Enter your full name" />
-          <mat-icon matPrefix>person</mat-icon>
+          <input matInput formControlName="name" required placeholder="Enter your full name" aria-label="Your full name" aria-required="true" />
+          <mat-icon matPrefix aria-hidden="true">person</mat-icon>
           <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="full-width form-field-animated">
           <mat-label>Email Address</mat-label>
-          <input matInput type="email" formControlName="email" required placeholder="your.email@example.com" />
-          <mat-icon matPrefix>email</mat-icon>
+          <input matInput type="email" formControlName="email" required placeholder="your.email@example.com" aria-label="Your email address" aria-required="true" />
+          <mat-icon matPrefix aria-hidden="true">email</mat-icon>
           <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
           <mat-error *ngIf="form.get('email')?.hasError('email')">Please enter a valid email address</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="full-width form-field-animated">
           <mat-label>Subject</mat-label>
-          <input matInput formControlName="subject" required placeholder="What is this regarding?" />
-          <mat-icon matPrefix>subject</mat-icon>
+          <input matInput formControlName="subject" required placeholder="What is this regarding?" aria-label="Message subject" aria-required="true" />
+          <mat-icon matPrefix aria-hidden="true">subject</mat-icon>
           <mat-error *ngIf="form.get('subject')?.hasError('required')">Subject is required</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field appearance="outline" class="full-width form-field-animated">
           <mat-label>Message</mat-label>
           <textarea matInput rows="6" formControlName="message" required 
-                    placeholder="Tell us more about your inquiry..."></textarea>
-          <mat-icon matPrefix>message</mat-icon>
+                    placeholder="Tell us more about your inquiry..." aria-label="Your message" aria-required="true"></textarea>
+          <mat-icon matPrefix aria-hidden="true">message</mat-icon>
           <mat-error *ngIf="form.get('message')?.hasError('required')">Message is required</mat-error>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="loading">
-          <mat-icon>{{ loading ? 'hourglass_empty' : 'send' }}</mat-icon>
-          {{ loading ? 'Sending...' : 'Send Message' }}
+        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="loading" [attr.aria-busy]="loading">
+          <mat-icon class="btn-icon" aria-hidden="true">{{ loading ? 'hourglass_empty' : 'send' }}</mat-icon>
+          <span class="btn-text">{{ loading ? 'Sending...' : 'Send Message' }}</span>
+          <span class="btn-ripple" aria-hidden="true"></span>
         </button>
       </form>
     </mat-card>
 
     <!-- Contact Info Card -->
-    <mat-card class="contact-info-card">
+    <mat-card class="contact-info-card" aria-labelledby="contact-info-heading">
       <div class="card-header">
-        <mat-icon class="header-icon">info</mat-icon>
-        <h2>Contact Information</h2>
+        <mat-icon class="header-icon" aria-hidden="true">info</mat-icon>
+        <h2 id="contact-info-heading">Contact Information</h2>
         <p>Reach out to us through any of these channels</p>
       </div>
 
-      <div class="contact-info">
-        <div class="contact-item">
-          <div class="icon-wrapper">
+      <div class="contact-info" role="list" aria-label="Contact methods">
+        <div class="contact-item" role="listitem">
+          <div class="icon-wrapper" aria-hidden="true">
             <mat-icon>email</mat-icon>
           </div>
           <div class="contact-details">
             <h3>Email</h3>
-            <p>webvibestechnology&#64;gmail.com</p>
+            <p><a href="mailto:webvibestechnology@gmail.com" aria-label="Email us at webvibestechnology@gmail.com">webvibestechnology&#64;gmail.com</a></p>
           </div>
         </div>
 
-        <div class="contact-item">
-          <div class="icon-wrapper">
+        <div class="contact-item" role="listitem">
+          <div class="icon-wrapper" aria-hidden="true">
             <mat-icon>phone</mat-icon>
           </div>
           <div class="contact-details">
             <h3>Phone</h3>
-            <p>+91 7447839781</p>
+            <p><a href="tel:+917447839781" aria-label="Call us at +91 7447839781">+91 7447839781</a></p>
           </div>
         </div>
 
-        <div class="contact-item">
-          <div class="icon-wrapper">
+        <div class="contact-item" role="listitem">
+          <div class="icon-wrapper" aria-hidden="true">
             <mat-icon>location_on</mat-icon>
           </div>
           <div class="contact-details">
             <h3>Address</h3>
-            <p>Bharatkunj-2, Kothrud<br>Pune, Maharashtra 411052<br>India</p>
+            <address>Bharatkunj-2, Kothrud<br>Pune, Maharashtra 411052<br>India</address>
           </div>
         </div>
 
-        <div class="contact-item">
-          <div class="icon-wrapper">
+        <div class="contact-item" role="listitem">
+          <div class="icon-wrapper" aria-hidden="true">
             <mat-icon>schedule</mat-icon>
           </div>
           <div class="contact-details">
@@ -110,20 +138,20 @@
 
       <div class="social-section">
         <h3>Follow Us</h3>
-        <div class="social-links">
-          <a href="https://facebook.com" target="_blank" rel="noopener" mat-icon-button class="social-btn">
-            <mat-icon>facebook</mat-icon>
+        <nav class="social-links" aria-label="Social media links">
+          <a href="https://facebook.com" target="_blank" rel="noopener" mat-icon-button class="social-btn" aria-label="Visit our Facebook page">
+            <mat-icon aria-hidden="true">facebook</mat-icon>
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener" mat-icon-button class="social-btn">
-            <mat-icon>twitter</mat-icon>
+          <a href="https://twitter.com" target="_blank" rel="noopener" mat-icon-button class="social-btn" aria-label="Visit our Twitter page">
+            <mat-icon aria-hidden="true">twitter</mat-icon>
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" mat-icon-button class="social-btn">
-            <mat-icon>linkedin</mat-icon>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" mat-icon-button class="social-btn" aria-label="Visit our LinkedIn page">
+            <mat-icon aria-hidden="true">linkedin</mat-icon>
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener" mat-icon-button class="social-btn">
-            <mat-icon>instagram</mat-icon>
+          <a href="https://instagram.com" target="_blank" rel="noopener" mat-icon-button class="social-btn" aria-label="Visit our Instagram page">
+            <mat-icon aria-hidden="true">instagram</mat-icon>
           </a>
-        </div>
+        </nav>
       </div>
     </mat-card>
   </div>
