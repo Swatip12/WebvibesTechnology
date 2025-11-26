@@ -1449,7 +1449,281 @@ mat-nav-list a:focus-visible {
 .feature-card-glass:focus-within {
   outline: 3px solid var(--primary-color);
   outline-offset: 2px;
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+}
+
+/* ========================================
+   CROSS-BROWSER COMPATIBILITY FIXES
+   ======================================== */
+
+/* Safari-specific fixes for backdrop-filter */
+@supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
+  .hero-glass,
+  .filter-glass-bar,
+  .stats-glow-container,
+  .feature-card-glass,
+  .testimonial-card,
+  .cta-section,
+  .filters-card,
+  .internship-card,
+  .course-card-glow,
+  .card-glass-content,
+  .search-glass-wrapper,
+  .filter-glass-field .mat-mdc-text-field-wrapper {
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  
+  .hero-glass,
+  .filter-glass-bar {
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* Fallback for browsers without backdrop-filter support */
+@supports not ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+  .hero-glass,
+  .filter-glass-bar,
+  .stats-glow-container,
+  .feature-card-glass,
+  .testimonial-card,
+  .cta-section,
+  .filters-card,
+  .internship-card,
+  .course-card-glow,
+  .card-glass-content {
+    background: rgba(26, 31, 58, 0.95);
+  }
+}
+
+/* Safari-specific fixes for gradient text */
+.hero-title-gradient,
+.section-title-gradient,
+.cta-title,
+.stat-number-glow {
+  background: linear-gradient(135deg, #ffffff 0%, #667eea 50%, #f093fb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+/* Firefox-specific mask-composite fix */
+@-moz-document url-prefix() {
+  .card-border-gradient {
+    -moz-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -moz-mask-composite: exclude;
+  }
+}
+
+/* Safari smooth scrolling fix */
+@supports (-webkit-overflow-scrolling: touch) {
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Edge-specific fixes (if needed) */
+@supports (-ms-ime-align: auto) {
+  /* Edge-specific styles if needed */
+}
+
+/* Chrome/Safari transform optimization */
+@supports (transform: translateZ(0)) {
+  .hover-lift,
+  .hover-scale,
+  .hover-grow,
+  .internship-card,
+  .course-card-glow,
+  .feature-card-glass {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+}
+
+/* Firefox animation performance optimization */
+@-moz-document url-prefix() {
+  .fade-in-up,
+  .fade-in,
+  .slide-in,
+  .slide-in-right,
+  .scale-in {
+    will-change: opacity, transform;
+  }
+  
+  .gradient-orb {
+    will-change: transform;
+  }
+}
+
+/* Safari iOS fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific fixes */
+  input,
+  textarea,
+  select {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+  }
+  
+  button {
+    -webkit-appearance: none;
+  }
+  
+  /* Fix for iOS Safari viewport height */
+  .home-dark,
+  .internships-container,
+  .courses-page-dark {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Prevent text size adjustment on orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Fix for Safari flexbox bugs */
+@supports (-webkit-appearance: none) {
+  .hero-actions-glow,
+  .cta-actions,
+  .stats-glow-container,
+  .filter-container-glass {
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+  }
+}
+
+/* Smooth font rendering across browsers */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Fix for Firefox button padding */
+@-moz-document url-prefix() {
+  button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+/* Fix for Safari button appearance */
+button,
+input[type="button"],
+input[type="submit"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Cross-browser box-sizing */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Fix for IE11 (if minimal support needed) */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /* IE11 specific fixes */
+  .feature-cards-glow,
+  .courses-grid-glow,
+  .internships-grid {
+    display: -ms-flexbox;
+    -ms-flex-wrap: wrap;
+  }
+}
+
+/* Ensure animations work in all browsers */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    -webkit-transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float-orb {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    -webkit-transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(50px, -50px) scale(1.1);
+    -webkit-transform: translate(50px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-50px, 50px) scale(0.9);
+    -webkit-transform: translate(-50px, 50px) scale(0.9);
+  }
+}
+
+/* Ensure will-change is properly supported */
+@supports (will-change: transform) {
+  .fade-in-up,
+  .fade-in,
+  .slide-in,
+  .slide-in-right,
+  .scale-in,
+  .hover-lift,
+  .hover-scale,
+  .hover-grow {
+    will-change: transform, opacity;
+  }
+  
+  .gradient-orb {
+    will-change: transform;
+  }
+  
+  .skeleton {
+    will-change: background-position;
+  }
+}
+
+/* Print styles */
+@media print {
+  .animated-bg,
+  .gradient-orb,
+  .hero-glass::before,
+  .hero-overlay {
+    display: none !important;
+  }
+  
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
 }
 
 /* Ensure interactive cards are keyboard accessible */

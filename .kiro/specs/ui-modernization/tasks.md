@@ -266,7 +266,9 @@
   - Run Lighthouse performance audit
   - _Requirements: 3.4, 6.1_
 
-- [-] 15. Cross-browser testing
+- [x] 15. Cross-browser testing
+
+
 
 
 
