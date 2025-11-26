@@ -55,7 +55,7 @@
                  role="listitem">
           <div class="timeline-content">
             <mat-card class="step-card">
-              <div class="step-number-badge" aria-label="Step {{ step.number }}">{{ step.number }}</div>
+              <div class="step-number-badge" [attr.aria-label]="'Step ' + step.number">{{ step.number }}</div>
               
               <!-- Step Image -->
               <div class="step-image-wrapper">

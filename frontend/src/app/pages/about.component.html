@@ -148,7 +148,7 @@
                             <mat-icon aria-hidden="true">email</mat-icon>
                             <div>
                                 <h4>Email</h4>
-                                <p><a href="mailto:{{ contactInfo.email }}" aria-label="Send email to {{ contactInfo.email }}">{{ contactInfo.email }}</a></p>
+                                <p><a href="mailto:{{ contactInfo.email }}" [attr.aria-label]="'Send email to ' + contactInfo.email">{{ contactInfo.email }}</a></p>
                             </div>
                         </div>
 
@@ -156,7 +156,7 @@
                             <mat-icon aria-hidden="true">phone</mat-icon>
                             <div>
                                 <h4>Phone</h4>
-                                <p><a href="tel:{{ contactInfo.phone }}" aria-label="Call {{ contactInfo.phone }}">{{ contactInfo.phone }}</a></p>
+                                <p><a href="tel:{{ contactInfo.phone }}" [attr.aria-label]="'Call ' + contactInfo.phone">{{ contactInfo.phone }}</a></p>
                             </div>
                         </div>
 

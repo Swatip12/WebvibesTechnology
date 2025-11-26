@@ -23,7 +23,7 @@
       <!-- Stats with Glow Effect -->
       <div class="stats-glow-container" role="list" aria-label="Course statistics">
         <div class="stat-glow-item" role="listitem">
-          <div class="stat-number-glow" aria-label="{{filteredData.length}} plus active courses">{{filteredData.length}}+</div>
+          <div class="stat-number-glow" [attr.aria-label]="filteredData.length + ' plus active courses'">{{filteredData.length}}+</div>
           <div class="stat-label-glow">Active Courses</div>
         </div>
         <div class="stat-divider-glow" aria-hidden="true"></div>

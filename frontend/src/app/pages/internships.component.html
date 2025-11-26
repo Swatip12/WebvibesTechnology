@@ -14,21 +14,21 @@
         <div class="stat-item" role="listitem">
           <mat-icon aria-hidden="true">business_center</mat-icon>
           <div class="stat-content">
-            <span class="stat-number" aria-label="{{data.length}} open positions">{{data.length}}</span>
+            <span class="stat-number" [attr.aria-label]="data.length + ' open positions'">{{data.length}}</span>
             <span class="stat-label">Open Positions</span>
           </div>
         </div>
         <div class="stat-item" role="listitem">
           <mat-icon aria-hidden="true">location_city</mat-icon>
           <div class="stat-content">
-            <span class="stat-number" aria-label="{{locations.length}} locations">{{locations.length}}</span>
+            <span class="stat-number" [attr.aria-label]="locations.length + ' locations'">{{locations.length}}</span>
             <span class="stat-label">Locations</span>
           </div>
         </div>
         <div class="stat-item" role="listitem">
           <mat-icon aria-hidden="true">category</mat-icon>
           <div class="stat-content">
-            <span class="stat-number" aria-label="{{departments.length}} departments">{{departments.length}}</span>
+            <span class="stat-number" [attr.aria-label]="departments.length + ' departments'">{{departments.length}}</span>
             <span class="stat-label">Departments</span>
           </div>
         </div>

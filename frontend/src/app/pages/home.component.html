@@ -42,7 +42,7 @@
         <div class="stat-icon-wrapper">
           <mat-icon aria-hidden="true">work_outline</mat-icon>
         </div>
-        <div class="stat-number-glow" aria-label="{{ activeInternshipsCount }} plus active internships">{{ activeInternshipsCount }}+</div>
+        <div class="stat-number-glow" [attr.aria-label]="activeInternshipsCount + ' plus active internships'">{{ activeInternshipsCount }}+</div>
         <div class="stat-label-glow">Active Internships</div>
       </div>
       
@@ -52,7 +52,7 @@
         <div class="stat-icon-wrapper">
           <mat-icon aria-hidden="true">school</mat-icon>
         </div>
-        <div class="stat-number-glow" aria-label="{{ activeCoursesCount }} plus available courses">{{ activeCoursesCount }}+</div>
+        <div class="stat-number-glow" [attr.aria-label]="activeCoursesCount + ' plus available courses'">{{ activeCoursesCount }}+</div>
         <div class="stat-label-glow">Available Courses</div>
       </div>
       
