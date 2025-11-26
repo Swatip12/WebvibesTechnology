@@ -147,6 +147,12 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
           const delay = entry.target.getAttribute('data-delay') || '0';
           setTimeout(() => {
             entry.target.classList.add('visible');
+            
+            // Remove will-change after animation completes for better performance
+            const element = entry.target as HTMLElement;
+            element.addEventListener('transitionend', () => {
+              element.style.willChange = 'auto';
+            }, { once: true });
           }, parseInt(delay));
           this.observer?.unobserve(entry.target);
         }

@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { InternshipsService } from '../core/api/internships.service';
 import { CoursesService } from '../core/api/courses.service';
 import { LazyImageDirective } from '../core/directives/lazy-image.directive';
+import { optimizeAnimations } from '../core/utils/performance.utils';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loadStatistics();
+    // Optimize animations based on device performance
+    optimizeAnimations();
   }
 
   ngAfterViewInit(): void {
@@ -59,6 +62,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('animate-in');
+          
+          // Remove will-change after animation completes for better performance
+          const element = entry.target as HTMLElement;
+          element.addEventListener('animationend', () => {
+            element.style.willChange = 'auto';
+          }, { once: true });
+          
           observer.unobserve(entry.target);
         }
       });

@@ -79,6 +79,15 @@ export class InternshipsComponent {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            
+            // Remove will-change after animation completes for better performance
+            const element = entry.target as HTMLElement;
+            element.addEventListener('transitionend', () => {
+              element.style.willChange = 'auto';
+            }, { once: true });
+            
+            // Unobserve after animation to improve performance
+            this.observer?.unobserve(entry.target);
           }
         });
       },

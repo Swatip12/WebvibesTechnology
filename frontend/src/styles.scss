@@ -288,30 +288,37 @@ mat-card {
 /* Animation Utility Classes */
 .fade-in {
   animation: fadeIn 0.6s ease-out;
+  will-change: opacity;
 }
 
 .fade-in-up {
   animation: fadeInUp 0.6s ease-out;
+  will-change: opacity, transform;
 }
 
 .slide-in {
   animation: slideIn 0.6s ease-out;
+  will-change: opacity, transform;
 }
 
 .slide-in-right {
   animation: slideInRight 0.6s ease-out;
+  will-change: opacity, transform;
 }
 
 .scale-in {
   animation: scaleIn 0.4s var(--transition-ease);
+  will-change: opacity, transform;
 }
 
 .pulse {
   animation: pulse 2s ease-in-out infinite;
+  will-change: opacity;
 }
 
 .bounce {
   animation: bounce 1s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* Animation Delays for Staggered Effects */
@@ -330,6 +337,15 @@ mat-card {
   animation-fill-mode: both;
 }
 
+/* Remove will-change after animation completes for better performance */
+.fade-in-up.animation-complete,
+.fade-in.animation-complete,
+.slide-in.animation-complete,
+.slide-in-right.animation-complete,
+.scale-in.animation-complete {
+  will-change: auto;
+}
+
 /* Hover Animations */
 .hover-lift {
   transition: transform var(--transition-speed) var(--transition-ease),
@@ -338,6 +354,11 @@ mat-card {
   &:hover {
     transform: translateY(-4px);
     box-shadow: var(--card-shadow-hover);
+    will-change: transform, box-shadow;
+  }
+  
+  &:not(:hover) {
+    will-change: auto;
   }
 }
 
@@ -346,6 +367,11 @@ mat-card {
   
   &:hover {
     transform: scale(1.05);
+    will-change: transform;
+  }
+  
+  &:not(:hover) {
+    will-change: auto;
   }
 }
 
@@ -354,6 +380,11 @@ mat-card {
   
   &:hover {
     transform: scale(1.1);
+    will-change: transform;
+  }
+  
+  &:not(:hover) {
+    will-change: auto;
   }
 }
 
@@ -368,6 +399,7 @@ mat-card {
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: var(--radius-md);
+  will-change: background-position;
 }
 
 .skeleton-card {
@@ -911,6 +943,7 @@ mat-card {
   
   &:hover {
     transform: translateY(-4px);
+    will-change: transform, box-shadow;
     
     mat-icon {
       transform: scale(1.05);
@@ -919,6 +952,10 @@ mat-card {
   
   &:active {
     transform: translateY(-2px);
+  }
+  
+  &:not(:hover) {
+    will-change: auto;
   }
 }
 
@@ -1429,6 +1466,44 @@ mat-card[tabindex] {
 *:focus-visible {
   outline: 3px solid var(--primary-color);
   outline-offset: 2px;
+}
+
+/* Low Performance Device Optimizations */
+.low-performance {
+  /* Disable complex animations */
+  .gradient-orb {
+    animation: none !important;
+    opacity: 0.1 !important;
+  }
+  
+  /* Simplify hover effects */
+  .hover-lift:hover,
+  .hover-scale:hover,
+  .hover-grow:hover {
+    transform: none !important;
+  }
+  
+  /* Disable shimmer animations */
+  .skeleton {
+    animation: none !important;
+    background: #f0f0f0 !important;
+  }
+  
+  /* Reduce backdrop blur */
+  .hero-glass,
+  .filter-glass-bar,
+  .course-card-glow,
+  .internship-card,
+  .feature-card-glass {
+    backdrop-filter: none !important;
+  }
+  
+  /* Disable gradient animations */
+  .hero-title-gradient {
+    animation: fadeInUp 0.3s ease-out !important;
+    background: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+  }
 }
 
 /* Print Styles */
