@@ -19,6 +19,9 @@ import { optimizeAnimations } from '../core/utils/performance.utils';
 export class HomeComponent implements OnInit, AfterViewInit {
   activeInternshipsCount = 0;
   activeCoursesCount = 0;
+  displayedInternshipsCount = 0;
+  displayedCoursesCount = 0;
+  displayedStudentsCount = 0;
 
   constructor(
     private internshipsService: InternshipsService,
@@ -34,12 +37,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.setupScrollAnimations();
+    this.setupStatCounterAnimations();
   }
 
   private loadStatistics(): void {
     this.internshipsService.listActive().subscribe({
       next: (internships) => {
         this.activeInternshipsCount = internships.length;
+        this.animateCounter('internships', this.activeInternshipsCount);
       },
       error: (err) => console.error('Error loading internships:', err)
     });
@@ -47,9 +52,61 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.coursesService.listActive().subscribe({
       next: (courses) => {
         this.activeCoursesCount = courses.length;
+        this.animateCounter('courses', this.activeCoursesCount);
       },
       error: (err) => console.error('Error loading courses:', err)
     });
+  }
+
+  private setupStatCounterAnimations(): void {
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Animate students count when stats section is visible
+          this.animateCounter('students', 5000);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const statsSection = this.elementRef.nativeElement.querySelector('.stats-glow-section');
+    if (statsSection) {
+      observer.observe(statsSection);
+    }
+  }
+
+  private animateCounter(type: 'internships' | 'courses' | 'students', targetValue: number): void {
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const increment = targetValue / steps;
+    const stepDuration = duration / steps;
+    let currentStep = 0;
+
+    const timer = setInterval(() => {
+      currentStep++;
+      const currentValue = Math.min(Math.floor(increment * currentStep), targetValue);
+      
+      switch(type) {
+        case 'internships':
+          this.displayedInternshipsCount = currentValue;
+          break;
+        case 'courses':
+          this.displayedCoursesCount = currentValue;
+          break;
+        case 'students':
+          this.displayedStudentsCount = currentValue;
+          break;
+      }
+
+      if (currentStep >= steps) {
+        clearInterval(timer);
+      }
+    }, stepDuration);
   }
 
   private setupScrollAnimations(): void {

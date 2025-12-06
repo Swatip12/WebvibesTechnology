@@ -8,6 +8,7 @@
 
   <!-- Hero Section -->
   <section class="hero-glass" role="banner" aria-label="Welcome section">
+    <div class="hero-particles" aria-hidden="true"></div>
     <div class="hero-content-wrapper">
       <div class="hero-badge-glow fade-in-up">
         <mat-icon aria-hidden="true">rocket_launch</mat-icon>
@@ -33,6 +34,9 @@
         </a>
       </div>
     </div>
+    <div class="hero-scroll-indicator fade-in-up stagger-4" aria-hidden="true">
+      <mat-icon>keyboard_arrow_down</mat-icon>
+    </div>
   </section>
 
   <!-- Statistics -->
@@ -42,7 +46,7 @@
         <div class="stat-icon-wrapper">
           <mat-icon aria-hidden="true">work_outline</mat-icon>
         </div>
-        <div class="stat-number-glow" [attr.aria-label]="activeInternshipsCount + ' plus active internships'">{{ activeInternshipsCount }}+</div>
+        <div class="stat-number-glow" [attr.aria-label]="displayedInternshipsCount + ' plus active internships'">{{ displayedInternshipsCount }}+</div>
         <div class="stat-label-glow">Active Internships</div>
       </div>
       
@@ -52,7 +56,7 @@
         <div class="stat-icon-wrapper">
           <mat-icon aria-hidden="true">school</mat-icon>
         </div>
-        <div class="stat-number-glow" [attr.aria-label]="activeCoursesCount + ' plus available courses'">{{ activeCoursesCount }}+</div>
+        <div class="stat-number-glow" [attr.aria-label]="displayedCoursesCount + ' plus available courses'">{{ displayedCoursesCount }}+</div>
         <div class="stat-label-glow">Available Courses</div>
       </div>
       
@@ -62,7 +66,7 @@
         <div class="stat-icon-wrapper">
           <mat-icon aria-hidden="true">people</mat-icon>
         </div>
-        <div class="stat-number-glow" aria-label="Over 5000 happy students">5K+</div>
+        <div class="stat-number-glow" [attr.aria-label]="displayedStudentsCount + ' plus happy students'">{{ displayedStudentsCount > 0 ? (displayedStudentsCount / 1000).toFixed(1) + 'K' : '0' }}+</div>
         <div class="stat-label-glow">Happy Students</div>
       </div>
     </div>

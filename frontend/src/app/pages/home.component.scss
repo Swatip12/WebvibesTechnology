@@ -104,6 +104,11 @@ $text-muted: #a0aec0;
   z-index: 1;
   padding: 140px 24px 120px;
   text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background: 
     linear-gradient(135deg, rgba(10, 14, 26, 0.95) 0%, rgba(26, 31, 58, 0.9) 50%, rgba(10, 14, 26, 0.95) 100%),
     url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1920&q=80');
@@ -130,6 +135,90 @@ $text-muted: #a0aec0;
 @keyframes hero-pulse {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 0.8; }
+}
+
+// Hero particles effect
+.hero-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(102, 126, 234, 0.6);
+    border-radius: 50%;
+    box-shadow: 
+      0 0 10px rgba(102, 126, 234, 0.8),
+      100px 200px 0 rgba(240, 147, 251, 0.6),
+      200px 100px 0 rgba(79, 172, 254, 0.6),
+      300px 300px 0 rgba(102, 126, 234, 0.6),
+      400px 150px 0 rgba(240, 147, 251, 0.6),
+      500px 250px 0 rgba(79, 172, 254, 0.6),
+      150px 350px 0 rgba(102, 126, 234, 0.6),
+      250px 50px 0 rgba(240, 147, 251, 0.6);
+    animation: particles-float 20s linear infinite;
+  }
+  
+  &::after {
+    animation-delay: 10s;
+    animation-duration: 25s;
+  }
+}
+
+@keyframes particles-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(50px);
+    opacity: 0;
+  }
+}
+
+// Scroll indicator
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce-arrow 2s ease-in-out infinite;
+  cursor: pointer;
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: rgba(255, 255, 255, 0.6);
+    filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+  }
+  
+  &:hover mat-icon {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(10px);
+  }
 }
 
 .hero-content-wrapper {
