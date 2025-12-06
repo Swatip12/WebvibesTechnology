@@ -42,6 +42,7 @@
 
 
 
+
   - Update hero section with new styling and animations
   - Enhance statistics section with modern cards
   - Redesign features section with improved layout
