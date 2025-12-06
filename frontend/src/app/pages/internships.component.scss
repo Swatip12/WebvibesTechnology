@@ -332,6 +332,7 @@ $text-muted: #cbd5e1;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  cursor: pointer;
 
   &.scroll-animate {
     opacity: 0;
@@ -345,6 +346,7 @@ $text-muted: #cbd5e1;
     }
   }
 
+  // Animated gradient border on hover
   &::before {
     content: '';
     position: absolute;
@@ -365,6 +367,22 @@ $text-muted: #cbd5e1;
     z-index: 1;
   }
 
+  // Glow effect on hover
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(102, 126, 234, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
   &:hover {
     transform: translateY(-12px) scale(1.02);
     box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4) !important;
@@ -372,6 +390,11 @@ $text-muted: #cbd5e1;
 
     &::before {
       opacity: 1;
+    }
+
+    &::after {
+      width: 300px;
+      height: 300px;
     }
 
     .card-avatar {
@@ -385,10 +408,29 @@ $text-muted: #cbd5e1;
     .card-image-overlay {
       background: linear-gradient(180deg, rgba(10, 14, 39, 0.5) 0%, rgba(102, 126, 234, 0.7) 100%);
     }
+
+    .card-badge {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.8);
+    }
+
+    .info-item {
+      transform: translateX(4px);
+    }
+
+    .apply-button {
+      transform: translateY(-2px) scale(1.05);
+    }
   }
   
   &:not(:hover) {
     will-change: auto;
+  }
+
+  // Focus state for accessibility
+  &:focus-within {
+    outline: 2px solid rgba(102, 126, 234, 0.6);
+    outline-offset: 4px;
   }
 }
 
@@ -413,6 +455,23 @@ $text-muted: #cbd5e1;
   transition: transform 0.4s ease;
   overflow: hidden;
   will-change: transform;
+
+  // Animated gradient overlay on top
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+    z-index: 1;
+  }
+}
+
+.internship-card:hover .card-image-header::before {
+  left: 100%;
 }
 
 .card-image-overlay {
@@ -423,6 +482,7 @@ $text-muted: #cbd5e1;
   bottom: 0;
   background: linear-gradient(180deg, rgba(10, 14, 39, 0.3) 0%, rgba(10, 14, 39, 0.8) 100%);
   transition: background 0.4s ease;
+  z-index: 0;
 }
 
 .card-badge {
@@ -441,11 +501,32 @@ $text-muted: #cbd5e1;
   z-index: 2;
   box-shadow: 0 4px 16px rgba(102, 126, 234, 0.6);
   backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  animation: pulse-badge 2s ease-in-out infinite;
 
   mat-icon {
     font-size: 16px;
     width: 16px;
     height: 16px;
+    animation: rotate-icon 3s linear infinite;
+  }
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.6);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.8);
+  }
+}
+
+@keyframes rotate-icon {
+  0%, 90%, 100% {
+    transform: rotate(0deg);
+  }
+  95% {
+    transform: rotate(360deg);
   }
 }
 
@@ -472,6 +553,17 @@ mat-card-title {
   font-weight: 700 !important;
   color: $text-light !important;
   margin-bottom: 8px !important;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, $text-light 0%, rgba(102, 126, 234, 0.9) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 100%;
+  background-position: 0% 50%;
+}
+
+.internship-card:hover mat-card-title {
+  background-position: 100% 50%;
 }
 
 mat-card-subtitle {
@@ -480,12 +572,23 @@ mat-card-subtitle {
   gap: 6px;
   color: $text-muted !important;
   font-size: 0.95rem !important;
+  transition: all 0.3s ease;
 
   .subtitle-icon {
     font-size: 18px;
     width: 18px;
     height: 18px;
     color: rgba(102, 126, 234, 0.8);
+    transition: all 0.3s ease;
+  }
+}
+
+.internship-card:hover mat-card-subtitle {
+  color: rgba(255, 255, 255, 0.95) !important;
+
+  .subtitle-icon {
+    color: #667eea;
+    transform: rotate(360deg);
   }
 }
 
@@ -510,11 +613,35 @@ mat-card-content {
   border-radius: 12px;
   font-size: 0.9rem;
   color: $text-light;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  // Shimmer effect on hover
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
 
   &:hover {
     background: rgba(102, 126, 234, 0.15);
     transform: translateY(-2px);
+    border-color: rgba(102, 126, 234, 0.4);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+
+    &::before {
+      left: 100%;
+    }
+
+    mat-icon {
+      transform: scale(1.15);
+    }
   }
 
   mat-icon {
@@ -522,6 +649,7 @@ mat-card-content {
     width: 20px;
     height: 20px;
     color: #667eea;
+    transition: transform 0.3s ease;
   }
 }
 
@@ -534,6 +662,25 @@ mat-card-content {
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+
+  // Fade out effect at the bottom
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, $dark-card);
+    pointer-events: none;
+  }
+}
+
+// Enhanced description on card hover
+.internship-card:hover .description {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 mat-card-actions {
@@ -543,6 +690,29 @@ mat-card-actions {
   align-items: center;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+
+  // Gradient line on hover
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: $primary-gradient;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+}
+
+.internship-card:hover mat-card-actions {
+  background: rgba(102, 126, 234, 0.05);
+
+  &::before {
+    transform: scaleX(1);
+  }
 }
 
 .apply-button {
@@ -553,22 +723,86 @@ mat-card-actions {
   background: $primary-gradient !important;
   color: white !important;
   box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4) !important;
-  transition: all 0.3s ease !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+
+  // Shine effect
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.6) !important;
+
+    &::before {
+      left: 100%;
+    }
+
+    mat-icon {
+      transform: translateX(4px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4) !important;
+  }
+
+  mat-icon {
+    transition: transform 0.3s ease;
   }
 }
 
 ::ng-deep .internship-card {
   mat-icon-button {
     color: $text-muted !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(102, 126, 234, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease;
+    }
     
     &:hover {
       background: rgba(102, 126, 234, 0.15) !important;
       color: #667eea !important;
+
+      &::before {
+        width: 100%;
+        height: 100%;
+      }
+
+      mat-icon {
+        animation: spin 0.6s ease-in-out;
+      }
     }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -584,9 +818,38 @@ mat-card-actions {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: fadeInUp 0.6s ease-out;
+
+  // Animated background gradient
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+    border-radius: 24px;
+    animation: pulse-glow 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
 }
 
 .empty-icon {
+  position: relative;
+  z-index: 1;
+
   mat-icon {
     font-size: 100px;
     width: 100px;
@@ -597,10 +860,22 @@ mat-card-actions {
     background-clip: text;
     margin-bottom: 32px;
     opacity: 0.6;
+    animation: float-icon 3s ease-in-out infinite;
+  }
+}
+
+@keyframes float-icon {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
 .empty-state h2 {
+  position: relative;
+  z-index: 1;
   font-size: 2rem;
   font-weight: 700;
   background: linear-gradient(135deg, #ffffff 0%, #667eea 100%);
@@ -611,6 +886,8 @@ mat-card-actions {
 }
 
 .empty-state p {
+  position: relative;
+  z-index: 1;
   font-size: 1.15rem;
   color: $text-muted;
   margin: 0 0 32px 0;
@@ -618,6 +895,8 @@ mat-card-actions {
 }
 
 .empty-state button {
+  position: relative;
+  z-index: 1;
   border-radius: 14px !important;
   font-weight: 600 !important;
   padding: 0 32px !important;
@@ -626,11 +905,93 @@ mat-card-actions {
   color: white !important;
   box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4) !important;
   transition: all 0.3s ease !important;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+  }
 
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
   }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+}
+
+// Enhanced Skeleton Styles
+.skeleton-internship-card {
+  background: $dark-card;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease-out;
+
+  .skeleton-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(90deg,
+      rgba(102, 126, 234, 0.1) 25%,
+      rgba(102, 126, 234, 0.2) 50%,
+      rgba(102, 126, 234, 0.1) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .skeleton-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 2;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.05) 25%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.05) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+// Screen reader only class
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 // Responsive Design
@@ -748,6 +1109,10 @@ mat-card-actions {
     margin-bottom: 24px;
   }
 
+  .hero-stats {
+    gap: 12px;
+  }
+
   .stat-item {
     padding: 16px 24px;
 
@@ -766,12 +1131,48 @@ mat-card-actions {
     height: 160px;
   }
 
+  .internship-card {
+    // Reduce hover effects on mobile for better performance
+    &:hover {
+      transform: translateY(-6px) scale(1.01);
+    }
+  }
+
+  mat-card-title {
+    font-size: 1.15rem !important;
+  }
+
+  mat-card-subtitle {
+    font-size: 0.85rem !important;
+  }
+
+  .info-grid {
+    gap: 8px;
+  }
+
+  .info-item {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
   mat-card-actions {
     flex-direction: column;
     gap: 12px;
+    padding: 16px !important;
 
     .apply-button {
       width: 100%;
+      height: 44px !important;
+    }
+
+    ::ng-deep mat-icon-button {
+      align-self: center;
     }
   }
 
@@ -781,5 +1182,11 @@ mat-card-actions {
 
   .empty-state h2 {
     font-size: 1.5rem;
+  }
+
+  .empty-icon mat-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
   }
 }

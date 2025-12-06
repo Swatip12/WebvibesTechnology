@@ -57,6 +57,7 @@
 
 
 
+
   - Update course card layout with modern design
   - Add hover effects to course cards
   - Enhance course details display
@@ -64,7 +65,12 @@
   - Ensure responsive layout
   - _Requirements: 1.1, 1.2, 5.1, 5.2, 5.3, 5.4, 5.5_
 
-- [ ] 6. Redesign Internships Page
+- [x] 6. Redesign Internships Page
+
+
+
+
+
   - Update internship card layout with modern design
   - Add hover effects to internship cards
   - Enhance internship details display

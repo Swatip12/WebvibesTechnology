@@ -84,8 +84,9 @@
   </mat-card>
 
   <!-- Skeleton Loaders -->
-  <div class="internships-grid" *ngIf="isLoading">
-    <div *ngFor="let i of [1,2,3,4,5,6]" class="skeleton-card skeleton-internship-card">
+  <div class="internships-grid" *ngIf="isLoading" role="status" aria-label="Loading internships">
+    <div *ngFor="let i of [1,2,3,4,5,6]" class="skeleton-card skeleton-internship-card" [style.animation-delay.ms]="i * 100">
+      <div class="skeleton-image skeleton"></div>
       <div class="skeleton-badge"></div>
       <div class="skeleton-header">
         <div class="skeleton-avatar skeleton"></div>
@@ -107,6 +108,7 @@
         <div class="skeleton-icon skeleton"></div>
       </div>
     </div>
+    <span class="sr-only">Loading internship opportunities...</span>
   </div>
 
   <!-- Internships Grid -->
