@@ -43,6 +43,7 @@ export class CoursesComponent implements OnInit, OnDestroy {
   isLoading: boolean = true;
   selectedDuration: string = 'all';
   selectedCategory: string = 'all';
+  searchQuery: string = '';
   private wsSubscription?: Subscription;
 
   durationOptions = [
@@ -111,7 +112,11 @@ export class CoursesComponent implements OnInit, OnDestroy {
     this.filteredData = this.data.filter(course => {
       const durationMatch = this.selectedDuration === 'all' || course.duration === this.selectedDuration;
       const categoryMatch = this.selectedCategory === 'all' || course.category === this.selectedCategory;
-      return durationMatch && categoryMatch;
+      const searchMatch = !this.searchQuery || 
+        course.title?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        course.description?.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        course.instructor?.toLowerCase().includes(this.searchQuery.toLowerCase());
+      return durationMatch && categoryMatch && searchMatch;
     });
 
     // Trigger re-animation if filter changed
@@ -121,6 +126,17 @@ export class CoursesComponent implements OnInit, OnDestroy {
   }
 
   onFilterChange() {
+    this.applyFilters();
+  }
+
+  onSearchChange() {
+    this.applyFilters();
+  }
+
+  resetFilters() {
+    this.selectedCategory = 'all';
+    this.selectedDuration = 'all';
+    this.searchQuery = '';
     this.applyFilters();
   }
 

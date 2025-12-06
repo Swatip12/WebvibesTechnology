@@ -45,7 +45,7 @@
     <div class="filter-container-glass">
       <div class="search-glass-wrapper">
         <mat-icon class="search-icon-glow" aria-hidden="true">search</mat-icon>
-        <input type="text" placeholder="Search courses..." class="search-input-glass" aria-label="Search courses by name or description">
+        <input type="text" placeholder="Search courses..." class="search-input-glass" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange()" aria-label="Search courses by name or description">
       </div>
       
       <mat-form-field appearance="outline" class="filter-glass-field">
@@ -158,7 +158,7 @@
       </div>
       <h3>No Courses Found</h3>
       <p>Try adjusting your filters to discover more courses</p>
-      <button mat-raised-button (click)="selectedCategory='all'; selectedDuration='all'; onFilterChange()" class="reset-btn-gradient" aria-label="Reset all filters to show all courses">
+      <button mat-raised-button (click)="resetFilters()" class="reset-btn-gradient" aria-label="Reset all filters to show all courses">
         <mat-icon aria-hidden="true">refresh</mat-icon>
         <span>Reset Filters</span>
       </button>

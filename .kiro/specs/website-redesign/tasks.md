@@ -51,7 +51,12 @@
   - Redesign CTA section with new effects
   - _Requirements: 1.1, 1.2, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6_
 
-- [ ] 5. Redesign Courses Page
+- [x] 5. Redesign Courses Page
+
+
+
+
+
   - Update course card layout with modern design
   - Add hover effects to course cards
   - Enhance course details display
