@@ -24,6 +24,10 @@
         <mat-icon matListItemIcon aria-hidden="true">timeline</mat-icon>
         <span matListItemTitle>Training Process</span>
       </a>
+      <a mat-list-item routerLink="/internship-entrance" routerLinkActive="active" (click)="drawer.close()" aria-label="Navigate to internship entrance page">
+        <mat-icon matListItemIcon aria-hidden="true">login</mat-icon>
+        <span matListItemTitle>Internship Entrance</span>
+      </a>
       <a mat-list-item routerLink="/apply" routerLinkActive="active" (click)="drawer.close()" aria-label="Navigate to application page">
         <mat-icon matListItemIcon aria-hidden="true">send</mat-icon>
         <span matListItemTitle>Apply</span>
@@ -57,6 +61,7 @@
         <a mat-button routerLink="/internships" routerLinkActive="active" aria-label="Browse internships">Internships</a>
         <a mat-button routerLink="/courses" routerLinkActive="active" aria-label="Explore courses">Courses</a>
         <a mat-button routerLink="/training-process" routerLinkActive="active" aria-label="View training process">Training Process</a>
+        <a mat-button routerLink="/internship-entrance" routerLinkActive="active" aria-label="Internship entrance" class="entrance-link">Internship Entrance</a>
         <a mat-button routerLink="/apply" routerLinkActive="active" aria-label="Apply for internship">Apply</a>
         <a mat-button routerLink="/about" routerLinkActive="active" aria-label="About us">About</a>
         <a mat-button routerLink="/contact" routerLinkActive="active" aria-label="Contact us">Contact</a>

@@ -169,6 +169,24 @@ $text-muted: #94A3B8;
         width: 0;
       }
     }
+
+    // Special styling for Internship Entrance link
+    &.entrance-link {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      font-weight: 600;
+
+      &:hover {
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.25) 0%, rgba(236, 72, 153, 0.25) 100%);
+        border-color: rgba(102, 126, 234, 0.5);
+        box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+      }
+
+      &.active {
+        background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%) !important;
+        border-color: transparent;
+      }
+    }
   }
 }
 

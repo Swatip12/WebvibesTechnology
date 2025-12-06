@@ -1,0 +1,347 @@
+.entrance-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+}
+
+.entrance-hero {
+  background: var(--primary-gradient);
+  padding: 80px 20px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .badge-wrapper {
+    margin-bottom: 24px;
+  }
+
+  .entrance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 8px 20px;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: float 3s ease-in-out infinite;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.02em;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.form-section {
+  max-width: 800px;
+  margin: -40px auto 0;
+  padding: 0 20px 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.entrance-card {
+  margin-bottom: 40px;
+  border-radius: 24px !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(99, 102, 241, 0.1);
+
+  mat-card-header {
+    padding: 32px 32px 0;
+
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+
+      .title-icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+        color: var(--primary-color);
+      }
+    }
+
+    mat-card-subtitle {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-left: 44px;
+    }
+  }
+
+  mat-card-content {
+    padding: 32px;
+  }
+}
+
+.entrance-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  mat-form-field {
+    width: 100%;
+
+    &.full-width {
+      textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+
+  .submit-button {
+    padding: 16px 48px !important;
+    font-size: 1.125rem !important;
+    border-radius: 50px !important;
+    background: var(--primary-gradient) !important;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+
+    mat-icon {
+      margin-right: 8px;
+    }
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(99, 102, 241, 0.4) !important;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+
+  .info-card {
+    text-align: center;
+    padding: 32px 24px !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(99, 102, 241, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(99, 102, 241, 0.15) !important;
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .info-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      color: var(--primary-color);
+      margin-bottom: 16px;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .entrance-hero {
+    padding: 60px 20px 40px;
+
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.125rem;
+    }
+  }
+
+  .form-section {
+    margin-top: -30px;
+    padding: 0 16px 60px;
+  }
+
+  .entrance-card {
+    mat-card-header {
+      padding: 24px 24px 0;
+
+      mat-card-title {
+        font-size: 1.5rem;
+
+        .title-icon {
+          font-size: 28px;
+          width: 28px;
+          height: 28px;
+        }
+      }
+
+      mat-card-subtitle {
+        margin-left: 40px;
+        font-size: 0.9rem;
+      }
+    }
+
+    mat-card-content {
+      padding: 24px;
+    }
+  }
+
+  .entrance-form {
+    gap: 20px;
+  }
+
+  .form-actions {
+    .submit-button {
+      width: 100%;
+      padding: 14px 32px !important;
+      font-size: 1rem !important;
+    }
+  }
+
+  .info-cards {
+    grid-template-columns: 1fr;
+    gap: 16px;
+
+    .info-card {
+      padding: 24px 20px !important;
+
+      .info-icon {
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+      }
+
+      h3 {
+        font-size: 1.125rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .entrance-hero {
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+    }
+  }
+}
+
+/* Custom Snackbar Styles */
+::ng-deep {
+  .success-snackbar {
+    background-color: var(--success-color) !important;
+    color: white !important;
+
+    .mat-mdc-snack-bar-label {
+      color: white !important;
+    }
+
+    .mat-mdc-button {
+      color: white !important;
+    }
+  }
+
+  .error-snackbar {
+    background-color: #ef4444 !important;
+    color: white !important;
+
+    .mat-mdc-snack-bar-label {
+      color: white !important;
+    }
+
+    .mat-mdc-button {
+      color: white !important;
+    }
+  }
+}
