@@ -99,6 +99,21 @@ $text-muted: #cbd5e1;
     position: relative;
     z-index: 1;
 
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: white;
+      background: rgba(102, 126, 234, 0.3);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(102, 126, 234, 0.5);
+      padding: 8px 24px;
+      border-radius: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
     h1 {
       font-size: 4rem;
       font-weight: 800;
@@ -123,11 +138,67 @@ $text-muted: #cbd5e1;
       font-size: 1.15rem;
       font-weight: 400;
       line-height: 1.8;
-      margin: 0;
+      margin: 0 0 48px 0;
       color: $text-muted;
       max-width: 800px;
-      margin: 0 auto;
+      margin-left: auto;
+      margin-right: auto;
       text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      margin-top: 48px;
+
+      .stat-item {
+        text-align: center;
+        padding: 24px;
+        background: rgba(102, 126, 234, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        border-radius: 20px;
+        min-width: 140px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-8px);
+          background: rgba(102, 126, 234, 0.2);
+          border-color: rgba(102, 126, 234, 0.5);
+          box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4);
+
+          mat-icon {
+            transform: scale(1.2) rotate(360deg);
+          }
+        }
+
+        mat-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          color: #667eea;
+          margin-bottom: 12px;
+          transition: all 0.6s ease;
+        }
+
+        .stat-number {
+          font-size: 2rem;
+          font-weight: 800;
+          background: linear-gradient(135deg, #ffffff 0%, #667eea 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          margin-bottom: 8px;
+        }
+
+        .stat-label {
+          font-size: 0.9rem;
+          color: $text-muted;
+          font-weight: 500;
+        }
+      }
     }
   }
 }
@@ -148,6 +219,28 @@ $text-muted: #cbd5e1;
   }
   50% {
     background-position: 100% 50%;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 24px rgba(102, 126, 234, 0.6);
+  }
+}
+
+// Fade-in animations
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -200,10 +293,13 @@ section {
 
 // Mission and Vision Section
 .mission-vision-section {
-  .content-wrapper {
+  background: rgba(102, 126, 234, 0.02);
+
+  .mission-vision-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 32px;
+    margin-top: 60px;
   }
 
   mat-card {
@@ -216,6 +312,7 @@ section {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     position: relative;
+    padding: 0 !important;
 
     &::before {
       content: '';
@@ -244,42 +341,48 @@ section {
         opacity: 1;
       }
 
-      mat-icon {
+      .card-icon-wrapper {
         transform: scale(1.1) rotate(5deg);
+        background: $primary-gradient;
       }
     }
 
-    mat-card-header {
-      margin-bottom: 24px;
-      padding: 32px 32px 0;
+    .card-icon-wrapper {
+      width: 100%;
+      padding: 48px 32px 24px;
+      background: rgba(102, 126, 234, 0.1);
+      display: flex;
+      justify-content: center;
+      transition: all 0.4s ease;
 
       mat-icon {
-        font-size: 56px;
-        width: 56px;
-        height: 56px;
+        font-size: 72px;
+        width: 72px;
+        height: 72px;
         background: $primary-gradient;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        transition: all 0.3s ease;
-      }
-
-      mat-card-title {
-        font-size: 2rem;
-        font-weight: 700;
-        color: $text-light !important;
-        margin-top: 16px;
       }
     }
 
     mat-card-content {
-      padding: 0 32px 32px;
+      padding: 32px;
+
+      h3 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $text-light;
+        margin: 0 0 20px 0;
+        text-align: center;
+      }
 
       p {
         font-size: 1.05rem;
         line-height: 1.9;
         color: $text-muted;
         margin: 0;
+        text-align: center;
       }
     }
   }
@@ -754,6 +857,30 @@ section {
 
     .hero-content .hero-description {
       font-size: 1.05rem;
+      margin-bottom: 32px;
+    }
+
+    .hero-content .hero-stats {
+      gap: 24px;
+
+      .stat-item {
+        min-width: 120px;
+        padding: 20px;
+
+        mat-icon {
+          font-size: 40px;
+          width: 40px;
+          height: 40px;
+        }
+
+        .stat-number {
+          font-size: 1.75rem;
+        }
+
+        .stat-label {
+          font-size: 0.85rem;
+        }
+      }
     }
   }
 
@@ -815,18 +942,32 @@ section {
   }
 
   .mission-vision-section {
-    .content-wrapper {
+    .mission-vision-grid {
       grid-template-columns: 1fr;
       gap: 24px;
     }
 
     mat-card {
-      mat-card-header {
-        padding: 24px 24px 0;
+      .card-icon-wrapper {
+        padding: 40px 24px 20px;
+
+        mat-icon {
+          font-size: 64px;
+          width: 64px;
+          height: 64px;
+        }
       }
 
       mat-card-content {
-        padding: 0 24px 24px;
+        padding: 24px;
+
+        h3 {
+          font-size: 1.75rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
       }
     }
   }
@@ -870,6 +1011,32 @@ section {
 
     .hero-content .hero-description {
       font-size: 1rem;
+      margin-bottom: 28px;
+    }
+
+    .hero-content .hero-stats {
+      gap: 16px;
+      flex-direction: column;
+      align-items: stretch;
+
+      .stat-item {
+        min-width: auto;
+        padding: 16px;
+
+        mat-icon {
+          font-size: 36px;
+          width: 36px;
+          height: 36px;
+        }
+
+        .stat-number {
+          font-size: 1.5rem;
+        }
+
+        .stat-label {
+          font-size: 0.8rem;
+        }
+      }
     }
   }
 
@@ -940,22 +1107,26 @@ section {
   }
 
   .mission-vision-section mat-card {
-    mat-card-header {
-      padding: 20px 20px 0;
+    .card-icon-wrapper {
+      padding: 32px 20px 16px;
 
       mat-icon {
-        font-size: 48px;
-        width: 48px;
-        height: 48px;
-      }
-
-      mat-card-title {
-        font-size: 1.5rem;
+        font-size: 56px;
+        width: 56px;
+        height: 56px;
       }
     }
 
     mat-card-content {
-      padding: 0 20px 20px;
+      padding: 20px;
+
+      h3 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
     }
   }
 

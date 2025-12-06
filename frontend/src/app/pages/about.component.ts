@@ -127,12 +127,25 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.setupScrollAnimations();
+    this.setupHeroAnimations();
   }
 
   ngOnDestroy(): void {
     if (this.observer) {
       this.observer.disconnect();
     }
+  }
+
+  private setupHeroAnimations(): void {
+    // Animate hero elements on load
+    setTimeout(() => {
+      const fadeElements = document.querySelectorAll('.fade-in-up');
+      fadeElements.forEach((el, index) => {
+        setTimeout(() => {
+          el.classList.add('visible');
+        }, index * 150);
+      });
+    }, 100);
   }
 
   private setupScrollAnimations(): void {
