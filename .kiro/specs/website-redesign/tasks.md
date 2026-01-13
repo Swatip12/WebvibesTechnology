@@ -90,11 +90,7 @@
   - Implement responsive design
   - _Requirements: 1.1, 1.2, 7.1, 7.2, 7.3, 7.5_
 
-- [-] 8. Redesign Contact Page
-
-
-
-
+- [x] 8. Redesign Contact Page
 
 
 
@@ -104,7 +100,11 @@
   - Implement form feedback
   - _Requirements: 1.1, 1.2, 8.1, 8.2, 8.3, 8.4, 8.5_
 
-- [ ] 9. Enhance Apply Page
+- [x] 9. Enhance Apply Page
+
+
+
+
   - Update application form styling
   - Improve form layout
   - Add modern visual elements

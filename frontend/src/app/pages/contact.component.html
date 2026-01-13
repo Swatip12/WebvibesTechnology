@@ -19,7 +19,7 @@
       <div class="hero-contact-info fade-in-up stagger-3" role="list" aria-label="Quick contact information">
         <div class="quick-contact-item hover-lift" role="listitem">
           <mat-icon aria-hidden="true">email</mat-icon>
-          <a href="mailto:info@webvibes.co.in" aria-label="Email us at info@webvibes.co.in">info@webvibes.co.in</a>
+          <a href="mailto:info@webvibes.co.in" aria-label="Email us at info@webvibes.co.in">info&#64;webvibes.co.in</a>
         </div>
         <div class="quick-contact-item hover-lift" role="listitem">
           <mat-icon aria-hidden="true">phone</mat-icon>
@@ -74,22 +74,21 @@
             <mat-label>Your Name</mat-label>
             <input matInput formControlName="name" required placeholder="Enter your full name" aria-label="Your full name" aria-required="true" />
             <mat-icon matPrefix aria-hidden="true">person</mat-icon>
-            <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+            <mat-error>{{ nameError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form-field-enhanced">
             <mat-label>Email Address</mat-label>
             <input matInput type="email" formControlName="email" required placeholder="your.email@example.com" aria-label="Your email address" aria-required="true" />
             <mat-icon matPrefix aria-hidden="true">email</mat-icon>
-            <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
-            <mat-error *ngIf="form.get('email')?.hasError('email')">Please enter a valid email address</mat-error>
+            <mat-error>{{ emailError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form-field-enhanced full-width">
             <mat-label>Subject</mat-label>
             <input matInput formControlName="subject" required placeholder="What is this regarding?" aria-label="Message subject" aria-required="true" />
             <mat-icon matPrefix aria-hidden="true">subject</mat-icon>
-            <mat-error *ngIf="form.get('subject')?.hasError('required')">Subject is required</mat-error>
+            <mat-error>{{ subjectError }}</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="form-field-enhanced full-width">
@@ -97,7 +96,7 @@
             <textarea matInput rows="6" formControlName="message" required 
                       placeholder="Tell us more about your inquiry..." aria-label="Your message" aria-required="true"></textarea>
             <mat-icon matPrefix aria-hidden="true">message</mat-icon>
-            <mat-error *ngIf="form.get('message')?.hasError('required')">Message is required</mat-error>
+            <mat-error>{{ messageError }}</mat-error>
           </mat-form-field>
         </div>
 
@@ -131,7 +130,7 @@
           </div>
           <div class="contact-details">
             <h3>Email</h3>
-            <p><a href="mailto:info@webvibes.co.in" aria-label="Email us at info@webvibes.co.in">info@webvibes.co.in</a></p>
+            <p><a href="mailto:info@webvibes.co.in" aria-label="Email us at info@webvibes.co.in">info&#64;webvibes.co.in</a></p>
             <span class="contact-description">Get in touch via email</span>
           </div>
           <div class="contact-arrow" aria-hidden="true">
