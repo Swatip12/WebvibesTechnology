@@ -1,17 +1,27 @@
 <div class="contact-page">
-  <!-- Hero Section with Background Image -->
+  <!-- Hero Section with Enhanced Background -->
   <section class="hero-section" role="banner" aria-label="Contact us">
     <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="hero-particles" aria-hidden="true">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
     <div class="hero-content">
-      <mat-icon class="hero-icon fade-in-up" aria-hidden="true">contact_mail</mat-icon>
+      <div class="hero-icon-wrapper fade-in-up">
+        <mat-icon class="hero-icon" aria-hidden="true">contact_mail</mat-icon>
+        <div class="icon-glow" aria-hidden="true"></div>
+      </div>
       <h1 class="hero-title fade-in-up stagger-1">Get In Touch</h1>
       <p class="hero-subtitle fade-in-up stagger-2">We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
       <div class="hero-contact-info fade-in-up stagger-3" role="list" aria-label="Quick contact information">
-        <div class="quick-contact-item" role="listitem">
+        <div class="quick-contact-item hover-lift" role="listitem">
           <mat-icon aria-hidden="true">email</mat-icon>
-          <a href="mailto:info.webvibes@gmail.com" aria-label="Email us at info.webvibes&#64;gmail.com">info.webvibes&#64;gmail.com</a>
+          <a href="mailto:info@webvibes.co.in" aria-label="Email us at info@webvibes.co.in">info@webvibes.co.in</a>
         </div>
-        <div class="quick-contact-item" role="listitem">
+        <div class="quick-contact-item hover-lift" role="listitem">
           <mat-icon aria-hidden="true">phone</mat-icon>
           <a href="tel:+917447839781" aria-label="Call us at +91 7447839781">+91 7447839781</a>
         </div>
@@ -22,137 +32,214 @@
   <!-- Contact Content -->
   <div class="contact-container">
     <!-- Contact Form Card -->
-    <mat-card class="contact-form-card">
+    <mat-card class="contact-form-card hover-lift">
       <div class="card-header">
-        <mat-icon class="header-icon">edit_note</mat-icon>
+        <div class="header-icon-wrapper">
+          <mat-icon class="header-icon">edit_note</mat-icon>
+          <div class="icon-pulse" aria-hidden="true"></div>
+        </div>
         <h2>Send Us a Message</h2>
         <p>Fill out the form below and we'll get back to you shortly</p>
       </div>
 
       <form [formGroup]="form" (ngSubmit)="submit()" class="contact-form" aria-label="Contact form">
-        <!-- Success Message -->
-        <div class="status-message success-message" *ngIf="submitSuccess" role="alert" aria-live="polite">
-          <mat-icon aria-hidden="true">check_circle</mat-icon>
+        <!-- Enhanced Success Message -->
+        <div class="status-message success-message scale-in" *ngIf="submitSuccess" role="alert" aria-live="polite">
+          <div class="status-icon-wrapper">
+            <mat-icon aria-hidden="true">check_circle</mat-icon>
+            <div class="success-ripple" aria-hidden="true"></div>
+          </div>
           <div class="message-content">
             <h3>Message Sent Successfully!</h3>
-            <p>Thank you for contacting us. We'll get back to you soon.</p>
+            <p>Thank you for contacting us. We'll get back to you within 24 hours.</p>
           </div>
+          <div class="status-decoration" aria-hidden="true"></div>
         </div>
 
-        <!-- Error Message -->
-        <div class="status-message error-message" *ngIf="submitError" role="alert" aria-live="assertive">
-          <mat-icon aria-hidden="true">error</mat-icon>
+        <!-- Enhanced Error Message -->
+        <div class="status-message error-message scale-in" *ngIf="submitError" role="alert" aria-live="assertive">
+          <div class="status-icon-wrapper">
+            <mat-icon aria-hidden="true">error</mat-icon>
+            <div class="error-pulse" aria-hidden="true"></div>
+          </div>
           <div class="message-content">
             <h3>Failed to Send Message</h3>
-            <p>Please check your connection and try again.</p>
+            <p>Please check your connection and try again, or contact us directly.</p>
           </div>
+          <div class="status-decoration error-decoration" aria-hidden="true"></div>
         </div>
 
-        <mat-form-field appearance="outline" class="full-width form-field-animated">
-          <mat-label>Your Name</mat-label>
-          <input matInput formControlName="name" required placeholder="Enter your full name" aria-label="Your full name" aria-required="true" />
-          <mat-icon matPrefix aria-hidden="true">person</mat-icon>
-          <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
-        </mat-form-field>
+        <div class="form-grid">
+          <mat-form-field appearance="outline" class="form-field-enhanced">
+            <mat-label>Your Name</mat-label>
+            <input matInput formControlName="name" required placeholder="Enter your full name" aria-label="Your full name" aria-required="true" />
+            <mat-icon matPrefix aria-hidden="true">person</mat-icon>
+            <mat-error *ngIf="form.get('name')?.hasError('required')">Name is required</mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width form-field-animated">
-          <mat-label>Email Address</mat-label>
-          <input matInput type="email" formControlName="email" required placeholder="your.email@example.com" aria-label="Your email address" aria-required="true" />
-          <mat-icon matPrefix aria-hidden="true">email</mat-icon>
-          <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
-          <mat-error *ngIf="form.get('email')?.hasError('email')">Please enter a valid email address</mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-enhanced">
+            <mat-label>Email Address</mat-label>
+            <input matInput type="email" formControlName="email" required placeholder="your.email@example.com" aria-label="Your email address" aria-required="true" />
+            <mat-icon matPrefix aria-hidden="true">email</mat-icon>
+            <mat-error *ngIf="form.get('email')?.hasError('required')">Email is required</mat-error>
+            <mat-error *ngIf="form.get('email')?.hasError('email')">Please enter a valid email address</mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width form-field-animated">
-          <mat-label>Subject</mat-label>
-          <input matInput formControlName="subject" required placeholder="What is this regarding?" aria-label="Message subject" aria-required="true" />
-          <mat-icon matPrefix aria-hidden="true">subject</mat-icon>
-          <mat-error *ngIf="form.get('subject')?.hasError('required')">Subject is required</mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-enhanced full-width">
+            <mat-label>Subject</mat-label>
+            <input matInput formControlName="subject" required placeholder="What is this regarding?" aria-label="Message subject" aria-required="true" />
+            <mat-icon matPrefix aria-hidden="true">subject</mat-icon>
+            <mat-error *ngIf="form.get('subject')?.hasError('required')">Subject is required</mat-error>
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width form-field-animated">
-          <mat-label>Message</mat-label>
-          <textarea matInput rows="6" formControlName="message" required 
-                    placeholder="Tell us more about your inquiry..." aria-label="Your message" aria-required="true"></textarea>
-          <mat-icon matPrefix aria-hidden="true">message</mat-icon>
-          <mat-error *ngIf="form.get('message')?.hasError('required')">Message is required</mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="form-field-enhanced full-width">
+            <mat-label>Message</mat-label>
+            <textarea matInput rows="6" formControlName="message" required 
+                      placeholder="Tell us more about your inquiry..." aria-label="Your message" aria-required="true"></textarea>
+            <mat-icon matPrefix aria-hidden="true">message</mat-icon>
+            <mat-error *ngIf="form.get('message')?.hasError('required')">Message is required</mat-error>
+          </mat-form-field>
+        </div>
 
-        <button mat-raised-button color="primary" type="submit" class="submit-btn" [disabled]="loading" [attr.aria-busy]="loading">
-          <mat-icon class="btn-icon" aria-hidden="true">{{ loading ? 'hourglass_empty' : 'send' }}</mat-icon>
-          <span class="btn-text">{{ loading ? 'Sending...' : 'Send Message' }}</span>
-          <span class="btn-ripple" aria-hidden="true"></span>
+        <button mat-raised-button color="primary" type="submit" class="submit-btn enhanced-btn" [disabled]="loading" [attr.aria-busy]="loading">
+          <div class="btn-content">
+            <mat-icon class="btn-icon" aria-hidden="true">{{ loading ? 'hourglass_empty' : 'send' }}</mat-icon>
+            <span class="btn-text">{{ loading ? 'Sending...' : 'Send Message' }}</span>
+          </div>
+          <div class="btn-ripple" aria-hidden="true"></div>
+          <div class="btn-glow" aria-hidden="true"></div>
         </button>
       </form>
     </mat-card>
 
-    <!-- Contact Info Card -->
-    <mat-card class="contact-info-card" aria-labelledby="contact-info-heading">
+    <!-- Enhanced Contact Info Card -->
+    <mat-card class="contact-info-card hover-lift" aria-labelledby="contact-info-heading">
       <div class="card-header">
-        <mat-icon class="header-icon" aria-hidden="true">info</mat-icon>
+        <div class="header-icon-wrapper">
+          <mat-icon class="header-icon" aria-hidden="true">info</mat-icon>
+          <div class="icon-pulse" aria-hidden="true"></div>
+        </div>
         <h2 id="contact-info-heading">Contact Information</h2>
         <p>Reach out to us through any of these channels</p>
       </div>
 
       <div class="contact-info" role="list" aria-label="Contact methods">
-        <div class="contact-item" role="listitem">
+        <div class="contact-item hover-scale" role="listitem">
           <div class="icon-wrapper" aria-hidden="true">
             <mat-icon>email</mat-icon>
+            <div class="icon-bg-glow"></div>
           </div>
           <div class="contact-details">
             <h3>Email</h3>
-            <p><a href="mailto:info.webvibes@gmail.com" aria-label="Email us at info.webvibes@gmail.com">info.webvibes&#64;gmail.com</a></p>
+            <p><a href="mailto:info@webvibes.co.in" aria-label="Email us at info@webvibes.co.in">info@webvibes.co.in</a></p>
+            <span class="contact-description">Get in touch via email</span>
+          </div>
+          <div class="contact-arrow" aria-hidden="true">
+            <mat-icon>arrow_forward</mat-icon>
           </div>
         </div>
 
-        <div class="contact-item" role="listitem">
+        <div class="contact-item hover-scale" role="listitem">
           <div class="icon-wrapper" aria-hidden="true">
             <mat-icon>phone</mat-icon>
+            <div class="icon-bg-glow"></div>
           </div>
           <div class="contact-details">
             <h3>Phone</h3>
             <p><a href="tel:+917447839781" aria-label="Call us at +91 7447839781">+91 7447839781</a></p>
+            <span class="contact-description">Call us directly</span>
+          </div>
+          <div class="contact-arrow" aria-hidden="true">
+            <mat-icon>arrow_forward</mat-icon>
           </div>
         </div>
 
-        <div class="contact-item" role="listitem">
+        <div class="contact-item hover-scale" role="listitem">
           <div class="icon-wrapper" aria-hidden="true">
             <mat-icon>location_on</mat-icon>
+            <div class="icon-bg-glow"></div>
           </div>
           <div class="contact-details">
             <h3>Address</h3>
             <address>Pune, Maharashtra<br>India</address>
+            <span class="contact-description">Visit our office</span>
+          </div>
+          <div class="contact-arrow" aria-hidden="true">
+            <mat-icon>arrow_forward</mat-icon>
           </div>
         </div>
 
-        <div class="contact-item" role="listitem">
+        <div class="contact-item hover-scale" role="listitem">
           <div class="icon-wrapper" aria-hidden="true">
             <mat-icon>schedule</mat-icon>
+            <div class="icon-bg-glow"></div>
           </div>
           <div class="contact-details">
             <h3>Business Hours</h3>
             <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday - Sunday: Closed</p>
+            <span class="contact-description">Our availability</span>
+          </div>
+          <div class="contact-arrow" aria-hidden="true">
+            <mat-icon>arrow_forward</mat-icon>
           </div>
         </div>
       </div>
 
       <div class="social-section">
-        <h3>Follow Us</h3>
+        <h3>Connect With Us</h3>
+        <p class="social-subtitle">Follow us on social media for updates</p>
         <nav class="social-links" aria-label="Social media links">
-          <a href="https://facebook.com" target="_blank" rel="noopener" mat-icon-button class="social-btn" aria-label="Visit our Facebook page">
+          <a href="https://facebook.com" target="_blank" rel="noopener" mat-icon-button class="social-btn hover-grow" aria-label="Visit our Facebook page">
             <mat-icon aria-hidden="true">facebook</mat-icon>
+            <div class="social-glow" aria-hidden="true"></div>
           </a>
-          <a href="https://twitter.com" target="_blank" rel="noopener" mat-icon-button class="social-btn" aria-label="Visit our Twitter page">
+          <a href="https://twitter.com" target="_blank" rel="noopener" mat-icon-button class="social-btn hover-grow" aria-label="Visit our Twitter page">
             <mat-icon aria-hidden="true">twitter</mat-icon>
+            <div class="social-glow" aria-hidden="true"></div>
           </a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" mat-icon-button class="social-btn" aria-label="Visit our LinkedIn page">
+          <a href="https://linkedin.com" target="_blank" rel="noopener" mat-icon-button class="social-btn hover-grow" aria-label="Visit our LinkedIn page">
             <mat-icon aria-hidden="true">linkedin</mat-icon>
+            <div class="social-glow" aria-hidden="true"></div>
           </a>
-          <a href="https://instagram.com" target="_blank" rel="noopener" mat-icon-button class="social-btn" aria-label="Visit our Instagram page">
+          <a href="https://instagram.com" target="_blank" rel="noopener" mat-icon-button class="social-btn hover-grow" aria-label="Visit our Instagram page">
             <mat-icon aria-hidden="true">instagram</mat-icon>
+            <div class="social-glow" aria-hidden="true"></div>
           </a>
         </nav>
       </div>
     </mat-card>
   </div>
+
+  <!-- Enhanced FAQ Section -->
+  <section class="faq-section">
+    <div class="faq-container">
+      <div class="faq-header">
+        <h2 class="fade-in-up">Frequently Asked Questions</h2>
+        <p class="fade-in-up stagger-1">Quick answers to common questions</p>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item fade-in-up stagger-2">
+          <div class="faq-icon">
+            <mat-icon>help_outline</mat-icon>
+          </div>
+          <h3>How quickly do you respond?</h3>
+          <p>We typically respond to all inquiries within 24 hours during business days.</p>
+        </div>
+        <div class="faq-item fade-in-up stagger-3">
+          <div class="faq-icon">
+            <mat-icon>schedule</mat-icon>
+          </div>
+          <h3>What are your business hours?</h3>
+          <p>Monday to Friday: 9:00 AM - 6:00 PM IST. We're closed on weekends and holidays.</p>
+        </div>
+        <div class="faq-item fade-in-up stagger-4">
+          <div class="faq-icon">
+            <mat-icon>phone</mat-icon>
+          </div>
+          <h3>Can I call directly?</h3>
+          <p>Yes! Call us at +91 7447839781 during business hours for immediate assistance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
