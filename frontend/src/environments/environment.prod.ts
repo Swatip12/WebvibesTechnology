@@ -1,5 +1,7 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://webvibes-backend.onrender.com/api',
-  wsUrl: 'wss://webvibes-backend.onrender.com/ws'
+  // TODO: Replace with your Railway backend URL after deployment
+  // Example: 'https://webvibes-backend-production.up.railway.app/api'
+  apiUrl: 'https://YOUR-RAILWAY-BACKEND-URL.up.railway.app/api',
+  wsUrl: 'wss://YOUR-RAILWAY-BACKEND-URL.up.railway.app/ws'
 };
